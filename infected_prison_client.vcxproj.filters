@@ -75,6 +75,12 @@
     <ClInclude Include="TileMap.h">
       <Filter>Fichiers d%27en-tête\Map</Filter>
     </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>Fichiers d%27en-tête\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponManager.h">
+      <Filter>Fichiers d%27en-tête\Controllers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -115,6 +121,12 @@
     </ClCompile>
     <ClCompile Include="TileMap.cpp">
       <Filter>Fichiers sources\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>Fichiers sources\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponManager.cpp">
+      <Filter>Fichiers sources\Controllers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
