@@ -12,6 +12,7 @@ DrawableEntity::DrawableEntity()
 
 DrawableEntity::~DrawableEntity()
 {
+
 }
 
 // Renvoit le centre de l'entité et pas le coin en haut à gauche
