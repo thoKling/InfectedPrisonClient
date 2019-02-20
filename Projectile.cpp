@@ -2,9 +2,9 @@
 
 #include "Utils.h"
 
-Projectile::Projectile()
+Projectile::Projectile(const std::string typeWeapon)
 {
-	if (!_texture.loadFromFile("Ressources/projectile.png"))
+	if (!_texture.loadFromFile("Ressources/projectile_"+typeWeapon+".png"))
 		throw std::string("Impossible de charger la texture projectile.png");
 
 	_sprite.setTexture(_texture);

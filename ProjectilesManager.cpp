@@ -19,8 +19,8 @@ ProjectilesManager::~ProjectilesManager()
 
 
 // créer un nouveau projectile et renvoit l'id de ce dernier
-unsigned int ProjectilesManager::createProjectile(const sf::Vector2f& pos, const sf::Vector2f& mousePos) {
-	_projectiles[_nextId] = new Projectile();
+unsigned int ProjectilesManager::createProjectile(const sf::Vector2f& pos, const sf::Vector2f& mousePos, const std::string typeWeapon) {
+	_projectiles[_nextId] = new Projectile(typeWeapon);
 	_projectiles[_nextId]->setPosition(pos);
 	_projectiles[_nextId]->orientate(mousePos);
 	_projectiles[_nextId]->setDirection(pos, mousePos);

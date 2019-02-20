@@ -10,7 +10,7 @@ public:
 	~ProjectilesManager();
 
 	// Méthode qui permet de créer un nouveau projectile
-	unsigned int createProjectile(const sf::Vector2f& pos, const sf::Vector2f& mousePosition);
+	unsigned int createProjectile(const sf::Vector2f& pos, const sf::Vector2f& mousePosition, const std::string typeWeapon);
 
 	// Procédure qui dessine les projectiles
 	void manageDraw(sf::RenderWindow& window);

@@ -4,7 +4,7 @@
 class Projectile : public DrawableEntity
 {
 public:
-	Projectile();
+	Projectile(const std::string typeWeapon);
 	~Projectile();
 	
 	void setDirection(const sf::Vector2f& pos, const sf::Vector2f& mousePos);
