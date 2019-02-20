@@ -1,5 +1,6 @@
 #pragma once
 #include "DrawableEntity.h"
+#include "Weapon.h"
 
 class TileMap;
 class ProjectilesManager;
@@ -29,6 +30,8 @@ private:
 	bool _beingHit = false;
 
 	TileMap* _map;
+
+	Weapon* _weapon;
 
 	/* Les "interrupteurs de déplacement".
 	True: les déplacements ont lieu,

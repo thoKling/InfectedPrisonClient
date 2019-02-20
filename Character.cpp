@@ -9,7 +9,7 @@
 #include <string>
 #include <iostream>
 
-Character::Character(TileMap* map) : _map(map)
+Character::Character(TileMap* map) : _map(map), _weapon(new Weapon())
 {
 	if (!_texture.loadFromFile("Ressources/zombie.png"))
 		throw std::string("Impossible de charger la texture zombie.png");
@@ -146,8 +146,9 @@ void Character::fire(const sf::Vector2f& mousePos, ProjectilesManager& projectil
 {
 	if (_fire)
 	{
-		projectilesManager.createProjectile(this->getPosition(), mousePos);
-		audioManager._sound.play();
+		if (_weapon) {
+			_weapon->fire(mousePos, projectilesManager, audioManager, this->getPosition());
+		}
 	}
 }
 
