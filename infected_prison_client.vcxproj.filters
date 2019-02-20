@@ -13,5 +13,108 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Fichiers d%27en-tête\Core">
+      <UniqueIdentifier>{d241bbb3-b0f1-4578-b110-d10ad68da50f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Controllers">
+      <UniqueIdentifier>{db09a5ef-5e2e-4359-a571-83084aae0e5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Models">
+      <UniqueIdentifier>{b94de2ed-0456-4f5a-9e7c-fc9c02378a47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Map">
+      <UniqueIdentifier>{616a33b3-6f36-4cea-9b6e-2fc2816782ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Core">
+      <UniqueIdentifier>{bcdb6966-c1eb-4717-ad80-703618d5a452}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Controllers">
+      <UniqueIdentifier>{be1a011d-b8d6-416f-963d-3103b2e31300}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Models">
+      <UniqueIdentifier>{2f0108c7-322a-443c-a8b3-71dc5cbaca0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Map">
+      <UniqueIdentifier>{74293b63-1afa-4237-aa7d-2ec4b47ca1f6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Application.h">
+      <Filter>Fichiers d%27en-tête\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioManager.h">
+      <Filter>Fichiers d%27en-tête\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="CharactersManager.h">
+      <Filter>Fichiers d%27en-tête\Controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectilesManager.h">
+      <Filter>Fichiers d%27en-tête\Controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZombiesManager.h">
+      <Filter>Fichiers d%27en-tête\Controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>Fichiers d%27en-tête\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawableEntity.h">
+      <Filter>Fichiers d%27en-tête\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>Fichiers d%27en-tête\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Zombie.h">
+      <Filter>Fichiers d%27en-tête\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Fichiers d%27en-tête\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="MapUtils.h">
+      <Filter>Fichiers d%27en-tête\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="TileMap.h">
+      <Filter>Fichiers d%27en-tête\Map</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Application.cpp">
+      <Filter>Fichiers sources\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>Fichiers sources\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioManager.cpp">
+      <Filter>Fichiers sources\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="CharactersManager.cpp">
+      <Filter>Fichiers sources\Controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectilesManager.cpp">
+      <Filter>Fichiers sources\Controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="ZombiesManager.cpp">
+      <Filter>Fichiers sources\Controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>Fichiers sources\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawableEntity.cpp">
+      <Filter>Fichiers sources\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Fichiers sources\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Zombie.cpp">
+      <Filter>Fichiers sources\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="MapUtils.cpp">
+      <Filter>Fichiers sources\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="TileMap.cpp">
+      <Filter>Fichiers sources\Map</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
