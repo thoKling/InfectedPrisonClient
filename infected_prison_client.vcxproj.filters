@@ -125,8 +125,5 @@
     <ClCompile Include="Weapon.cpp">
       <Filter>Fichiers sources\Models</Filter>
     </ClCompile>
-    <ClCompile Include="WeaponManager.cpp">
-      <Filter>Fichiers sources\Controllers</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>

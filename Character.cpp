@@ -5,11 +5,12 @@
 #include "TileMap.h"
 #include "ProjectilesManager.h"
 #include "AudioManager.h"
+#include "Weapon.h"
 
 #include <string>
 #include <iostream>
 
-Character::Character(TileMap* map) : _map(map), _weapon(new Weapon())
+Character::Character(TileMap* map) : _map(map)
 {
 	if (!_texture.loadFromFile("Ressources/zombie.png"))
 		throw std::string("Impossible de charger la texture zombie.png");
@@ -17,6 +18,9 @@ Character::Character(TileMap* map) : _map(map), _weapon(new Weapon())
 	_sprite.setTexture(_texture);
 
 	this->setOrigin(32.f, 32.f);
+
+	_weapon = new Weapon();
+
 }
 
 
@@ -139,6 +143,7 @@ void Character::update(const sf::Vector2f& mousePos, ProjectilesManager& project
 			_beingHit = false;
 	}
 
+	_weapon->update();
 }
 
 // Tir du personnage

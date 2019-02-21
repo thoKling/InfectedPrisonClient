@@ -89,7 +89,7 @@ Application::Application() : _zombiesManager(&_map, &_charactersManager), _chara
 	_audioManager._sound.setBuffer(_audioManager._buffer);
 
 	_charactersManager.createCharacter(sf::Vector2f(300, 200));
-	_zombiesManager.createZombie(sf::Vector2f(80, 300));
+	//_zombiesManager.createZombie(sf::Vector2f(80, 300));
 }
 
 

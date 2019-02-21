@@ -158,7 +158,6 @@
     <ClCompile Include="TileMap.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="Weapon.cpp" />
-    <ClCompile Include="WeaponManager.cpp" />
     <ClCompile Include="Zombie.cpp" />
     <ClCompile Include="ZombiesManager.cpp" />
   </ItemGroup>
