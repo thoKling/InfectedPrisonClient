@@ -32,6 +32,7 @@ Character::~Character()
 /** Récupération et traitement des entrées clavier du joueur **/
 void Character::handleInputs(const sf::Event& event)
 {
+
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		_fire = true;
 

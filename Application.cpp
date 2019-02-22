@@ -167,6 +167,10 @@ void Application::draw()
 // Ici on gère les entrées clavier du joueur
 void Application::handleInputs(sf::Event event)
 {
+	if (!_window.hasFocus()) {
+		return;
+	}
+
 	if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::F3)
 	{
 		Application::toggleDebug();
