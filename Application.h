@@ -8,6 +8,7 @@
 #include "ProjectilesManager.h"
 #include "AudioManager.h"
 
+
 #define MS_PER_UPDATE 1000/60
 
 class Application
@@ -23,6 +24,14 @@ private:
 	void draw();
 	void handleInputs(sf::Event);
 	void update();
+
+	sf::View _mainView; // Vue centrée sur le personnage 
+
+	sf::RenderTexture test1;
+	sf::RenderTexture test2;
+	ltbl::LightSystem* _ls;
+	ltbl::LightPointEmission* _playerLight;
+	sf::Texture pointLightTexture;
 
 	TileMap _map;
 	CharactersManager _charactersManager;

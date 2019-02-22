@@ -127,6 +127,13 @@
     <ClInclude Include="Character.h" />
     <ClInclude Include="CharactersManager.h" />
     <ClInclude Include="DrawableEntity.h" />
+    <ClInclude Include="LTBL2\src\LightDirectionEmission.hpp" />
+    <ClInclude Include="LTBL2\src\LightPointEmission.hpp" />
+    <ClInclude Include="LTBL2\src\LightResources.hpp" />
+    <ClInclude Include="LTBL2\src\LightShape.hpp" />
+    <ClInclude Include="LTBL2\src\LightSystem.hpp" />
+    <ClInclude Include="LTBL2\src\Sprite.hpp" />
+    <ClInclude Include="LTBL2\src\Utils.hpp" />
     <ClInclude Include="MapUtils.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="ProjectilesManager.h" />
@@ -141,6 +148,11 @@
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="CharactersManager.cpp" />
     <ClCompile Include="DrawableEntity.cpp" />
+    <ClCompile Include="LTBL2\src\LightDirectionEmission.cpp" />
+    <ClCompile Include="LTBL2\src\LightPointEmission.cpp" />
+    <ClCompile Include="LTBL2\src\LightShape.cpp" />
+    <ClCompile Include="LTBL2\src\LightSystem.cpp" />
+    <ClCompile Include="LTBL2\src\Sprite.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MapUtils.cpp" />
     <ClCompile Include="Projectile.cpp" />
