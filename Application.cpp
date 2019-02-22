@@ -196,6 +196,14 @@ void Application::update()
 
 	// Idem avec les projectiles
 	_projectilesManager.update(mouseWorldPos);
+
+	//si la fenetre n'a pas le focus on eteint la musique
+	if (_window.hasFocus() && !_audioManager.isMainThemePlayed()) {
+		_audioManager.playMainTheme();
+	}
+	else if(!_window.hasFocus() && _audioManager.isMainThemePlayed()){
+		_audioManager.stopMainTheme();
+	}
 }
 
 // Affichage de choses utiles pour dév

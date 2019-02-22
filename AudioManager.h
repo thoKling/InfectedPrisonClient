@@ -13,8 +13,14 @@ public:
 
 	// Méthode qui permet de jouer la musique principale du jeu
 	void playMainTheme();
+	void stopMainTheme();
+
+	bool isMainThemePlayed();
 
 	void createSoundBuffer();
+
+
+	bool _isMainThemePlayed;
 
 	sf::Sound gun();
 

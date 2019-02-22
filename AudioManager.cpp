@@ -1,9 +1,8 @@
 #include "AudioManager.h"
 
 
-AudioManager::AudioManager()
+AudioManager::AudioManager() : _isMainThemePlayed(false), _nextId(0)
 {
-	_nextId = 0;
 }
 
 
@@ -25,6 +24,16 @@ void AudioManager::createMainTheme()
 void AudioManager::playMainTheme()
 {
 	_mainTheme.play();
+	_isMainThemePlayed = true;
+}
+
+void AudioManager::stopMainTheme() {
+	_mainTheme.pause();
+	_isMainThemePlayed = false;
+}
+
+bool AudioManager::isMainThemePlayed() {
+	return _isMainThemePlayed;
 }
 
 void AudioManager::createSoundBuffer()
