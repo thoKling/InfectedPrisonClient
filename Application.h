@@ -27,12 +27,6 @@ private:
 
 	sf::View _mainView; // Vue centrée sur le personnage 
 
-	sf::RenderTexture test1;
-	sf::RenderTexture test2;
-	ltbl::LightSystem* _ls;
-	ltbl::LightPointEmission* _playerLight;
-	sf::Texture pointLightTexture;
-
 	TileMap _map;
 	CharactersManager _charactersManager;
 	ZombiesManager _zombiesManager;

@@ -2,8 +2,6 @@
 
 #include <iostream>
 
-#include "LTBL2/src/LightSystem.hpp"
-
 #include "TileMap.h"
 
 sf::Packet& operator >>(sf::Packet& packet, std::vector<std::vector<int>>& myVec)
@@ -20,20 +18,6 @@ sf::Packet& operator >>(sf::Packet& packet, std::vector<std::vector<int>>& myVec
 
 Application::Application() : _zombiesManager(&_map, &_charactersManager), _charactersManager(&_map)
 {
-	_ls = new ltbl::LightSystem(test1, test2);
-	_ls->create({ -1000.f, -1000.f, 2000.f, 2000.f }, _window.getSize());
-
-	pointLightTexture.loadFromFile("LTBL2/examples/pointLightTexture.png");
-	pointLightTexture.setSmooth(true);
-
-	_playerLight = _ls->createLightPointEmission();
-	_playerLight->setTexture(pointLightTexture);
-	//_playerLight->setTextureRect(sf::IntRect{ 0,0,(int)pointLightTexture.getSize().x*2, (int)pointLightTexture.getSize().y*2 });
-	_playerLight->setOrigin(sf::Vector2f(pointLightTexture.getSize().x * 0.5f, pointLightTexture.getSize().y * 0.5f));
-	_playerLight->setScale(18.f, 18.f);
-	_playerLight->setColor(sf::Color(255,255,255));
-	_playerLight->setSourceRadius(20000.f);
-
 	// on crée la fenêtre
 	_window.create(sf::VideoMode(1024, 512), "Infected Prison");
 	_mainView = _window.getDefaultView();
@@ -163,9 +147,6 @@ void Application::draw()
 	_zombiesManager.manageDraw(_window);
 	_projectilesManager.manageDraw(_window);
 
-	_playerLight->setLocalCastCenter(_charactersManager.getCharacters()[0]->getPosition());
-	_playerLight->setRotation(0.f);
-
 	// On affiche les dessins
 	_window.display();
 }
@@ -192,8 +173,6 @@ void Application::update()
 
 	// Mise à jour du comportement des personnages
 	_charactersManager.update(mouseWorldPos, _projectilesManager, _audioManager);
-
-	_playerLight->setPosition(_charactersManager.getCharacters()[0]->getPosition());
 
 	// Idem avec les zombies
 	_zombiesManager.update();

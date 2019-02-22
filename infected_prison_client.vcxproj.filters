@@ -37,9 +37,6 @@
     <Filter Include="Fichiers sources\Map">
       <UniqueIdentifier>{74293b63-1afa-4237-aa7d-2ec4b47ca1f6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="LTBL2">
-      <UniqueIdentifier>{1c2f97a0-f16a-4a96-8e73-ccf96493d70e}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -77,27 +74,6 @@
     </ClInclude>
     <ClInclude Include="TileMap.h">
       <Filter>Fichiers d%27en-tête\Map</Filter>
-    </ClInclude>
-    <ClInclude Include="LTBL2\src\LightDirectionEmission.hpp">
-      <Filter>LTBL2</Filter>
-    </ClInclude>
-    <ClInclude Include="LTBL2\src\LightPointEmission.hpp">
-      <Filter>LTBL2</Filter>
-    </ClInclude>
-    <ClInclude Include="LTBL2\src\LightResources.hpp">
-      <Filter>LTBL2</Filter>
-    </ClInclude>
-    <ClInclude Include="LTBL2\src\LightShape.hpp">
-      <Filter>LTBL2</Filter>
-    </ClInclude>
-    <ClInclude Include="LTBL2\src\LightSystem.hpp">
-      <Filter>LTBL2</Filter>
-    </ClInclude>
-    <ClInclude Include="LTBL2\src\Sprite.hpp">
-      <Filter>LTBL2</Filter>
-    </ClInclude>
-    <ClInclude Include="LTBL2\src\Utils.hpp">
-      <Filter>LTBL2</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -139,21 +115,6 @@
     </ClCompile>
     <ClCompile Include="TileMap.cpp">
       <Filter>Fichiers sources\Map</Filter>
-    </ClCompile>
-    <ClCompile Include="LTBL2\src\LightDirectionEmission.cpp">
-      <Filter>LTBL2</Filter>
-    </ClCompile>
-    <ClCompile Include="LTBL2\src\LightPointEmission.cpp">
-      <Filter>LTBL2</Filter>
-    </ClCompile>
-    <ClCompile Include="LTBL2\src\LightShape.cpp">
-      <Filter>LTBL2</Filter>
-    </ClCompile>
-    <ClCompile Include="LTBL2\src\LightSystem.cpp">
-      <Filter>LTBL2</Filter>
-    </ClCompile>
-    <ClCompile Include="LTBL2\src\Sprite.cpp">
-      <Filter>LTBL2</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
