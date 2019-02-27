@@ -1,6 +1,8 @@
 #pragma once
 #include "DrawableEntity.h"
 
+#include "LTBL2/lighting/LightSystem.h"
+
 class TileMap;
 class ProjectilesManager;
 class AudioManager;
@@ -8,7 +10,7 @@ class AudioManager;
 class Character : public DrawableEntity
 {
 public:
-	Character(TileMap* map);
+	Character(TileMap* map, ltbl::LightSystem* ls);
 	~Character();
 
 	/* Procédure qui récupère et traite les entrées clavier du joueur */
@@ -29,6 +31,10 @@ private:
 	bool _beingHit = false;
 
 	TileMap* _map;
+	ltbl::LightSystem* _ls;
+
+	std::shared_ptr<ltbl::LightPointEmission> light;
+	sf::Texture pointLightTexture;
 
 	/* Les "interrupteurs de déplacement".
 	True: les déplacements ont lieu,

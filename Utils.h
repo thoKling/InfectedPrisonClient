@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 
-#define PI 3.14159265
+constexpr auto PI = 3.14159265;
 
 #define toRadians PI / 180.0
 #define toDegrees 180.0 / PI

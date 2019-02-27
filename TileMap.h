@@ -6,7 +6,7 @@ class TileMap : public sf::Drawable, public sf::Transformable
 {
 public:
 	bool load(const std::string& tileset, sf::Vector2u tileSize, const std::vector<std::vector<int>>& tiles, unsigned int width, unsigned int height);
-	std::vector<std::vector<int>> getTiles() const;
+	const std::vector<std::vector<int>>& getTiles() const;
 	int getTileNumber(sf::Vector2i tilePos);
 	bool isObstacle(sf::Vector2i tilePos);
 	TileMap();

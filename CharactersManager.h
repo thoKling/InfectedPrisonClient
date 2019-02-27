@@ -4,11 +4,14 @@
 #include "Character.h"
 
 class TileMap;
+namespace ltbl {
+	class LightSystem;
+}
 
 class CharactersManager
 {
 public:
-	CharactersManager(TileMap* map);
+	CharactersManager(TileMap* map, ltbl::LightSystem* ls);
 	~CharactersManager();
 
 	// Méthode qui permet de créer un nouveau personnage
@@ -31,6 +34,7 @@ private:
 	std::map<unsigned int, Character*> _characters;
 
 	TileMap* _map;
+	ltbl::LightSystem* _ls;
 
 	// identifiant suivant servant à la création d'un nouveau personnage
 	unsigned int _nextId;

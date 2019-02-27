@@ -8,7 +8,6 @@
 #include "ProjectilesManager.h"
 #include "AudioManager.h"
 
-
 #define MS_PER_UPDATE 1000/60
 
 class Application
@@ -25,7 +24,18 @@ private:
 	void handleInputs(sf::Event);
 	void update();
 
-	sf::View _mainView; // Vue centrée sur le personnage 
+	sf::View _minimapView; // Vue de la minicarte centrée sur le personnage
+	void drawMinimap();
+
+	sf::View _mainView; // Vue principale centrée sur le personnage 
+
+	// Systeme de lumieres
+	ltbl::LightSystem _ls;
+	sf::Sprite _lightSprite;
+	sf::RenderStates _lightRenderStates;
+	sf::Texture _penumbraTexture;
+	sf::Shader _unshadowShader;
+	sf::Shader _lightOverShapeShader;
 
 	TileMap _map;
 	CharactersManager _charactersManager;

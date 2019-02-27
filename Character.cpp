@@ -5,11 +5,12 @@
 #include "TileMap.h"
 #include "ProjectilesManager.h"
 #include "AudioManager.h"
+#include "LTBL2/lighting/LightSystem.h"
 
 #include <string>
 #include <iostream>
 
-Character::Character(TileMap* map) : _map(map)
+Character::Character(TileMap* map, ltbl::LightSystem* ls) : _map(map), _ls(ls)
 {
 	if (!_texture.loadFromFile("Ressources/zombie.png"))
 		throw std::string("Impossible de charger la texture zombie.png");
@@ -17,6 +18,18 @@ Character::Character(TileMap* map) : _map(map)
 	_sprite.setTexture(_texture);
 
 	this->setOrigin(32.f, 32.f);
+
+	light = std::make_shared<ltbl::LightPointEmission>();
+	pointLightTexture.loadFromFile("LTBL2/resources/pointLightTexture.png");
+	pointLightTexture.setSmooth(true);
+
+	light->_emissionSprite.setOrigin(sf::Vector2f(pointLightTexture.getSize().x * 0.5f, pointLightTexture.getSize().y * 0.5f));
+	light->_emissionSprite.setTexture(pointLightTexture);
+	light->_emissionSprite.setScale(sf::Vector2f(6.0f, 6.0f));
+	light->_emissionSprite.setColor(sf::Color(255, 230, 200));
+	light->_emissionSprite.setPosition(sf::Vector2f(0.0f, 0.0f));
+	light->_localCastCenter = sf::Vector2f(0.0f, 0.0f);
+	_ls->addLight(light);
 }
 
 
@@ -132,6 +145,8 @@ void Character::update(const sf::Vector2f& mousePos, ProjectilesManager& project
 	fire(mousePos, projectilesManager, audioManager);
 	
 	mv();
+
+	light->_emissionSprite.setPosition(getPosition());
 
 	if (_beingHit) {
 		_sprite.setColor(sf::Color(_sprite.getColor().r, _sprite.getColor().g + 15, _sprite.getColor().b + 15));

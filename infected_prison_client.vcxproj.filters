@@ -37,6 +37,15 @@
     <Filter Include="Fichiers sources\Map">
       <UniqueIdentifier>{74293b63-1afa-4237-aa7d-2ec4b47ca1f6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="LTBL2">
+      <UniqueIdentifier>{c55e89eb-8640-41be-b6a0-a779fe1ee498}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LTBL2\lighting">
+      <UniqueIdentifier>{0f056331-f695-4f31-9b6b-f2d99fac6c00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LTBL2\quadtree">
+      <UniqueIdentifier>{a96cd7da-137e-414c-b18f-af0e5a1812ff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -74,6 +83,36 @@
     </ClInclude>
     <ClInclude Include="TileMap.h">
       <Filter>Fichiers d%27en-tête\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="LTBL2\Math.h">
+      <Filter>LTBL2</Filter>
+    </ClInclude>
+    <ClInclude Include="LTBL2\quadtree\DynamicQuadtree.h">
+      <Filter>LTBL2\quadtree</Filter>
+    </ClInclude>
+    <ClInclude Include="LTBL2\quadtree\Quadtree.h">
+      <Filter>LTBL2\quadtree</Filter>
+    </ClInclude>
+    <ClInclude Include="LTBL2\quadtree\QuadtreeNode.h">
+      <Filter>LTBL2\quadtree</Filter>
+    </ClInclude>
+    <ClInclude Include="LTBL2\quadtree\QuadtreeOccupant.h">
+      <Filter>LTBL2\quadtree</Filter>
+    </ClInclude>
+    <ClInclude Include="LTBL2\quadtree\StaticQuadtree.h">
+      <Filter>LTBL2\quadtree</Filter>
+    </ClInclude>
+    <ClInclude Include="LTBL2\lighting\LightDirectionEmission.h">
+      <Filter>LTBL2\lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="LTBL2\lighting\LightPointEmission.h">
+      <Filter>LTBL2\lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="LTBL2\lighting\LightShape.h">
+      <Filter>LTBL2\lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="LTBL2\lighting\LightSystem.h">
+      <Filter>LTBL2\lighting</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -115,6 +154,36 @@
     </ClCompile>
     <ClCompile Include="TileMap.cpp">
       <Filter>Fichiers sources\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="LTBL2\Math.cpp">
+      <Filter>LTBL2</Filter>
+    </ClCompile>
+    <ClCompile Include="LTBL2\quadtree\DynamicQuadtree.cpp">
+      <Filter>LTBL2\quadtree</Filter>
+    </ClCompile>
+    <ClCompile Include="LTBL2\quadtree\Quadtree.cpp">
+      <Filter>LTBL2\quadtree</Filter>
+    </ClCompile>
+    <ClCompile Include="LTBL2\quadtree\QuadtreeNode.cpp">
+      <Filter>LTBL2\quadtree</Filter>
+    </ClCompile>
+    <ClCompile Include="LTBL2\quadtree\QuadtreeOccupant.cpp">
+      <Filter>LTBL2\quadtree</Filter>
+    </ClCompile>
+    <ClCompile Include="LTBL2\quadtree\StaticQuadtree.cpp">
+      <Filter>LTBL2\quadtree</Filter>
+    </ClCompile>
+    <ClCompile Include="LTBL2\lighting\LightDirectionEmission.cpp">
+      <Filter>LTBL2\lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="LTBL2\lighting\LightPointEmission.cpp">
+      <Filter>LTBL2\lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="LTBL2\lighting\LightShape.cpp">
+      <Filter>LTBL2\lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="LTBL2\lighting\LightSystem.cpp">
+      <Filter>LTBL2\lighting</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

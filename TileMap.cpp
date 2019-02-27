@@ -46,7 +46,7 @@ bool TileMap::load(const std::string& tileset, sf::Vector2u tileSize, const std:
 	return true;
 }
 
-std::vector<std::vector<int>> TileMap::getTiles() const
+const std::vector<std::vector<int>>& TileMap::getTiles() const
 {
 	return _tiles;
 }
