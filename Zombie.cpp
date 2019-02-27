@@ -8,7 +8,7 @@
 #include "Utils.h"
 #include "Application.h"
 
-Zombie::Zombie(TileMap* map, CharactersManager* charManager) : _map(map), _charManager(charManager), _velocity(2), _lastTileTarget(NULLPOS)
+Zombie::Zombie(TileMap* map, CharactersManager* charManager) : _map(map), _charManager(charManager), _velocity(1.5), _lastTileTarget(NULLPOS)
 {
 	if (!_texture.loadFromFile("Ressources/PNG/zombie/zombie.png"))
 		throw std::string("Impossible de charger la texture zombie.png");

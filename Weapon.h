@@ -10,7 +10,10 @@ class Weapon
 {
 private:
 	int _ammo;
+	// est en train de recharger
 	bool _isReloading;
+	// a besoin de recharger
+	bool _needToReload;
 	// l'arme est elle en capacité de tirer
 	bool _isFireable;
 	// nombre de tick depuis la dernière update du rechargement( 1tick = 0.06s), nous servant à ne pas actualiser trop souvent
@@ -31,8 +34,11 @@ public:
 	Weapon();
 	~Weapon();
 
-	void fire(const sf::Vector2f& mousePos, ProjectilesManager& projectilesManager, AudioManager& audioManager, const sf::Vector2f& firingPosition);
+	void fire(const sf::Vector2f& mousePos, ProjectilesManager& projectilesManager, const sf::Vector2f& firingPosition);
+	bool needToReload();
+	bool isReloading();
 	void reload();
 	void update();
+	std::string getType();
 };
 

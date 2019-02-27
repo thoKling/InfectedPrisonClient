@@ -5,40 +5,31 @@
 class AudioManager
 {
 public:
-	AudioManager();
-	~AudioManager();
+	AudioManager() = delete;
 
 	// Méthode qui permet de créer la musique principale du jeu
-	void createMainTheme();
+	static void createMainTheme();
 
 	// Méthode qui permet de jouer la musique principale du jeu
-	void playMainTheme();
-	void stopMainTheme();
+	static void playMainTheme();
+	static void stopMainTheme();
 
-	bool isMainThemePlayed();
+	static bool isMainThemePlayed();
 
-	void createSoundBuffer();
+	// Charge et joue un son dont le nom de fichier (sans l'extension ni le dossier parent) est donné en paramètre
+	static void playSound(std::string nameSound);
 
 
-	bool _isMainThemePlayed;
-
-	sf::Sound gun();
-
-	sf::SoundBuffer _buffer;
-	sf::Sound _sound;
+	static bool _isMainThemePlayed;
 
 private:
 	// Musique principale du jeu
-	sf::Music _mainTheme;
+	static sf::Music _mainTheme;
+
+	
+	static sf::Sound sound;
 	
 	// Liste des buffers
-	std::map<unsigned int, sf::SoundBuffer> _buffers;
-
-	// Liste des sons
-	std::map<unsigned int, sf::Sound*> _sounds;
-
-	// identifiant suivant servant à la création d'un nouveau son
-	unsigned int _nextId;
-
+	static std::map<std::string, sf::SoundBuffer*> _sounds;
 };
 

@@ -10,16 +10,9 @@
 #include <string>
 #include <iostream>
 
-Character::Character(TileMap* map) : _map(map)
+Character::Character(TileMap* map) : _map(map), _isPunching(false), _punchingSpeed(0.5), _weapon(nullptr)
 {
-	if (!_texture.loadFromFile("Ressources/zombie.png"))
-		throw std::string("Impossible de charger la texture zombie.png");
-
-	_sprite.setTexture(_texture);
-
 	this->setOrigin(32.f, 32.f);
-
-	_weapon = new Weapon();
 
 }
 
@@ -40,32 +33,60 @@ void Character::handleInputs(const sf::Event& event)
 		_fire = false;
 
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-		_rightIsHeld = true;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+		_dIsHeld = true;
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-		_leftIsHeld = true;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+		_qIsHeld = true;
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-		_downIsHeld = true;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+		_sIsHeld = true;
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
 		_upIsHeld = true;
 
 
-	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-		_rightIsHeld = false;
+	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+		_dIsHeld = false;
 
-	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-		_leftIsHeld = false;
+	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+		_qIsHeld = false;
 
-	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-		_downIsHeld = false;
+	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+		_sIsHeld = false;
 
-	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
 		_upIsHeld = false;
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+		if (_weapon && _weapon->needToReload())
+			_weapon->reload();
+	if(event.type ==sf::Event::KeyReleased && event.key.code == sf::Keyboard::G)
+	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::G)) 
+	{
+		if (!_weapon) {
+			this->receiveWeapon();
+		}
+		else {
+			this->throwWeapon();
+		}
+	}
+	
 }
 
+void Character::receiveWeapon() {
+	_weapon = new Weapon();
+
+	_sprite.setTexture(_texture);
+}
+
+void Character::throwWeapon() {
+
+	delete _weapon;
+	_weapon = nullptr;
+
+	_sprite.setTexture(_texture);
+}
 
 /** Déplacements du personnage **/
 
@@ -73,13 +94,13 @@ void Character::mv()
 {
 	double x = 0, y = 0;
 
-	if (_rightIsHeld)
+	if (_dIsHeld)
 		x += _velocity;
 
-	if (_leftIsHeld)
+	if (_qIsHeld)
 		x += -_velocity;
 
-	if (_downIsHeld)
+	if (_sIsHeld)
 		y += _velocity;
 
 	if (_upIsHeld)
@@ -130,11 +151,30 @@ void Character::receiveHit(const sf::Vector2f& hitterPosition)
 	}
 }
 
-void Character::update(const sf::Vector2f& mousePos, ProjectilesManager& projectilesManager, AudioManager& audioManager)
+void Character::draw() {
+	
+	std::string file = "Man Blue/manBlue_stand";
+	if (_weapon) {
+
+		if(_weapon->isReloading())
+			file = "Man Blue/manBlue_reload";
+		else
+			file = "Man Blue/manBlue_"+_weapon->getType();
+	}
+	else if (_isPunching) {
+		file = "Man Blue/manBlue_punch";
+	}
+	if (!_texture.loadFromFile("Ressources/PNG/" + file + ".png"))
+		throw std::string("Impossible de charger la texture " + file + ".png");
+
+	_sprite.setTexture(_texture);
+}
+
+void Character::update(const sf::Vector2f& mousePos, ProjectilesManager& projectilesManager)
 {	
 	orientate(sf::Vector2f(mousePos));
 
-	fire(mousePos, projectilesManager, audioManager);
+	fire(mousePos, projectilesManager);
 	
 	mv();
 
@@ -144,16 +184,34 @@ void Character::update(const sf::Vector2f& mousePos, ProjectilesManager& project
 			_beingHit = false;
 	}
 
-	_weapon->update();
+
+	// 60 frames/secondes, @see Application.h
+	if (_isPunching ) {
+		_tickSincePunchingUpdate++;
+		if (_tickSincePunchingUpdate > 60 * _punchingSpeed) {
+			_isPunching= false;
+			//if(!_canPunch)
+				_tickSincePunchingUpdate = 0;
+		}
+	}
+
+	if(_weapon)
+		_weapon->update();
+
+	draw();
 }
 
 // Tir du personnage
-void Character::fire(const sf::Vector2f& mousePos, ProjectilesManager& projectilesManager, AudioManager& audioManager)
+void Character::fire(const sf::Vector2f& mousePos, ProjectilesManager& projectilesManager)
 {
 	if (_fire)
 	{
 		if (_weapon) {
-			_weapon->fire(mousePos, projectilesManager, audioManager, this->getPosition());
+			_weapon->fire(mousePos, projectilesManager, this->getPosition());
+		}
+		else {
+			if(!_isPunching) 
+				_isPunching = true;
 		}
 	}
 }

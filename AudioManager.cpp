@@ -1,18 +1,10 @@
 #include "AudioManager.h"
+#include <iostream>
 
-
-AudioManager::AudioManager() : _isMainThemePlayed(false), _nextId(0)
-{
-}
-
-
-AudioManager::~AudioManager()
-{
-	for (auto it = _sounds.begin(); it != _sounds.end(); ++it)
-	{
-		delete it->second;
-	}
-}
+bool AudioManager::_isMainThemePlayed = false;
+sf::Music AudioManager::_mainTheme;
+std::map<std::string, sf::SoundBuffer*> AudioManager::_sounds;
+sf::Sound AudioManager::sound;
 
 void AudioManager::createMainTheme()
 {
@@ -36,15 +28,19 @@ bool AudioManager::isMainThemePlayed() {
 	return _isMainThemePlayed;
 }
 
-void AudioManager::createSoundBuffer()
+void AudioManager::playSound(std::string nameSound)
 {
-	if (!_buffer.loadFromFile("Ressources/Sounds/gun.wav"))
-		throw std::string("Impossible de charger le son");
-}
-
-sf::Sound AudioManager::gun()
-{
-	//sf::Sound sound;
-	_sound.setBuffer(_buffer);
-	return _sound;
+	// Si la map contient ce son
+	std::map<std::string, sf::SoundBuffer*>::iterator it = _sounds.find(nameSound);
+	if (it != _sounds.end()) {
+		sound.setBuffer(*(it->second));
+	}
+	else {
+		sf::SoundBuffer* buffer = new sf::SoundBuffer();
+		if (!buffer->loadFromFile("Ressources/Sounds/" + nameSound + ".wav"))
+			throw std::string("Impossible de charger le son " + nameSound + ".wav");
+		_sounds.insert({ nameSound, buffer });
+	sound.setBuffer(*buffer);
+	}
+	sound.play();
 }

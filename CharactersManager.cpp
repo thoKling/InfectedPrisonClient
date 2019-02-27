@@ -38,7 +38,9 @@ std::map<unsigned int, Character*> CharactersManager::getCharacters()
 void CharactersManager::manageDraw(sf::RenderWindow& window) {
 	for (auto it = _characters.begin(); it != _characters.end(); ++it)
 	{
+		Character chara = *it->second;
 		window.draw(*it->second);
+		chara.draw();
 	}
 }
 
@@ -50,7 +52,7 @@ void CharactersManager::handleInputs(const sf::Event& event)
 }
 
 // Mise à jour du comportement des personnages
-void CharactersManager::update(const sf::Vector2f& mousePos, ProjectilesManager& projectilesManager, AudioManager& audioManager)
+void CharactersManager::update(const sf::Vector2f& mousePos, ProjectilesManager& projectilesManager)
 {
-	_characters[0]->update(mousePos, projectilesManager, audioManager);
+	_characters[0]->update(mousePos, projectilesManager);
 }

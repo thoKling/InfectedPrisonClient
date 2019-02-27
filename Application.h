@@ -28,7 +28,6 @@ private:
 	CharactersManager _charactersManager;
 	ZombiesManager _zombiesManager;
 	ProjectilesManager _projectilesManager;
-	AudioManager _audioManager;
 
 	sf::RenderWindow _window;
 	sf::UdpSocket _socket;

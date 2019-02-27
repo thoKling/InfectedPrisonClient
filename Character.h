@@ -20,14 +20,28 @@ public:
 	void mv();
 
 	void receiveHit(const sf::Vector2f& hitterPosition);
-	void fire(const sf::Vector2f& mousePos, ProjectilesManager& projectilesManager, AudioManager& audioManager);
+	void fire(const sf::Vector2f& mousePos, ProjectilesManager& projectilesManager);
+	void reload();
+	void receiveWeapon();
+	void throwWeapon();
 
-	void update(const sf::Vector2f& mousePos, ProjectilesManager& projectilesManager, AudioManager& audioManager);
+	void update(const sf::Vector2f& mousePos, ProjectilesManager& projectilesManager);
+
+	void draw();
 
 private:
 	// La vitesse de déplacement du personnage
 	double _velocity = 3;
 	bool _beingHit = false;
+
+	// Boolean indiquant si oui ou non le joueur est en train de frapper
+	bool _isPunching;
+	// Boolean indiquant si oui ou non le joueur peut frapper
+	bool _canPunch;
+	// nombre de secondes pour mettre un coup de poing
+	const float _punchingSpeed;
+	// nombre de tick depuis la dernière update du punch( 1tick = 0.06s)
+	int _tickSincePunchingUpdate;
 
 	TileMap* _map;
 
@@ -36,9 +50,9 @@ private:
 	/* Les "interrupteurs de déplacement".
 	True: les déplacements ont lieu,
 	False: il n'y a pas de déplacements */
-	bool _rightIsHeld = false;
-	bool _leftIsHeld = false;
-	bool _downIsHeld = false;
+	bool _dIsHeld = false;
+	bool _qIsHeld = false;
+	bool _sIsHeld = false;
 	bool _upIsHeld = false;
 
 	// Interrupteur de tir

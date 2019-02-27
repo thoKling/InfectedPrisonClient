@@ -83,13 +83,10 @@ Application::Application() : _zombiesManager(&_map, &_charactersManager), _chara
 		throw std::string("Impossible de charger la map");
 
 	// on crée la musique principale du jeu
-	_audioManager.createMainTheme();
-	_audioManager.createSoundBuffer();
-	_audioManager._buffer.loadFromFile("gun.wav");
-	_audioManager._sound.setBuffer(_audioManager._buffer);
+	AudioManager::createMainTheme();
 
 	_charactersManager.createCharacter(sf::Vector2f(300, 200));
-	//_zombiesManager.createZombie(sf::Vector2f(80, 300));
+	_zombiesManager.createZombie(sf::Vector2f(100, 300));
 }
 
 
@@ -99,7 +96,7 @@ Application::~Application()
 
 void Application::start() {	
 	// on lance la musique principale du jeu
-	_audioManager.playMainTheme();
+	//AudioManager::playMainTheme();
 
 	// on fait tourner la boucle principale
 	sf::Clock clock;
@@ -189,20 +186,21 @@ void Application::update()
 	sf::Vector2f mouseWorldPos = _window.mapPixelToCoords(mousePixelPos);
 
 	// Mise à jour du comportement des personnages
-	_charactersManager.update(mouseWorldPos, _projectilesManager, _audioManager);
+	_charactersManager.update(mouseWorldPos, _projectilesManager);
 
 	// Idem avec les zombies
-	_zombiesManager.update();
+	if(!Application::isDebugMode())
+		_zombiesManager.update();
 
 	// Idem avec les projectiles
 	_projectilesManager.update(mouseWorldPos);
 
 	//si la fenetre n'a pas le focus on eteint la musique
-	if (_window.hasFocus() && !_audioManager.isMainThemePlayed()) {
-		_audioManager.playMainTheme();
+	if (_window.hasFocus() && !AudioManager::isMainThemePlayed()) {
+		AudioManager::playMainTheme();
 	}
-	else if(!_window.hasFocus() && _audioManager.isMainThemePlayed()){
-		_audioManager.stopMainTheme();
+	else if(!_window.hasFocus() && AudioManager::isMainThemePlayed()){
+		AudioManager::stopMainTheme();
 	}
 }
 
