@@ -100,9 +100,5 @@ void Projectile::setDirection(const sf::Vector2f& pos, const sf::Vector2f& mouse
 
 void Projectile::update(const sf::Vector2f& mousePos)
 {
-	_target = _charManager->getCharacters().at(0)->getPosition();
-	if (Utils::distance(getPosition(), _target) > 80)
-		move(_x, _y);
-	else
-		_charManager->getCharacters().at(0)->receiveHit(getPosition());
+	move(_x, _y);
 }
