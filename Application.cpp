@@ -18,23 +18,10 @@ sf::Packet& operator >>(sf::Packet& packet, std::vector<std::vector<int>>& myVec
 
 Application::Application() : _zombiesManager(&_map, &_charactersManager), _charactersManager(&_map)
 {
-	sf::Shader unshadowShader;
-	sf::Shader lightOverShapeShader;
-	unshadowShader.loadFromFile("resources/unshadowShader.vert", "resources/unshadowShader.frag");
-	lightOverShapeShader.loadFromFile("resources/lightOverShapeShader.vert", "resources/lightOverShapeShader.frag");
-
-	sf::Texture penumbraTexture;
-	penumbraTexture.loadFromFile("resources/penumbraTexture.png");
-	penumbraTexture.setSmooth(true);
-
-	//sf::RenderTexture test;
-
-	//ltbl::LightSystem* ls = new ltbl::LightSystem(test, test);
-	//ls->create({ -1000.f, -1000.f, 2000.f, 2000.f }, _window.getSize());
-
 	// on crée la fenêtre
 	_window.create(sf::VideoMode(1024, 512), "Infected Prison");
-
+	_mainView = _window.getDefaultView();
+	_mainView.zoom(1.5f);
 	std::vector<std::vector<int>> _level;
 
 	// Mettre à true si on veut utiliser le serveur
@@ -127,22 +114,12 @@ void Application::start() {
 // Fonction de dessin
 void Application::draw()
 {
-	// On met à jour la vue principale centrée sur le joueur
-	sf::View view = _window.getDefaultView();
-	view.zoom(1.5f);
-	sf::Vector2i playerPos = sf::Vector2i(_charactersManager.getCharacters()[0]->getPosition());
-	view.setCenter((int)playerPos.x, (int)playerPos.y); // On cast en int car quand position pas exacte la vue bug
-	_window.setView(view);
+	sf::Vector2i playerPos = sf::Vector2i(_charactersManager.getCharacters()[0]->getPosition()); // On cast en int car quand position pas exacte la vue bug
 
 	// On nettoie la fenetre
 	_window.clear();
 
-	// On fait les différents dessins en commencant par la map
-	_window.draw(_map);
-	_charactersManager.manageDraw(_window);
-	_zombiesManager.manageDraw(_window);
-	_projectilesManager.manageDraw(_window);
-
+	//_ls->render(_window);
 	// On dessine la miniMap
 	sf::View minimapView = _window.getDefaultView();
 	// Dans un coin en haut à droite
@@ -156,6 +133,16 @@ void Application::draw()
 	_window.draw(_map);
 	_charactersManager.manageDraw(_window);
 	_zombiesManager.manageDraw(_window);
+
+	// On met à jour la vue principale centrée sur le joueur
+	_mainView.setCenter(sf::Vector2f(playerPos));
+	_window.setView(_mainView);
+
+	// On fait les différents dessins en commencant par la map
+	_window.draw(_map);
+	_charactersManager.manageDraw(_window);
+	_zombiesManager.manageDraw(_window);
+	_projectilesManager.manageDraw(_window);
 
 	// On affiche les dessins
 	_window.display();
