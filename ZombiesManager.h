@@ -12,6 +12,7 @@ public:
 	ZombiesManager(TileMap* map, CharactersManager* player);
 	~ZombiesManager();
 	unsigned int createZombie(const sf::Vector2f& pos);
+	std::map<unsigned int, Zombie*>& getZombies();
 	void manageDraw(sf::RenderWindow& window);
 	void update();
 

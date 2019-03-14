@@ -25,6 +25,11 @@ unsigned int ZombiesManager::createZombie(const sf::Vector2f& pos) {
 	return _nextId - 1;
 }
 
+std::map<unsigned int, Zombie*>& ZombiesManager::getZombies()
+{
+	return _zombies;
+}
+
 // on draw chaque zombie
 void ZombiesManager::manageDraw(sf::RenderWindow& window) {
 	for (auto it = _zombies.begin(); it != _zombies.end(); ++it)
@@ -35,8 +40,16 @@ void ZombiesManager::manageDraw(sf::RenderWindow& window) {
 
 // on update chaque zombie
 void ZombiesManager::update() {
+	std::vector<unsigned int> toErase;
 	for (auto it = _zombies.begin(); it != _zombies.end(); ++it)
 	{
 		it->second->update();
+		if (it->second->isDead())
+			toErase.push_back(it->first);
+	}
+	// On supprime les zombies morts
+	for (auto it = toErase.begin(); it != toErase.end(); ++it)
+	{
+		_zombies.erase(*it);
 	}
 }

@@ -27,7 +27,7 @@ public:
 	void handleInputs(const sf::Event& event);
 
 	// Procédure qui met à jour le comportement des personnages
-	void update(const sf::Vector2f& mousePos, ProjectilesManager& projectilesManager, AudioManager& audioManager);
+	void update(const sf::Vector2f& mousePos);
 
 private:
 	// Liste des personnages

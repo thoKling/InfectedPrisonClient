@@ -15,6 +15,8 @@ public:
 	// Renvoit le vecteur unitaire de la startPos à la endPos
 	static sf::Vector2f getVecUnit(const sf::Vector2f& startPos, const sf::Vector2f& endPos);
 	// Renvoit la distance entre 2 coordonnées
-	static double distance(const sf::Vector2f & pos1, const sf::Vector2f & pos2);
+	static double distance(const sf::Vector2f& pos1, const sf::Vector2f& pos2);
+	// Fonction split pour les strings, renvoit les différents morceaux de la chaine entre les delimiter
+	static std::vector<std::string> split(std::string stringToSplit, std::string delimiter);
 };
 

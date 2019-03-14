@@ -1,104 +1,43 @@
 #include "Projectile.h"
 
 #include "Utils.h"
+#include "TextureManager.h"
+#include "ZombiesManager.h"
 
-Projectile::Projectile()
+Projectile::Projectile(const std::string typeWeapon, ZombiesManager* zombiesManager) : _zombiesManager(zombiesManager)
 {
-	if (!_texture.loadFromFile("Ressources/projectile.png"))
-		throw std::string("Impossible de charger la texture projectile.png");
-
-	_sprite.setTexture(_texture);
+	_sprite.setTexture(TextureManager::loadText("Ressources/projectile_" + typeWeapon + ".png"));
 
 	this->setOrigin(16.f, 16.f);
 }
-
 
 Projectile::~Projectile()
 {
 }
 
-
-void Projectile::setDirection(const sf::Vector2f& pos, const sf::Vector2f& mousePos)
+bool Projectile::toDelete()
 {
-	double distanceX, distanceY, a;
-	double direction[2];
+	return _toDelete;
+}
 
-	// Calcul des distances x et y
-	distanceX = mousePos.x - pos.x;
-	distanceY = mousePos.y - pos.y;
 
-	// Changement des valeurs de _x et de _y en fonction du quadrant et des distances x et y
-	int quadrant = Utils::getQuadrant(pos, mousePos);
-	switch (quadrant)
-	{
-		case 1:
-			if (abs(distanceX) >= abs(distanceY))
-			{
-				a = distanceY / distanceX;
-				_x = _velocity;
-				_y = a * _x;
-			}
-
-			else
-			{
-				a = distanceX / distanceY;
-				_y = -_velocity;
-				_x = a * _y;
-			}
-			break;
-
-		case 2:
-			if (abs(distanceX) >= abs(distanceY))
-			{
-				a = distanceY / distanceX;
-				_x = _velocity;
-				_y = a * _x;
-			}
-
-			else
-			{
-				a = distanceX / distanceY;
-				_y = _velocity;
-				_x = (a * _y);
-			}
-			break;
-
-		case 3:
-			if (abs(distanceX) >= abs(distanceY))
-			{
-				a = distanceY / distanceX;
-				_x = -_velocity;
-				_y = a * _x;
-			}
-
-			else
-			{
-				a = distanceX / distanceY;
-				_y = _velocity;
-				_x = a * _y;
-			}
-			break;
-
-		case 4:
-			if (abs(distanceX) >= abs(distanceY))
-			{
-				a = distanceY / distanceX;
-				_x = -_velocity;
-				_y = a * _x;
-			}
-
-			else
-			{
-				a = distanceX / distanceY;
-				_y = -_velocity;
-				_x = a * _y;
-			}
-			break;
-	}
+void Projectile::setDirection(const sf::Vector2f& destination)
+{
+	orientate(destination);
+	_direction = Utils::getVecUnit(getPosition(), destination);
 }
 
 
 void Projectile::update(const sf::Vector2f& mousePos)
 {
-	move(_x, _y);
+	move(_velocity*_direction.x, _velocity*_direction.y);
+	auto zombies = _zombiesManager->getZombies();
+	for (auto it = zombies.begin(); it != zombies.end(); ++it)
+	{
+		if (it->second->getGlobalBounds().intersects(getGlobalBounds())) {
+			it->second->receiveHit(getPosition());
+			_toDelete = true;
+			break;
+		}
+	}
 }

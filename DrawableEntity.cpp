@@ -6,7 +6,6 @@
 
 DrawableEntity::DrawableEntity()
 {
-	_texture.setSmooth(true);
 }
 
 
@@ -89,6 +88,15 @@ void DrawableEntity::orientate(const sf::Vector2f& position)
 
 	// On fait une rotation du personnage en fonction de l'angle final trouvé
 	this->rotate(angle);
+}
+
+// Retourne la hitBox de l'entite
+sf::FloatRect DrawableEntity::getGlobalBounds()
+{
+	sf::FloatRect res = sf::FloatRect(
+		DrawableEntity::getPosition(),
+		sf::Vector2f(_sprite.getTextureRect().height, _sprite.getTextureRect().width));
+	return res;
 }
 
 std::vector<sf::Vector2f> DrawableEntity::getCorners()

@@ -12,9 +12,14 @@ public:
 
 	void update();
 	sf::Vector2i getPositionTiles();
+	void receiveHit(sf::Vector2f hitterPosition);
+	bool isDead();
 
 private:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+	bool _beingHit = false;
+
+	unsigned int _lifes = 3;
 
 	void myMove();
 

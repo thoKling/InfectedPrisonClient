@@ -30,3 +30,16 @@ double Utils::distance(const sf::Vector2f & pos1, const sf::Vector2f & pos2)
 	return sqrt(pow(pos1.x - pos2.x, 2) + pow(pos1.y - pos2.y, 2));
 }
 
+std::vector<std::string> Utils::split(std::string stringToSplit, std::string delimiter)
+{
+	size_t pos = 0;
+	std::vector<std::string> tokens;
+	while ((pos = stringToSplit.find(delimiter)) != std::string::npos) {
+		tokens.push_back(stringToSplit.substr(0, pos));
+		//std::cout << token << std::endl;
+		stringToSplit.erase(0, pos + delimiter.length());
+	}
+	tokens.push_back(stringToSplit);
+	return tokens;
+}
+

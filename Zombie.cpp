@@ -8,12 +8,11 @@
 #include "Utils.h"
 #include "Application.h"
 
-Zombie::Zombie(TileMap* map, CharactersManager* charManager) : _map(map), _charManager(charManager), _velocity(2), _lastTileTarget(NULLPOS)
-{
-	if (!_texture.loadFromFile("Ressources/PNG/zombie/zombie.png"))
-		throw std::string("Impossible de charger la texture zombie.png");
+#include "TextureManager.h"
 
-	_sprite.setTexture(_texture);
+Zombie::Zombie(TileMap* map, CharactersManager* charManager) : _map(map), _charManager(charManager), _velocity(1.5), _lastTileTarget(NULLPOS)
+{
+	_sprite.setTexture(TextureManager::loadText("Ressources/PNG/zombie/zombie.png"));
 	_target = sf::Vector2f(200, 200);
 	setOrigin(24.f, 24.f);
 }
@@ -26,6 +25,13 @@ Zombie::~Zombie()
 
 void Zombie::update() {
 	_target = _charManager->getCharacters().at(0)->getPosition();
+
+	if (_beingHit) {
+		_sprite.setColor(sf::Color(_sprite.getColor().r, _sprite.getColor().g + 15, _sprite.getColor().b + 15));
+		if (_sprite.getColor().g == 255)
+			_beingHit = false;
+	}
+
 	if (Utils::distance(getPosition(), _target) > 80)
 		myMove();
 	else
@@ -35,6 +41,23 @@ void Zombie::update() {
 // Renvoit la position par rapport aux tiles 
 sf::Vector2i Zombie::getPositionTiles() {
 	return MapUtils::transformInTilesPos(sf::Vector2f(getPosition().x+32, getPosition().y+32));
+}
+
+void Zombie::receiveHit(sf::Vector2f hitterPosition)
+{
+	if (!_beingHit) {
+		_sprite.setColor(sf::Color::Red);
+		_beingHit = true;
+		sf::Vector2f newPos;
+		sf::Vector2f vecUnit = Utils::getVecUnit(hitterPosition, getPosition());
+		move(sf::Vector2f(vecUnit.x * 100, vecUnit.y * 100));
+		_lifes--;
+	}
+}
+
+bool Zombie::isDead()
+{
+	return _lifes == 0;
 }
 
 // Redéfinition de la méthode draw

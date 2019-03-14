@@ -5,6 +5,8 @@
 #include "LTBL2/lighting/LightSystem.h"
 
 #include "TileMap.h"
+#include "AudioManager.h"
+#include "ProjectilesManager.h"
 
 sf::Packet& operator >>(sf::Packet& packet, std::vector<std::vector<int>>& myVec)
 {
@@ -18,7 +20,7 @@ sf::Packet& operator >>(sf::Packet& packet, std::vector<std::vector<int>>& myVec
 	return packet;
 }
 
-Application::Application() : _zombiesManager(&_map, &_charactersManager), _charactersManager(&_map, &_ls)
+Application::Application() : _map(&_zombiesManager), _zombiesManager(&_map, &_charactersManager), _charactersManager(&_map, &_ls)
 {
 	// on crée la fenêtre
 	_window.create(sf::VideoMode(1024, 512), "Infected Prison");
@@ -77,6 +79,8 @@ Application::Application() : _zombiesManager(&_map, &_charactersManager), _chara
 			{
 				if (j == 0 || j == 31 || i == 0 || i == 15)
 					temp.push_back(41);
+				else if (j == 5 && (i <=5 ))
+					temp.push_back(41);
 				else
 					temp.push_back(10);
 			}
@@ -85,14 +89,11 @@ Application::Application() : _zombiesManager(&_map, &_charactersManager), _chara
 	}
 
 	// on crée la tilemap avec le niveau précédemment défini
-	if (!_map.load("Ressources/Tilesheet/tileset.png", sf::Vector2u(64, 64), _level, 32, 16))
+	if (!_map.load(&_ls, "Ressources/Tilesheet/tileset.png", sf::Vector2u(64, 64), _level, 32, 16))
 		throw std::string("Impossible de charger la map");
 
 	// on crée la musique principale du jeu
-	_audioManager.createMainTheme();
-	_audioManager.createSoundBuffer();
-	_audioManager._buffer.loadFromFile("gun.wav");
-	_audioManager._sound.setBuffer(_audioManager._buffer);
+	//AudioManager::createMainTheme();
 
 	_charactersManager.createCharacter(sf::Vector2f(300, 200));
 	_zombiesManager.createZombie(sf::Vector2f(800, 500));
@@ -101,11 +102,12 @@ Application::Application() : _zombiesManager(&_map, &_charactersManager), _chara
 
 Application::~Application()
 {
+	ProjectilesManager::deleteAllProjectiles();
 }
 
 void Application::start() {	
 	// on lance la musique principale du jeu
-	_audioManager.playMainTheme();
+	//AudioManager::playMainTheme();
 
 	// on fait tourner la boucle principale
 	sf::Clock clock;
@@ -140,10 +142,11 @@ void Application::draw()
 	_window.clear();
 
 	// On fait les différents dessins en commencant par la map
+	_window.setView(_mainView);
 	_window.draw(_map);
 	_charactersManager.manageDraw(_window);
 	_zombiesManager.manageDraw(_window);
-	_projectilesManager.manageDraw(_window);
+	ProjectilesManager::manageDraw(_window);
 
 	// On ne dessine pas les ombres si on est en mode debug
 	if (!isDebugMode()) {
@@ -160,9 +163,29 @@ void Application::draw()
 	_window.display();
 }
 
+// Dessine la minimap, remet la vue sur _mainView
+void Application::drawMinimap()
+{
+	// On dessine la miniMap
+	_window.setView(_minimapView);
+
+	// On fait les différents dessins en commencant par la map
+	_window.draw(_map);
+	_charactersManager.manageDraw(_window);
+	_zombiesManager.manageDraw(_window);
+
+	// On remet la vue principale
+	_window.setView(_mainView);
+}
+
+
 // Ici on gère les entrées clavier du joueur
 void Application::handleInputs(sf::Event event)
 {
+	if (!_window.hasFocus()) {
+		return;
+	}
+
 	if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::F3)
 	{
 		Application::toggleDebug();
@@ -181,35 +204,29 @@ void Application::update()
 	sf::Vector2f mouseWorldPos = _window.mapPixelToCoords(mousePixelPos);
 
 	// Mise à jour du comportement des personnages
-	_charactersManager.update(mouseWorldPos, _projectilesManager, _audioManager);
+	_charactersManager.update(mouseWorldPos);
 
 	// On recupere la position du joueur, on cast en vector2i car les positions flotantes font des problemes dans les vues
 	sf::Vector2i playerPos = sf::Vector2i(_charactersManager.getCharacters()[0]->getPosition());
 
 	// On centre les vues sur le joueur
-	_mainView.setCenter(sf::Vector2f(playerPos));
+	_mainView.setCenter(_charactersManager.getCharacters()[0]->getPosition());//sf::Vector2f(playerPos));
 	_minimapView.setCenter(sf::Vector2f(playerPos)); 
 	
 	// Idem avec les zombies
-	_zombiesManager.update();
+	if(!Application::isDebugMode())
+		_zombiesManager.update();
 
 	// Idem avec les projectiles
-	_projectilesManager.update(mouseWorldPos);
-}
+	ProjectilesManager::update(mouseWorldPos);
 
-// Dessine la minimap, remet la vue sur _mainView
-void Application::drawMinimap()
-{
-	// On dessine la miniMap
-	_window.setView(_minimapView);
-
-	// On fait les différents dessins en commencant par la map
-	_window.draw(_map);
-	_charactersManager.manageDraw(_window);
-	_zombiesManager.manageDraw(_window);
-
-	// On remet la vue principale
-	_window.setView(_mainView);
+	//si la fenetre n'a pas le focus on eteint la musique
+	if (_window.hasFocus() && !AudioManager::isMainThemePlayed()) {
+		AudioManager::playMainTheme();
+	}
+	else if(!_window.hasFocus() && AudioManager::isMainThemePlayed()){
+		AudioManager::stopMainTheme();
+	}
 }
 
 // Affichage de choses utiles pour dév

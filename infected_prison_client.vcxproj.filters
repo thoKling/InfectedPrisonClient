@@ -1,189 +1,186 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Fichiers sources">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Fichiers d%27en-tête">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Fichiers de ressources">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Fichiers d%27en-tête\Core">
-      <UniqueIdentifier>{d241bbb3-b0f1-4578-b110-d10ad68da50f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Fichiers d%27en-tête\Controllers">
-      <UniqueIdentifier>{db09a5ef-5e2e-4359-a571-83084aae0e5d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Fichiers d%27en-tête\Models">
-      <UniqueIdentifier>{b94de2ed-0456-4f5a-9e7c-fc9c02378a47}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Fichiers d%27en-tête\Map">
-      <UniqueIdentifier>{616a33b3-6f36-4cea-9b6e-2fc2816782ac}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Fichiers sources\Core">
-      <UniqueIdentifier>{bcdb6966-c1eb-4717-ad80-703618d5a452}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Fichiers sources\Controllers">
-      <UniqueIdentifier>{be1a011d-b8d6-416f-963d-3103b2e31300}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Fichiers sources\Models">
-      <UniqueIdentifier>{2f0108c7-322a-443c-a8b3-71dc5cbaca0e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Fichiers sources\Map">
-      <UniqueIdentifier>{74293b63-1afa-4237-aa7d-2ec4b47ca1f6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="LTBL2">
-      <UniqueIdentifier>{c55e89eb-8640-41be-b6a0-a779fe1ee498}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="LTBL2\lighting">
-      <UniqueIdentifier>{0f056331-f695-4f31-9b6b-f2d99fac6c00}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="LTBL2\quadtree">
-      <UniqueIdentifier>{a96cd7da-137e-414c-b18f-af0e5a1812ff}</UniqueIdentifier>
-    </Filter>
+    <ClCompile Include="Application.cpp">
+      <Filter>Sources\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>Sources\Models\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioManager.cpp">
+      <Filter>Sources\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="CharactersManager.cpp">
+      <Filter>Sources\Controllers\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawableEntity.cpp">
+      <Filter>Sources\Models\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="LTBL2\quadtree\DynamicQuadtree.cpp">
+      <Filter>Libs\LTBL2</Filter>
+    </ClCompile>
+    <ClCompile Include="LTBL2\lighting\LightDirectionEmission.cpp">
+      <Filter>Libs\LTBL2</Filter>
+    </ClCompile>
+    <ClCompile Include="LTBL2\lighting\LightPointEmission.cpp">
+      <Filter>Libs\LTBL2</Filter>
+    </ClCompile>
+    <ClCompile Include="LTBL2\lighting\LightShape.cpp">
+      <Filter>Libs\LTBL2</Filter>
+    </ClCompile>
+    <ClCompile Include="LTBL2\lighting\LightSystem.cpp">
+      <Filter>Libs\LTBL2</Filter>
+    </ClCompile>
+    <ClCompile Include="MapUtils.cpp">
+      <Filter>Sources\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="LTBL2\Math.cpp">
+      <Filter>Libs\LTBL2</Filter>
+    </ClCompile>
+    <ClCompile Include="Zombie.cpp">
+      <Filter>Sources\Models\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="LTBL2\quadtree\Quadtree.cpp">
+      <Filter>Libs\LTBL2</Filter>
+    </ClCompile>
+    <ClCompile Include="LTBL2\quadtree\QuadtreeNode.cpp">
+      <Filter>Libs\LTBL2</Filter>
+    </ClCompile>
+    <ClCompile Include="LTBL2\quadtree\QuadtreeOccupant.cpp">
+      <Filter>Libs\LTBL2</Filter>
+    </ClCompile>
+    <ClCompile Include="LTBL2\quadtree\StaticQuadtree.cpp">
+      <Filter>Libs\LTBL2</Filter>
+    </ClCompile>
+    <ClCompile Include="TileMap.cpp">
+      <Filter>Sources\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>Sources\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>Sources\Models\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Sources\Models\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectilesManager.cpp">
+      <Filter>Sources\Controllers\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="ZombiesManager.cpp">
+      <Filter>Sources\Controllers\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureManager.cpp">
+      <Filter>Sources\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
-      <Filter>Fichiers d%27en-tête\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="AudioManager.h">
-      <Filter>Fichiers d%27en-tête\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="CharactersManager.h">
-      <Filter>Fichiers d%27en-tête\Controllers</Filter>
-    </ClInclude>
-    <ClInclude Include="ProjectilesManager.h">
-      <Filter>Fichiers d%27en-tête\Controllers</Filter>
-    </ClInclude>
-    <ClInclude Include="ZombiesManager.h">
-      <Filter>Fichiers d%27en-tête\Controllers</Filter>
+      <Filter>Sources\Core</Filter>
     </ClInclude>
     <ClInclude Include="Character.h">
-      <Filter>Fichiers d%27en-tête\Models</Filter>
+      <Filter>Sources\Models\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioManager.h">
+      <Filter>Sources\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="CharactersManager.h">
+      <Filter>Sources\Controllers\Entities</Filter>
     </ClInclude>
     <ClInclude Include="DrawableEntity.h">
-      <Filter>Fichiers d%27en-tête\Models</Filter>
-    </ClInclude>
-    <ClInclude Include="Projectile.h">
-      <Filter>Fichiers d%27en-tête\Models</Filter>
-    </ClInclude>
-    <ClInclude Include="Zombie.h">
-      <Filter>Fichiers d%27en-tête\Models</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils.h">
-      <Filter>Fichiers d%27en-tête\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="MapUtils.h">
-      <Filter>Fichiers d%27en-tête\Map</Filter>
-    </ClInclude>
-    <ClInclude Include="TileMap.h">
-      <Filter>Fichiers d%27en-tête\Map</Filter>
-    </ClInclude>
-    <ClInclude Include="LTBL2\Math.h">
-      <Filter>LTBL2</Filter>
+      <Filter>Sources\Models\Entities</Filter>
     </ClInclude>
     <ClInclude Include="LTBL2\quadtree\DynamicQuadtree.h">
-      <Filter>LTBL2\quadtree</Filter>
-    </ClInclude>
-    <ClInclude Include="LTBL2\quadtree\Quadtree.h">
-      <Filter>LTBL2\quadtree</Filter>
-    </ClInclude>
-    <ClInclude Include="LTBL2\quadtree\QuadtreeNode.h">
-      <Filter>LTBL2\quadtree</Filter>
-    </ClInclude>
-    <ClInclude Include="LTBL2\quadtree\QuadtreeOccupant.h">
-      <Filter>LTBL2\quadtree</Filter>
-    </ClInclude>
-    <ClInclude Include="LTBL2\quadtree\StaticQuadtree.h">
-      <Filter>LTBL2\quadtree</Filter>
+      <Filter>Libs\LTBL2</Filter>
     </ClInclude>
     <ClInclude Include="LTBL2\lighting\LightDirectionEmission.h">
-      <Filter>LTBL2\lighting</Filter>
+      <Filter>Libs\LTBL2</Filter>
     </ClInclude>
     <ClInclude Include="LTBL2\lighting\LightPointEmission.h">
-      <Filter>LTBL2\lighting</Filter>
+      <Filter>Libs\LTBL2</Filter>
     </ClInclude>
     <ClInclude Include="LTBL2\lighting\LightShape.h">
-      <Filter>LTBL2\lighting</Filter>
+      <Filter>Libs\LTBL2</Filter>
     </ClInclude>
     <ClInclude Include="LTBL2\lighting\LightSystem.h">
-      <Filter>LTBL2\lighting</Filter>
+      <Filter>Libs\LTBL2</Filter>
+    </ClInclude>
+    <ClInclude Include="MapUtils.h">
+      <Filter>Sources\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="LTBL2\Math.h">
+      <Filter>Libs\LTBL2</Filter>
+    </ClInclude>
+    <ClInclude Include="Zombie.h">
+      <Filter>Sources\Models\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="LTBL2\quadtree\StaticQuadtree.h">
+      <Filter>Libs\LTBL2</Filter>
+    </ClInclude>
+    <ClInclude Include="LTBL2\quadtree\Quadtree.h">
+      <Filter>Libs\LTBL2</Filter>
+    </ClInclude>
+    <ClInclude Include="LTBL2\quadtree\QuadtreeNode.h">
+      <Filter>Libs\LTBL2</Filter>
+    </ClInclude>
+    <ClInclude Include="LTBL2\quadtree\QuadtreeOccupant.h">
+      <Filter>Libs\LTBL2</Filter>
+    </ClInclude>
+    <ClInclude Include="TileMap.h">
+      <Filter>Sources\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Sources\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>Sources\Models\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>Sources\Models\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectilesManager.h">
+      <Filter>Sources\Controllers\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="ZombiesManager.h">
+      <Filter>Sources\Controllers\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager.h">
+      <Filter>Sources\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Application.cpp">
-      <Filter>Fichiers sources\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Utils.cpp">
-      <Filter>Fichiers sources\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="AudioManager.cpp">
-      <Filter>Fichiers sources\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="CharactersManager.cpp">
-      <Filter>Fichiers sources\Controllers</Filter>
-    </ClCompile>
-    <ClCompile Include="ProjectilesManager.cpp">
-      <Filter>Fichiers sources\Controllers</Filter>
-    </ClCompile>
-    <ClCompile Include="ZombiesManager.cpp">
-      <Filter>Fichiers sources\Controllers</Filter>
-    </ClCompile>
-    <ClCompile Include="Character.cpp">
-      <Filter>Fichiers sources\Models</Filter>
-    </ClCompile>
-    <ClCompile Include="DrawableEntity.cpp">
-      <Filter>Fichiers sources\Models</Filter>
-    </ClCompile>
-    <ClCompile Include="Projectile.cpp">
-      <Filter>Fichiers sources\Models</Filter>
-    </ClCompile>
-    <ClCompile Include="Zombie.cpp">
-      <Filter>Fichiers sources\Models</Filter>
-    </ClCompile>
-    <ClCompile Include="MapUtils.cpp">
-      <Filter>Fichiers sources\Map</Filter>
-    </ClCompile>
-    <ClCompile Include="TileMap.cpp">
-      <Filter>Fichiers sources\Map</Filter>
-    </ClCompile>
-    <ClCompile Include="LTBL2\Math.cpp">
-      <Filter>LTBL2</Filter>
-    </ClCompile>
-    <ClCompile Include="LTBL2\quadtree\DynamicQuadtree.cpp">
-      <Filter>LTBL2\quadtree</Filter>
-    </ClCompile>
-    <ClCompile Include="LTBL2\quadtree\Quadtree.cpp">
-      <Filter>LTBL2\quadtree</Filter>
-    </ClCompile>
-    <ClCompile Include="LTBL2\quadtree\QuadtreeNode.cpp">
-      <Filter>LTBL2\quadtree</Filter>
-    </ClCompile>
-    <ClCompile Include="LTBL2\quadtree\QuadtreeOccupant.cpp">
-      <Filter>LTBL2\quadtree</Filter>
-    </ClCompile>
-    <ClCompile Include="LTBL2\quadtree\StaticQuadtree.cpp">
-      <Filter>LTBL2\quadtree</Filter>
-    </ClCompile>
-    <ClCompile Include="LTBL2\lighting\LightDirectionEmission.cpp">
-      <Filter>LTBL2\lighting</Filter>
-    </ClCompile>
-    <ClCompile Include="LTBL2\lighting\LightPointEmission.cpp">
-      <Filter>LTBL2\lighting</Filter>
-    </ClCompile>
-    <ClCompile Include="LTBL2\lighting\LightShape.cpp">
-      <Filter>LTBL2\lighting</Filter>
-    </ClCompile>
-    <ClCompile Include="LTBL2\lighting\LightSystem.cpp">
-      <Filter>LTBL2\lighting</Filter>
-    </ClCompile>
+    <Filter Include="Sources">
+      <UniqueIdentifier>{c51b72af-77d0-4468-837d-454587179694}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libs">
+      <UniqueIdentifier>{ec63a7c4-a651-4d51-aed3-1c6360087e95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libs\LTBL2">
+      <UniqueIdentifier>{078c6ab9-4030-4948-a278-c8eb1c5bae16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Core">
+      <UniqueIdentifier>{f36cecc5-9190-4942-adea-89ed0a741129}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Models">
+      <UniqueIdentifier>{0238765a-e697-4987-ac0a-f680b3b7aca2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Models\Entities">
+      <UniqueIdentifier>{a46b6bd6-5faf-4db8-b546-45fa65a1a342}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Controllers">
+      <UniqueIdentifier>{dcb9068e-1997-4a31-b55a-e98ea1040da1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Controllers\Entities">
+      <UniqueIdentifier>{d89bed07-2556-49f8-bac6-46dd6d23ed0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Map">
+      <UniqueIdentifier>{4af5a378-2ef5-4df9-bbf1-a2cf4852cf9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Models\Items">
+      <UniqueIdentifier>{45d37c4a-ce4e-4fd2-8adb-46b14582fd9d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
