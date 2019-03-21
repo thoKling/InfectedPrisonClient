@@ -2,11 +2,10 @@
 
 #include <iostream>
 
-#include "LTBL2/lighting/LightSystem.h"
-
-#include "TileMap.h"
+#include "World.h"
 #include "AudioManager.h"
-#include "ProjectilesManager.h"
+
+#include "Utils.h"
 
 sf::Packet& operator >>(sf::Packet& packet, std::vector<std::vector<int>>& myVec)
 {
@@ -20,28 +19,12 @@ sf::Packet& operator >>(sf::Packet& packet, std::vector<std::vector<int>>& myVec
 	return packet;
 }
 
-Application::Application() : _map(&_zombiesManager), _zombiesManager(&_map, &_charactersManager), _charactersManager(&_map, &_ls)
+Application::Application()
 {
 	// on crée la fenêtre
 	_window.create(sf::VideoMode(1024, 512), "Infected Prison");
 
-	// on créé les vues
-	_mainView = _window.getDefaultView();
-	_mainView.zoom(1.5f);
-	_window.setView(_mainView);
-	_minimapView = _mainView;
-	_minimapView.zoom(1.5);
-	// Dans un coin en haut à droite
-	_minimapView.setViewport(sf::FloatRect(0.75f, 0.f, 0.25f, 0.25f));
-
-	// on créé le système de lumieres
-	_penumbraTexture.loadFromFile("LTBL2/resources/penumbraTexture.png");
-	_penumbraTexture.setSmooth(true);
-	_unshadowShader.loadFromFile("LTBL2/resources/unshadowShader.vert", "LTBL2/resources/unshadowShader.frag");
-	_lightOverShapeShader.loadFromFile("LTBL2/resources/lightOverShapeShader.vert", "LTBL2/resources/lightOverShapeShader.frag");
-	_ls.create(sf::FloatRect(-1000.0f, -1000.0f, 1000.0f, 1000.0f), _window.getSize(), _penumbraTexture, _unshadowShader, _lightOverShapeShader);
-	_lightRenderStates.blendMode = sf::BlendMultiply;
-	_lightSprite.setTexture(_ls.getLightingTexture());
+	World::init(&_window);
 
 	std::vector<std::vector<int>> _level;
 
@@ -87,22 +70,12 @@ Application::Application() : _map(&_zombiesManager), _zombiesManager(&_map, &_ch
 			_level.push_back(temp);
 		}
 	}
-
-	// on crée la tilemap avec le niveau précédemment défini
-	if (!_map.load(&_ls, "Ressources/Tilesheet/tileset.png", sf::Vector2u(64, 64), _level, 32, 16))
-		throw std::string("Impossible de charger la map");
-
-	// on crée la musique principale du jeu
-	//AudioManager::createMainTheme();
-
-	_charactersManager.createCharacter(sf::Vector2f(300, 200));
-	_zombiesManager.createZombie(sf::Vector2f(800, 500));
+	World::getInstance()->loadMap(_level, sf::Vector2i(0,0));
 }
 
 
 Application::~Application()
 {
-	ProjectilesManager::deleteAllProjectiles();
 }
 
 void Application::start() {	
@@ -141,41 +114,10 @@ void Application::draw()
 	// On nettoie la fenetre
 	_window.clear();
 
-	// On fait les différents dessins en commencant par la map
-	_window.setView(_mainView);
-	_window.draw(_map);
-	_charactersManager.manageDraw(_window);
-	_zombiesManager.manageDraw(_window);
-	ProjectilesManager::manageDraw(_window);
-
-	// On ne dessine pas les ombres si on est en mode debug
-	if (!isDebugMode()) {
-		_window.setView(_window.getDefaultView());
-		_window.draw(_lightSprite, _lightRenderStates);	// les ombres
-		_window.setView(_mainView);
-		_ls.render(_mainView, _unshadowShader, _lightOverShapeShader); // les lumières
-	}
-
-	// On dessine la minimap
-	drawMinimap();
+	World::getInstance()->draw();
 
 	// On affiche les dessins
 	_window.display();
-}
-
-// Dessine la minimap, remet la vue sur _mainView
-void Application::drawMinimap()
-{
-	// On dessine la miniMap
-	_window.setView(_minimapView);
-
-	// On fait les différents dessins en commencant par la map
-	_window.draw(_map);
-	_charactersManager.manageDraw(_window);
-	_zombiesManager.manageDraw(_window);
-
-	// On remet la vue principale
-	_window.setView(_mainView);
 }
 
 
@@ -186,12 +128,13 @@ void Application::handleInputs(sf::Event event)
 		return;
 	}
 
+	// Toggle debugMode
 	if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::F3)
 	{
-		Application::toggleDebug();
+		Utils::debugMode = !Utils::debugMode;
 	}
-	// Récupération des entrées clavier qui concernent les personnages
-	_charactersManager.handleInputs(event);
+
+	World::getInstance()->handleInputs(event);
 }
 
 // On update chaque élément du jeux (1 fois par frame)
@@ -203,40 +146,5 @@ void Application::update()
 	// Conversion en coordonnées "monde"
 	sf::Vector2f mouseWorldPos = _window.mapPixelToCoords(mousePixelPos);
 
-	// Mise à jour du comportement des personnages
-	_charactersManager.update(mouseWorldPos);
-
-	// On recupere la position du joueur, on cast en vector2i car les positions flotantes font des problemes dans les vues
-	sf::Vector2i playerPos = sf::Vector2i(_charactersManager.getCharacters()[0]->getPosition());
-
-	// On centre les vues sur le joueur
-	_mainView.setCenter(_charactersManager.getCharacters()[0]->getPosition());//sf::Vector2f(playerPos));
-	_minimapView.setCenter(sf::Vector2f(playerPos)); 
-	
-	// Idem avec les zombies
-	if(!Application::isDebugMode())
-		_zombiesManager.update();
-
-	// Idem avec les projectiles
-	ProjectilesManager::update(mouseWorldPos);
-
-	//si la fenetre n'a pas le focus on eteint la musique
-	if (_window.hasFocus() && !AudioManager::isMainThemePlayed()) {
-		AudioManager::playMainTheme();
-	}
-	else if(!_window.hasFocus() && AudioManager::isMainThemePlayed()){
-		AudioManager::stopMainTheme();
-	}
-}
-
-// Affichage de choses utiles pour dév
-bool Application::_debugMode = false;
-void Application::toggleDebug()
-{
-	Application::_debugMode = !Application::_debugMode;
-}
-
-bool Application::isDebugMode()
-{
-	return Application::_debugMode;
+	World::getInstance()->update(mouseWorldPos);
 }

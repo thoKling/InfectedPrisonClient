@@ -2,16 +2,13 @@
 
 #include <iostream>
 
-#include "TileMap.h"
-#include "LTBL2/lighting/LightSystem.h"
+#include "World.h"
 
-CharactersManager::CharactersManager(TileMap* map, ltbl::LightSystem* ls) : _map(map), _nextId(0), _ls(ls)
-{
-}
-
+unsigned int CharactersManager::_nextId = 0;
+std::map<unsigned int, Character*> CharactersManager::_characters;
 
 // on désalloue la mémoire utilisée pour stocker les personnages
-CharactersManager::~CharactersManager()
+void CharactersManager::destroyChars()
 {
 	for (auto it = _characters.begin(); it != _characters.end(); ++it)
 	{
@@ -22,7 +19,7 @@ CharactersManager::~CharactersManager()
 
 // créer un nouveau personnage et renvoit l'id de ce dernier
 unsigned int CharactersManager::createCharacter(const sf::Vector2f& pos) {
-	_characters[_nextId] = new Character(_map, _ls);
+	_characters[_nextId] = new Character();
 	_characters[_nextId]->setPosition(pos);
 	_nextId++;
 	return _nextId - 1;

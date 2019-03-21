@@ -1,15 +1,14 @@
 #include "ZombiesManager.h"
 
-#include "CharactersManager.h"
-
 #include <iostream>
 
-ZombiesManager::ZombiesManager(TileMap* map, CharactersManager* charManager) : _map(map), _nextId(0), _charManager(charManager)
-{
-}
+#include "World.h"
+
+unsigned int ZombiesManager::_nextId = 0;
+std::map<unsigned int, Zombie*> ZombiesManager::_zombies;
 
 // on désalloue la mémoire utilisée pour stocker les zombies
-ZombiesManager::~ZombiesManager()
+void ZombiesManager::destroyZombies()
 {
 	for (auto it = _zombies.begin(); it != _zombies.end(); ++it)
 	{
@@ -19,7 +18,7 @@ ZombiesManager::~ZombiesManager()
 
 // créé un nouveau zombie et renvoit l'id de ce dernier
 unsigned int ZombiesManager::createZombie(const sf::Vector2f& pos) {
-	_zombies[_nextId] = new Zombie(_map, _charManager);
+	_zombies[_nextId] = new Zombie();
 	_zombies[_nextId]->setPosition(pos);
 	_nextId++;
 	return _nextId - 1;

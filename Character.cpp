@@ -2,31 +2,33 @@
 
 #include "Utils.h"
 #include "MapUtils.h"
-#include "TileMap.h"
+#include "World.h"
 #include "AudioManager.h"
 #include "TextureManager.h"
 #include "LTBL2/lighting/LightSystem.h"
-
 #include "Weapon.h"
+
 #include <string>
 #include <iostream>
 
-Character::Character(TileMap* map, ltbl::LightSystem* ls) : _map(map), _isPunching(false), _punchingSpeed(0.5), _weapon(nullptr), _ls(ls)
+Character::Character() : 
+	_isPunching(false), 
+	_punchingSpeed(0.5), 
+	_weapon(nullptr)
 {
 	this->setOrigin(32.f, 32.f);
 
+	sf::Texture* pointLightTexture = TextureManager::loadText("LTBL2/resources/pointLightTexture.png");
 	light = std::make_shared<ltbl::LightPointEmission>();
-	pointLightTexture.loadFromFile("LTBL2/resources/pointLightTexture.png");
-	pointLightTexture.setSmooth(true);
-
-	light->_emissionSprite.setOrigin(sf::Vector2f(pointLightTexture.getSize().x * 0.5f, pointLightTexture.getSize().y * 0.5f));
-	light->_emissionSprite.setTexture(pointLightTexture);
+	light->_emissionSprite.setOrigin(sf::Vector2f(pointLightTexture->getSize().x * 0.5f, pointLightTexture->getSize().y * 0.5f));
+	light->_emissionSprite.setTexture(*pointLightTexture);
 	light->_emissionSprite.setScale(sf::Vector2f(9.0f, 9.0f));
 	light->_emissionSprite.setColor(sf::Color(255, 230, 200));
 	light->_emissionSprite.setPosition(sf::Vector2f(0.0f, 0.0f));
 	light->_localCastCenter = sf::Vector2f(0.0f, 0.0f);
-	_ls->addLight(light);
-	_sprite.setTexture(TextureManager::loadText("Ressources/PNG/Man Blue/manBlue_stand.png"));
+	World::getInstance()->getLightSys()->addLight(light);
+
+	_sprite.setTexture(*TextureManager::loadText("Ressources/PNG/Man Blue/manBlue_stand.png"));
 }
 
 
@@ -126,7 +128,7 @@ void Character::mv()
 	std::vector<sf::Vector2f> corners = getCorners();
 	for (size_t i = 0; i < 4; i++)
 	{
-		if (_map->isObstacle(MapUtils::transformInTilesPos(corners[i]))) {
+		if (World::getInstance()->isObstacle(MapUtils::transformInTilesPos(corners[i]))) {
 			std::cout << "Can't move in x" << std::endl;
 			this->move(-x, 0);
 			break;
@@ -139,7 +141,7 @@ void Character::mv()
 	corners = getCorners();
 	for (size_t i = 0; i < 4; i++)
 	{
-		if (_map->isObstacle(MapUtils::transformInTilesPos(corners[i]))) {
+		if (World::getInstance()->isObstacle(MapUtils::transformInTilesPos(corners[i]))) {
 			std::cout << "Can't move in y" << std::endl;
 			this->move(0, -y);
 			break;
@@ -196,7 +198,7 @@ void Character::update(const sf::Vector2f& mousePos)
 		file = "Man Blue/manBlue_punch";
 	}
 
-	_sprite.setTexture(TextureManager::loadText("Ressources/PNG/" + file + ".png"));
+	_sprite.setTexture(*TextureManager::loadText("Ressources/PNG/" + file + ".png"));
 }
 
 // Tir du personnage
@@ -205,7 +207,7 @@ void Character::fire(const sf::Vector2f& mousePos)
 	if (_fire)
 	{
 		if (_weapon) {
-			_weapon->fire(mousePos, this->getPosition(), _map);
+			_weapon->fire(mousePos, this->getPosition());
 		}
 		else {
 			if(!_isPunching) 

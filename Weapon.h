@@ -2,11 +2,6 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "AudioManager.h"
-
-class Character;
-class TileMap;
-
 class Weapon
 {
 private:
@@ -33,7 +28,7 @@ public:
 	Weapon();
 	~Weapon();
 
-	void fire(const sf::Vector2f& mousePos, const sf::Vector2f& firingPosition, TileMap* map);
+	void fire(const sf::Vector2f& mousePos, const sf::Vector2f& firingPosition);
 	bool needToReload();
 	bool isReloading();
 	void reload();

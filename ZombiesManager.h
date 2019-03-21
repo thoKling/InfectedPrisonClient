@@ -3,23 +3,19 @@
 #include <SFML/Graphics.hpp>
 #include "Zombie.h"
 
-class TileMap;
-class CharactersManager;
+class World;
 
 class ZombiesManager
 {
 public:
-	ZombiesManager(TileMap* map, CharactersManager* player);
-	~ZombiesManager();
-	unsigned int createZombie(const sf::Vector2f& pos);
-	std::map<unsigned int, Zombie*>& getZombies();
-	void manageDraw(sf::RenderWindow& window);
-	void update();
+	static unsigned int createZombie(const sf::Vector2f& pos);
+	static std::map<unsigned int, Zombie*>& getZombies();
+	static void manageDraw(sf::RenderWindow& window);
+	static void update();
+	static void destroyZombies();
 
 private:
-	std::map<unsigned int, Zombie*> _zombies;
-	TileMap* _map;
-	CharactersManager* _charManager;
-	unsigned int _nextId;
+	static std::map<unsigned int, Zombie*> _zombies;
+	static unsigned int _nextId;
 };
 

@@ -4,9 +4,9 @@
 #include "TextureManager.h"
 #include "ZombiesManager.h"
 
-Projectile::Projectile(const std::string typeWeapon, ZombiesManager* zombiesManager) : _zombiesManager(zombiesManager)
+Projectile::Projectile(const std::string& typeWeapon)
 {
-	_sprite.setTexture(TextureManager::loadText("Ressources/projectile_" + typeWeapon + ".png"));
+	_sprite.setTexture(*TextureManager::loadText("Ressources/projectile_" + typeWeapon + ".png"));
 
 	this->setOrigin(16.f, 16.f);
 }
@@ -28,10 +28,10 @@ void Projectile::setDirection(const sf::Vector2f& destination)
 }
 
 
-void Projectile::update(const sf::Vector2f& mousePos)
+void Projectile::update()
 {
 	move(_velocity*_direction.x, _velocity*_direction.y);
-	auto zombies = _zombiesManager->getZombies();
+	auto zombies = ZombiesManager::getZombies();
 	for (auto it = zombies.begin(); it != zombies.end(); ++it)
 	{
 		if (it->second->getGlobalBounds().intersects(getGlobalBounds())) {

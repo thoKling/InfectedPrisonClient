@@ -2,8 +2,6 @@
 
 #include <iostream>
 
-#include "TileMap.h"
-
 unsigned int ProjectilesManager::_nextId = 0;
 std::map<unsigned int, Projectile*> ProjectilesManager::_projectiles;
 
@@ -19,8 +17,8 @@ void ProjectilesManager::deleteAllProjectiles()
 
 
 // créer un nouveau projectile et renvoit l'id de ce dernier
-unsigned int ProjectilesManager::createProjectile(const sf::Vector2f& pos, const sf::Vector2f& mousePos, const std::string typeWeapon, TileMap* map) {
-	_projectiles[_nextId] = new Projectile(typeWeapon, map->getZombiesManager());
+unsigned int ProjectilesManager::createProjectile(const sf::Vector2f& pos, const sf::Vector2f& mousePos, const std::string& weaponType) {
+	_projectiles[_nextId] = new Projectile(weaponType);
 	_projectiles[_nextId]->setPosition(pos);
 	_projectiles[_nextId]->setDirection(mousePos);
 	_nextId++;
@@ -38,12 +36,12 @@ void ProjectilesManager::manageDraw(sf::RenderWindow& window) {
 
 
 // Mise à jour du comportement des projectiles
-void ProjectilesManager::update(const sf::Vector2f& mousePos)
+void ProjectilesManager::update()
 {
 	std::vector<unsigned int> toErase;
 	for (auto it = _projectiles.begin(); it != _projectiles.end(); ++it)
 	{
-		it->second->update(mousePos);
+		it->second->update();
 		if (it->second->toDelete())
 			toErase.push_back(it->first);
 	}

@@ -10,9 +10,6 @@
     <ClCompile Include="Character.cpp">
       <Filter>Sources\Models\Entities</Filter>
     </ClCompile>
-    <ClCompile Include="AudioManager.cpp">
-      <Filter>Sources\Core</Filter>
-    </ClCompile>
     <ClCompile Include="CharactersManager.cpp">
       <Filter>Sources\Controllers\Entities</Filter>
     </ClCompile>
@@ -75,6 +72,15 @@
     </ClCompile>
     <ClCompile Include="TextureManager.cpp">
       <Filter>Sources\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioManager.cpp">
+      <Filter>Sources\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Region.cpp">
+      <Filter>Sources\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="World.cpp">
+      <Filter>Sources\Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -150,6 +156,12 @@
     <ClInclude Include="TextureManager.h">
       <Filter>Sources\Core</Filter>
     </ClInclude>
+    <ClInclude Include="Region.h">
+      <Filter>Sources\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="World.h">
+      <Filter>Sources\Map</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Sources">
@@ -181,6 +193,9 @@
     </Filter>
     <Filter Include="Sources\Models\Items">
       <UniqueIdentifier>{45d37c4a-ce4e-4fd2-8adb-46b14582fd9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Core\Game">
+      <UniqueIdentifier>{1751bde1-ac59-4c2e-931b-f3bb261f6646}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -148,10 +148,12 @@
     <ClInclude Include="MapUtils.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="ProjectilesManager.h" />
+    <ClInclude Include="Region.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="TileMap.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Weapon.h" />
+    <ClInclude Include="World.h" />
     <ClInclude Include="Zombie.h" />
     <ClInclude Include="ZombiesManager.h" />
   </ItemGroup>
@@ -175,10 +177,12 @@
     <ClCompile Include="MapUtils.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="ProjectilesManager.cpp" />
+    <ClCompile Include="Region.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="TileMap.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="Weapon.cpp" />
+    <ClCompile Include="World.cpp" />
     <ClCompile Include="Zombie.cpp" />
     <ClCompile Include="ZombiesManager.cpp" />
   </ItemGroup>

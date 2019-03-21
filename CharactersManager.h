@@ -3,40 +3,31 @@
 #include <SFML/Graphics.hpp>
 #include "Character.h"
 
-class TileMap;
-namespace ltbl {
-	class LightSystem;
-}
-
 class CharactersManager
 {
 public:
-	CharactersManager(TileMap* map, ltbl::LightSystem* ls);
-	~CharactersManager();
+	static void destroyChars();
 
 	// Méthode qui permet de créer un nouveau personnage
-	unsigned int createCharacter(const sf::Vector2f& pos);
+	static unsigned int createCharacter(const sf::Vector2f& pos);
 
 	// Méthode qui renvoit la liste des personnages
-	std::map<unsigned int, Character*> getCharacters();
+	static std::map<unsigned int, Character*> getCharacters();
 
 	// Procédure qui dessine les personnages
-	void manageDraw(sf::RenderWindow& window);
+	static void manageDraw(sf::RenderWindow& window);
 
-	// Procédure qui récupère et traite les entrées clavier liées aux personnages
-	void handleInputs(const sf::Event& event);
+	// Procédure qui traite les entrées clavier liées aux personnages
+	static void handleInputs(const sf::Event& event);
 
 	// Procédure qui met à jour le comportement des personnages
-	void update(const sf::Vector2f& mousePos);
+	static void update(const sf::Vector2f& mousePos);
 
 private:
 	// Liste des personnages
-	std::map<unsigned int, Character*> _characters;
-
-	TileMap* _map;
-	ltbl::LightSystem* _ls;
+	static std::map<unsigned int, Character*> _characters;
 
 	// identifiant suivant servant à la création d'un nouveau personnage
-	unsigned int _nextId;
+	static unsigned int _nextId;
 };
 

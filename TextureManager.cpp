@@ -5,7 +5,7 @@
 
 std::map<std::string, sf::Texture*> TextureManager::_textMap;
 
-sf::Texture& TextureManager::loadText(std::string path)
+sf::Texture* TextureManager::loadText(std::string path)
 {
 	// On recupere juste le nom de la texture
 	std::vector<std::string> splited = Utils::split(path, "/");
@@ -14,7 +14,7 @@ sf::Texture& TextureManager::loadText(std::string path)
 	// On vérifie qu'on ne l'a pas déjà chargée
 	if (_textMap.find(textName) != _textMap.end()) {
 		//std::cout << "Déjà chargée" << std::endl;
-		return *_textMap[textName];
+		return _textMap[textName];
 	}
 
 	std::cout << "Chargement nouvelle texture " << textName << std::endl;
@@ -29,5 +29,5 @@ sf::Texture& TextureManager::loadText(std::string path)
 	_textMap[textName] = temp;
 
 	// On la renvoit
-	return *_textMap[textName];
+	return _textMap[textName];
 }

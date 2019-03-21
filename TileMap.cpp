@@ -1,16 +1,14 @@
 #include "TileMap.h"
 
-#include "ZombiesManager.h"
-
 #include <iostream>
 
-TileMap::TileMap(ZombiesManager* zombiesManager) : _zombiesManager(zombiesManager)
-{
+#include "World.h"
 
+TileMap::TileMap()
+{
 }
 
-bool TileMap::load(ltbl::LightSystem* ls, const std::string& tileset, sf::Vector2u tileSize, const std::vector<std::vector<int>>& tiles, unsigned int width, unsigned int height) {
-	_tiles = tiles;
+bool TileMap::load(const std::string& tileset, sf::Vector2u tileSize, const std::vector<std::vector<int>>& tiles, unsigned int width, unsigned int height) {
 	// on charge la texture du tileset
 	if (!_tileset.loadFromFile(tileset))
 		return false;
@@ -48,7 +46,7 @@ bool TileMap::load(ltbl::LightSystem* ls, const std::string& tileset, sf::Vector
 				lightShape->_shape.setPoint(2, sf::Vector2f((i+1) * tileSize.x, (j + 1) * tileSize.y));
 				lightShape->_shape.setPoint(3, sf::Vector2f(i * tileSize.x, (j + 1) * tileSize.y));
 				lightShape->_renderLightOverShape = true;
-				ls->addShape(lightShape);
+				World::getInstance()->getLightSys()->addShape(lightShape);
 			}
 
 			// on définit ses quatre coordonnées de texture
@@ -59,32 +57,6 @@ bool TileMap::load(ltbl::LightSystem* ls, const std::string& tileset, sf::Vector
 		}
 
 	return true;
-}
-
-const std::vector<std::vector<int>>& TileMap::getTiles() const
-{
-	return _tiles;
-}
-
-// Renvoit le numéro de tile
-int TileMap::getTileNumber(sf::Vector2i tilePos)
-{
-	// si on demande une position en dehors de la map
-	if (tilePos.x >= _tiles[0].size() || tilePos.y >= _tiles.size()) {
-		std::cout << "Position demandée en dehors de la map" << std::endl;
-		return -1;
-	}
-	return _tiles[tilePos.y][tilePos.x];
-}
-
-ZombiesManager* TileMap::getZombiesManager()
-{
-	return _zombiesManager;
-}
-
-bool TileMap::isObstacle(sf::Vector2i tilePos)
-{
-	return getTileNumber(tilePos) == 41;
 }
 
 void TileMap::draw(sf::RenderTarget& target, sf::RenderStates states) const

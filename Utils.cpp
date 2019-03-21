@@ -1,5 +1,7 @@
 #include "Utils.h"
 
+bool Utils::debugMode = false;
+
 int Utils::getQuadrant(const sf::Vector2f & pos1, const sf::Vector2f & pos2)
 {
 	if (pos2.x >= pos1.x)

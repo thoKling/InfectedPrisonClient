@@ -3,16 +3,16 @@
 #include <iostream>
 
 #include "MapUtils.h"
-#include "TileMap.h"
-#include "CharactersManager.h"
+#include "World.h"
 #include "Utils.h"
-#include "Application.h"
-
+#include "CharactersManager.h"
 #include "TextureManager.h"
 
-Zombie::Zombie(TileMap* map, CharactersManager* charManager) : _map(map), _charManager(charManager), _velocity(1.5), _lastTileTarget(NULLPOS)
+Zombie::Zombie() : 
+	_velocity(1.5), 
+	_lastTileTarget(NULLPOS)
 {
-	_sprite.setTexture(TextureManager::loadText("Ressources/PNG/zombie/zombie.png"));
+	_sprite.setTexture(*TextureManager::loadText("Ressources/PNG/zombie/zombie.png"));
 	_target = sf::Vector2f(200, 200);
 	setOrigin(24.f, 24.f);
 }
@@ -24,7 +24,7 @@ Zombie::~Zombie()
 }
 
 void Zombie::update() {
-	_target = _charManager->getCharacters().at(0)->getPosition();
+	_target = CharactersManager::getCharacters().at(0)->getPosition();
 
 	if (_beingHit) {
 		_sprite.setColor(sf::Color(_sprite.getColor().r, _sprite.getColor().g + 15, _sprite.getColor().b + 15));
@@ -32,10 +32,11 @@ void Zombie::update() {
 			_beingHit = false;
 	}
 
+	// Si on est à distance on attaque
 	if (Utils::distance(getPosition(), _target) > 80)
 		myMove();
 	else
-		_charManager->getCharacters().at(0)->receiveHit(getPosition());
+		CharactersManager::getCharacters().at(0)->receiveHit(getPosition());
 }
 
 // Renvoit la position par rapport aux tiles 
@@ -64,7 +65,7 @@ bool Zombie::isDead()
 void Zombie::draw(sf::RenderTarget & target, sf::RenderStates states) const
 {
 	// On dessine la zone d'attaque du zombie
-	if (Application::isDebugMode()) {
+	if (Utils::debugMode) {
 		sf::CircleShape attackCircle(90.f);
 		attackCircle.setFillColor(sf::Color(250, 0, 0, 128));
 		attackCircle.setPosition(this->getPosition().x - 90, this->getPosition().y - 90);
@@ -76,14 +77,14 @@ void Zombie::draw(sf::RenderTarget & target, sf::RenderStates states) const
 void Zombie::myMove() {
 	std::list<sf::Vector2i> path;
 
-	if (_lastTileTarget == NULLPOS) {
-		path = MapUtils::getPath(_map->getTiles(), MapUtils::transformInTilesPos(getPosition()), MapUtils::transformInTilesPos(_target));
-		if (!path.empty()) {
-			_lastTileTarget = path.front();
-		}
-	}
-	else {
-		
+	//if (_lastTileTarget == NULLPOS) {
+		//path = MapUtils::getPath(_map->getTiles(), MapUtils::transformInTilesPos(getPosition()), MapUtils::transformInTilesPos(_target));
+		//if (!path.empty()) {
+		//	_lastTileTarget = path.front();
+		//}
+	//}
+	//else {
+		//std::cout << "move";
 		// On calcule la destination de la prochaine tile
 		// TODO : pour l'instant on va vers le centre mais ca fait des déplacements bizarres, à corriger
 		sf::Vector2f destination = _target;//sf::Vector2f(_lastTileTarget.x * 64 + 32, _lastTileTarget.y * 64 + 32);
@@ -109,7 +110,7 @@ void Zombie::myMove() {
 			_lastTileTarget = NULLPOS;
 		else
 			this->move(depX, depY);
-	}
+	//}
 
 	/*
 	std::cout << "Pos init : " << this->getPositionTiles().x << " " << this->getPositionTiles().y << std::endl;

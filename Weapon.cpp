@@ -3,10 +3,17 @@
 #include <iostream>
 
 #include "ProjectilesManager.h"
-#include "TileMap.h"
+#include "AudioManager.h"
 
-Weapon::Weapon() : _capacity(5), _fireRate(10), _reloadSpeed(2), _type("gun"), _isReloading(false),_tickSinceReloadingUpdate(0), 
-_tickSinceFiringUpdate(0), _isFireable(true)
+Weapon::Weapon() : 
+	_capacity(5), 
+	_fireRate(10), 
+	_reloadSpeed(2), 
+	_type("gun"), 
+	_isReloading(false),
+	_tickSinceReloadingUpdate(0), 
+	_tickSinceFiringUpdate(0), 
+	_isFireable(true)
 {
 	_ammo = _capacity;
 }
@@ -16,12 +23,12 @@ Weapon::~Weapon()
 }
 
 // Tir du personnage
-void Weapon::fire(const sf::Vector2f& mousePos, const sf::Vector2f& firingPosition, TileMap* map)
+void Weapon::fire(const sf::Vector2f& mousePos, const sf::Vector2f& firingPosition)
 {
 	if (_isFireable) {
 		if (_ammo > 0) {
 			_isFireable = false;
-			ProjectilesManager::createProjectile(firingPosition, mousePos, _type, map);
+			ProjectilesManager::createProjectile(firingPosition, mousePos, _type);
 			AudioManager::playSound("gunShot");
 			--_ammo;
 		}

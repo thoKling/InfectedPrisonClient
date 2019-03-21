@@ -1,16 +1,12 @@
 #pragma once
 #include "DrawableEntity.h"
 #include "Weapon.h"
-
-#include "LTBL2/lighting/LightSystem.h"
-
-class TileMap;
-class AudioManager;
+#include "LTBL2/lighting/LightPointEmission.h"
 
 class Character : public DrawableEntity
 {
 public:
-	Character(TileMap* map, ltbl::LightSystem* ls);
+	Character();
 	~Character();
 
 	/* Procédure qui récupère et traite les entrées clavier du joueur */
@@ -39,9 +35,6 @@ private:
 	const float _punchingSpeed;
 	// nombre de tick depuis la dernière update du punch( 1tick = 0.06s)
 	int _tickSincePunchingUpdate;
-
-	TileMap* _map;
-	ltbl::LightSystem* _ls;
 
 	std::shared_ptr<ltbl::LightPointEmission> light;
 	sf::Texture pointLightTexture;
