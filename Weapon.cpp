@@ -4,6 +4,8 @@
 
 #include "ProjectilesManager.h"
 #include "AudioManager.h"
+#include "Character.h"
+#include "TextureManager.h"
 
 Weapon::Weapon() : 
 	_capacity(5), 
@@ -15,6 +17,7 @@ Weapon::Weapon() :
 	_tickSinceFiringUpdate(0), 
 	_isFireable(true)
 {
+	_sprite.setTexture(*TextureManager::loadText("Ressources/theKey.png"));
 	_ammo = _capacity;
 }
 
@@ -22,13 +25,13 @@ Weapon::~Weapon()
 {
 }
 
-// Tir du personnage
-void Weapon::fire(const sf::Vector2f& mousePos, const sf::Vector2f& firingPosition)
+void Weapon::use(Character* charac)
 {
 	if (_isFireable) {
+		std::cout << "Tiration" << std::endl;
 		if (_ammo > 0) {
 			_isFireable = false;
-			ProjectilesManager::createProjectile(firingPosition, mousePos, _type);
+			ProjectilesManager::createProjectile(charac->getPosition(), charac->getRotation(), _type);
 			AudioManager::playSound("gunShot");
 			--_ammo;
 		}
@@ -36,10 +39,6 @@ void Weapon::fire(const sf::Vector2f& mousePos, const sf::Vector2f& firingPositi
 			AudioManager::playSound("dryFireGunShot");
 		}
 	}
-}
-
-bool Weapon::needToReload() {
-	return _ammo == 0;
 }
 
 bool Weapon::isReloading() {
@@ -77,6 +76,6 @@ void Weapon::update()
 	}
 }
 
-std::string Weapon::getType() {
+std::string Weapon::getWeaponType() {
 	return _type;
 }

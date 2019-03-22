@@ -1,6 +1,7 @@
 #pragma once
 
 #include "TileMap.h"
+#include "DroppedItem.h"
 
 class Region
 {
@@ -9,6 +10,9 @@ public:
 	~Region();
 
 	void manageDraw(sf::RenderWindow& window);
+
+	Item* getNearestItemInRange(sf::Vector2f position, unsigned int range);
+	void dropItem(Item* item, const sf::Vector2f& position);
 
 	///
 	/// Utils
@@ -20,6 +24,7 @@ public:
 private:
 	TileMap _map;
 
+	std::list<DroppedItem*> _items;
 	std::vector<std::vector<int>> _tiles;
 };
 

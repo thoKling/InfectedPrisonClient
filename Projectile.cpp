@@ -20,17 +20,9 @@ bool Projectile::toDelete()
 	return _toDelete;
 }
 
-
-void Projectile::setDirection(const sf::Vector2f& destination)
-{
-	orientate(destination);
-	_direction = Utils::getVecUnit(getPosition(), destination);
-}
-
-
 void Projectile::update()
 {
-	move(_velocity*_direction.x, _velocity*_direction.y);
+	move(_velocity*cos(getRotation()*toRadians), _velocity*sin(getRotation()*toRadians));
 	auto zombies = ZombiesManager::getZombies();
 	for (auto it = zombies.begin(); it != zombies.end(); ++it)
 	{

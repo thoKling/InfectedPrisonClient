@@ -135,6 +135,9 @@
     <ClInclude Include="Character.h" />
     <ClInclude Include="CharactersManager.h" />
     <ClInclude Include="DrawableEntity.h" />
+    <ClInclude Include="DroppedItem.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="Key.h" />
     <ClInclude Include="LTBL2\lighting\LightDirectionEmission.h" />
     <ClInclude Include="LTBL2\lighting\LightPointEmission.h" />
     <ClInclude Include="LTBL2\lighting\LightShape.h" />
@@ -163,6 +166,9 @@
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="CharactersManager.cpp" />
     <ClCompile Include="DrawableEntity.cpp" />
+    <ClCompile Include="DroppedItem.cpp" />
+    <ClCompile Include="Item.cpp" />
+    <ClCompile Include="Key.cpp" />
     <ClCompile Include="LTBL2\lighting\LightDirectionEmission.cpp" />
     <ClCompile Include="LTBL2\lighting\LightPointEmission.cpp" />
     <ClCompile Include="LTBL2\lighting\LightShape.cpp" />

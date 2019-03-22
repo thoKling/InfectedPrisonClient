@@ -13,9 +13,6 @@
     <ClCompile Include="CharactersManager.cpp">
       <Filter>Sources\Controllers\Entities</Filter>
     </ClCompile>
-    <ClCompile Include="DrawableEntity.cpp">
-      <Filter>Sources\Models\Entities</Filter>
-    </ClCompile>
     <ClCompile Include="LTBL2\quadtree\DynamicQuadtree.cpp">
       <Filter>Libs\LTBL2</Filter>
     </ClCompile>
@@ -82,6 +79,18 @@
     <ClCompile Include="World.cpp">
       <Filter>Sources\Map</Filter>
     </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Sources\Models\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Key.cpp">
+      <Filter>Sources\Models\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawableEntity.cpp">
+      <Filter>Sources\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="DroppedItem.cpp">
+      <Filter>Sources\Models\Items</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -95,9 +104,6 @@
     </ClInclude>
     <ClInclude Include="CharactersManager.h">
       <Filter>Sources\Controllers\Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="DrawableEntity.h">
-      <Filter>Sources\Models\Entities</Filter>
     </ClInclude>
     <ClInclude Include="LTBL2\quadtree\DynamicQuadtree.h">
       <Filter>Libs\LTBL2</Filter>
@@ -162,6 +168,18 @@
     <ClInclude Include="World.h">
       <Filter>Sources\Map</Filter>
     </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Sources\Models\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Key.h">
+      <Filter>Sources\Models\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawableEntity.h">
+      <Filter>Sources\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="DroppedItem.h">
+      <Filter>Sources\Models\Items</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Sources">
@@ -194,8 +212,8 @@
     <Filter Include="Sources\Models\Items">
       <UniqueIdentifier>{45d37c4a-ce4e-4fd2-8adb-46b14582fd9d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\Core\Game">
-      <UniqueIdentifier>{1751bde1-ac59-4c2e-931b-f3bb261f6646}</UniqueIdentifier>
+    <Filter Include="Sources\HUD">
+      <UniqueIdentifier>{85cbe02c-977d-41a9-9b9f-54ab2b2db881}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

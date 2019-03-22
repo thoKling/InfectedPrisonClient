@@ -23,6 +23,11 @@ sf::Vector2f DrawableEntity::getPosition() const
 	return initPos;
 }
 
+sf::Sprite DrawableEntity::getSprite() const
+{
+	return _sprite;
+}
+
 
 void DrawableEntity::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {

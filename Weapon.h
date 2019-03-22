@@ -2,7 +2,9 @@
 
 #include <SFML/Graphics.hpp>
 
-class Weapon
+#include "Item.h"
+
+class Weapon : public Item
 {
 private:
 	int _ammo;
@@ -28,11 +30,10 @@ public:
 	Weapon();
 	~Weapon();
 
-	void fire(const sf::Vector2f& mousePos, const sf::Vector2f& firingPosition);
-	bool needToReload();
-	bool isReloading();
-	void reload();
-	void update();
-	std::string getType();
+	virtual void use(Character* charac);
+	virtual bool isReloading();
+	virtual void reload();
+	virtual void update();
+	virtual std::string getWeaponType();
 };
 

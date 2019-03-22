@@ -1,7 +1,8 @@
 #pragma once
 #include "DrawableEntity.h"
-#include "Weapon.h"
 #include "LTBL2/lighting/LightPointEmission.h"
+
+class Item;
 
 class Character : public DrawableEntity
 {
@@ -16,9 +17,9 @@ public:
 	void mv();
 
 	void receiveHit(const sf::Vector2f& hitterPosition);
-	void fire(const sf::Vector2f& mousePos);
-	void receiveWeapon();
-	void throwWeapon();
+	void pickItem();
+
+	void dropItem();
 
 	void update(const sf::Vector2f& mousePos);
 
@@ -39,7 +40,7 @@ private:
 	std::shared_ptr<ltbl::LightPointEmission> light;
 	sf::Texture pointLightTexture;
 
-	Weapon* _weapon;
+	Item* _currentItem;
 
 	/* Les "interrupteurs de déplacement".
 	True: les déplacements ont lieu,

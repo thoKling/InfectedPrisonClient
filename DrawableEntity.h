@@ -10,6 +10,8 @@ public:
 	// Renvoit le centre de l'entité et pas le coin en haut à gauche
 	virtual sf::Vector2f getPosition() const;
 
+	sf::Sprite getSprite() const;
+
 	/* Orientation de l'entite vers la position */
 	void orientate(const sf::Vector2f& position);
 

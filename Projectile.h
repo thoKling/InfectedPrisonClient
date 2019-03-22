@@ -9,13 +9,11 @@ public:
 	
 	bool toDelete();
 
-	void setDirection(const sf::Vector2f& mousePos);
 	void update();
 	
 private:
 	double _velocity = 8.0;
 	sf::Vector2f _direction;
 	bool _toDelete = false;
-
 };
 

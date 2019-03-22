@@ -6,7 +6,7 @@
 #include "AudioManager.h"
 #include "TextureManager.h"
 #include "LTBL2/lighting/LightSystem.h"
-#include "Weapon.h"
+#include "Item.h"
 
 #include <string>
 #include <iostream>
@@ -14,7 +14,7 @@
 Character::Character() : 
 	_isPunching(false), 
 	_punchingSpeed(0.5), 
-	_weapon(nullptr)
+	_currentItem(nullptr)
 {
 	this->setOrigin(32.f, 32.f);
 
@@ -34,16 +34,18 @@ Character::Character() :
 
 Character::~Character()
 {
+	delete _currentItem;
 }
 
 /** Récupération et traitement des entrées clavier du joueur **/
 void Character::handleInputs(const sf::Event& event)
 {
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-		_fire = true;
+		if(_currentItem)
+			_currentItem->use(this);
 
-	if (!sf::Mouse::isButtonPressed(sf::Mouse::Left))
-		_fire = false;
+	//if (!sf::Mouse::isButtonPressed(sf::Mouse::Left))
+	//	_fire = false;
 
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
@@ -72,34 +74,21 @@ void Character::handleInputs(const sf::Event& event)
 		_upIsHeld = false;
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
-		if (_weapon && _weapon->needToReload())
-			_weapon->reload();
+		if(_currentItem)
+			_currentItem->reload();
 
-	if(event.type ==sf::Event::KeyReleased && event.key.code == sf::Keyboard::G)
-	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::G)) 
-	{
-		if (!_weapon) {
-			this->receiveWeapon();
+	if (event.type == sf::Event::KeyReleased)
+		switch (event.key.code) {
+			case sf::Keyboard::E:
+				pickItem();
+				break;
+			case sf::Keyboard::F:
+				dropItem();
+				break;
 		}
-		else {
-			this->throwWeapon();
-		}
-	}
-	
-}
-
-void Character::receiveWeapon() {
-	_weapon = new Weapon();
-}
-
-void Character::throwWeapon() {
-
-	delete _weapon;
-	_weapon = nullptr;
 }
 
 /** Déplacements du personnage **/
-
 void Character::mv()
 {
 	double x = 0, y = 0;
@@ -164,8 +153,6 @@ void Character::update(const sf::Vector2f& mousePos)
 {	
 	orientate(sf::Vector2f(mousePos));
 
-	fire(mousePos);
-	
 	mv();
 
 	light->_emissionSprite.setPosition(getPosition());
@@ -187,32 +174,31 @@ void Character::update(const sf::Vector2f& mousePos)
 		}
 	}
 	std::string file = "Man Blue/manBlue_stand";
-	if (_weapon) {
-		_weapon->update();
-		if (_weapon->isReloading())
+	if (_currentItem) {
+		_currentItem->update();
+		if (_currentItem->isReloading())
 			file = "Man Blue/manBlue_reload";
 		else
-			file = "Man Blue/manBlue_" + _weapon->getType();
-	}
+			file = "Man Blue/manBlue_" + _currentItem->getWeaponType();
+	}/*
 	else if (_isPunching) {
 		file = "Man Blue/manBlue_punch";
-	}
+	}*/
 
 	_sprite.setTexture(*TextureManager::loadText("Ressources/PNG/" + file + ".png"));
 }
 
-// Tir du personnage
-void Character::fire(const sf::Vector2f& mousePos)
-{
-	if (_fire)
-	{
-		if (_weapon) {
-			_weapon->fire(mousePos, this->getPosition());
-		}
-		else {
-			if(!_isPunching) 
-				_isPunching = true;
-		}
+void Character::pickItem() {
+	Item* item = World::getInstance()->getNearestItemInRange(getPosition(), 50);
+
+	if (item != nullptr) {
+		_currentItem = item;
 	}
 }
 
+void Character::dropItem() {
+	if (_currentItem) {
+		World::getInstance()->dropItem(_currentItem, getPosition());
+		_currentItem = nullptr;
+	}
+}

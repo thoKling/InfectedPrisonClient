@@ -64,7 +64,8 @@ void World::update(sf::Vector2f mousePos)
 
 	// Mise à jour du comportement des personnages
 	CharactersManager::update(mousePos);
-	ZombiesManager::update();
+	if(!Utils::debugMode)
+		ZombiesManager::update();
 
 	// On recupere la position du joueur, on cast en vector2i car les positions flotantes font des problemes dans les vues
 	sf::Vector2i playerPos = sf::Vector2i(CharactersManager::getCharacters()[0]->getPosition());
@@ -121,6 +122,15 @@ ltbl::LightSystem* World::getLightSys()
 bool World::isObstacle(const sf::Vector2i& position)
 {
 	return _currentRegion->isObstacle(position);
+}
+
+Item * World::getNearestItemInRange(const sf::Vector2f& position, unsigned int range)
+{
+	return _currentRegion->getNearestItemInRange(position, range);
+}
+
+void World::dropItem(Item* item, const sf::Vector2f& position) {
+	_currentRegion->dropItem(item, position);
 }
 
 void World::drawMinimap()
