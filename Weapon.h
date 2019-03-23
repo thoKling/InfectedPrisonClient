@@ -34,6 +34,7 @@ public:
 	virtual bool isReloading();
 	virtual void reload();
 	virtual void update();
+	virtual unsigned int getAmmo();
 	virtual std::string getWeaponType();
 };
 

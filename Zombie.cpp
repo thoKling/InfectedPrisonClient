@@ -9,7 +9,7 @@
 #include "TextureManager.h"
 
 Zombie::Zombie() : 
-	_velocity(1.5), 
+	_velocity(1), 
 	_lastTileTarget(NULLPOS)
 {
 	_sprite.setTexture(*TextureManager::loadText("Ressources/PNG/zombie/zombie.png"));

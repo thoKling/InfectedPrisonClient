@@ -7,6 +7,7 @@
 #include "TextureManager.h"
 #include "LTBL2/lighting/LightSystem.h"
 #include "Item.h"
+#include "HUD.h"
 
 #include <string>
 #include <iostream>
@@ -140,12 +141,15 @@ void Character::mv()
 
 void Character::receiveHit(const sf::Vector2f& hitterPosition)
 {
-	if (!_beingHit) {
+	if (!_beingHit && _alive) {
 		_sprite.setColor(sf::Color::Red);
 		_beingHit = true;
 		sf::Vector2f newPos;
 		sf::Vector2f vecUnit = Utils::getVecUnit(hitterPosition, getPosition());
 		move(sf::Vector2f(vecUnit.x * 100, vecUnit.y * 100));	
+		--_lives;
+		if (!_lives)
+			die();
 	}
 }
 
@@ -180,12 +184,20 @@ void Character::update(const sf::Vector2f& mousePos)
 			file = "Man Blue/manBlue_reload";
 		else
 			file = "Man Blue/manBlue_" + _currentItem->getWeaponType();
-	}/*
+		HUD::setAmmo(_currentItem->getAmmo());
+	}
 	else if (_isPunching) {
 		file = "Man Blue/manBlue_punch";
-	}*/
+	}
 
 	_sprite.setTexture(*TextureManager::loadText("Ressources/PNG/" + file + ".png"));
+
+	HUD::setLives(_lives);
+}
+
+void Character::die()
+{
+	_alive = false;
 }
 
 void Character::pickItem() {

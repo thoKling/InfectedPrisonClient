@@ -27,6 +27,9 @@ private:
 	// La vitesse de déplacement du personnage
 	double _velocity = 5;
 	bool _beingHit = false;
+	unsigned int _lives = 3;
+	bool _alive = true;
+	void die();
 
 	// Boolean indiquant si oui ou non le joueur est en train de frapper
 	bool _isPunching;

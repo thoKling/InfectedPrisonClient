@@ -28,7 +28,6 @@ sf::Sprite DrawableEntity::getSprite() const
 	return _sprite;
 }
 
-
 void DrawableEntity::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	// on applique la transformation de l'entité -- on la combine avec celle qui a été passée par l'appelant

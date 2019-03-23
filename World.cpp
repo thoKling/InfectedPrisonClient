@@ -4,6 +4,7 @@
 #include "ZombiesManager.h"
 #include "AudioManager.h"
 #include "Utils.h"
+#include "HUD.h"
 
 World* World::_instance = nullptr;
 
@@ -46,6 +47,7 @@ void World::init(sf::RenderWindow* window)
 	_instance = new World(window);
 	// Création du caractère
 	CharactersManager::createCharacter(sf::Vector2f(128, 200));
+	HUD::init(window);
 }
 
 void World::loadMap(const std::vector<std::vector<int>>& tiles, const sf::Vector2i& position)
@@ -104,8 +106,9 @@ void World::draw()
 		_ls.render(_mainView, _unshadowShader, _lightOverShapeShader); // les lumières
 	}
 
-	// On dessine la minimap
-	drawMinimap();
+	_window->setView(_window->getDefaultView());
+	HUD::manageDraw(_window);
+	_window->setView(_mainView);
 }
 
 void World::handleInputs(const sf::Event& event)
@@ -141,6 +144,10 @@ void World::drawMinimap()
 	// On fait les différents dessins en commencant par la map
 	_currentRegion->manageDraw(*_window);
 	CharactersManager::manageDraw(*_window);
+
+	//_window->draw(_lightSprite, _lightRenderStates);	// les ombres
+	_ls.render(_minimapView, _unshadowShader, _lightOverShapeShader); // les lumières
+
 
 	// On remet la vue principale
 	_window->setView(_mainView);

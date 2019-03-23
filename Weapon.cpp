@@ -28,7 +28,6 @@ Weapon::~Weapon()
 void Weapon::use(Character* charac)
 {
 	if (_isFireable) {
-		std::cout << "Tiration" << std::endl;
 		if (_ammo > 0) {
 			_isFireable = false;
 			ProjectilesManager::createProjectile(charac->getPosition(), charac->getRotation(), _type);
@@ -74,6 +73,11 @@ void Weapon::update()
 			_tickSinceFiringUpdate = 0;
 		}
 	}
+}
+
+unsigned int Weapon::getAmmo()
+{
+	return _ammo;
 }
 
 std::string Weapon::getWeaponType() {

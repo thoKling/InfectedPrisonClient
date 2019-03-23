@@ -5,7 +5,6 @@
 #include "CharactersManager.h"
 #include "Region.h"
 #include "Utils.h"
-#include <unordered_map>
 
 class World
 {
@@ -51,7 +50,7 @@ private:
 	/// Les éléments du jeu
 	///
 	Region* _currentRegion;
-	std::unordered_map<sf::Vector2i, Region*, vector2i_hash<int>> _regions;
+	//std::unordered_map<sf::Vector2i, Region*, vector2i_hash<int>> _regions;
 
 	///
 	/// Le système de lumières

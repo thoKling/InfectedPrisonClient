@@ -13,6 +13,7 @@ public:
 	virtual void reload();
 	virtual void update();
 	virtual bool isReloading();
+	virtual unsigned int getAmmo();
 	virtual std::string getWeaponType();
 };
 

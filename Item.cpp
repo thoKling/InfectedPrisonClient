@@ -28,6 +28,11 @@ bool Item::isReloading()
 	return false;
 }
 
+unsigned int Item::getAmmo()
+{
+	return 0;
+}
+
 std::string Item::getWeaponType()
 {
 	return "NaW"; // Not a Weapon
