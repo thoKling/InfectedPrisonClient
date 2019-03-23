@@ -29,6 +29,8 @@ sf::Vector2f Utils::getVecUnit(const sf::Vector2f& startPos, const sf::Vector2f&
 }
 double Utils::distance(const sf::Vector2f & pos1, const sf::Vector2f & pos2)
 {
+	float test1 = pow(pos1.x - pos2.x, 2);
+	float test2 = pow(pos1.y - pos2.y, 2);
 	return sqrt(pow(pos1.x - pos2.x, 2) + pow(pos1.y - pos2.y, 2));
 }
 

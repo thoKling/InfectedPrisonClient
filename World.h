@@ -34,7 +34,7 @@ public:
 
 	// Utils
 	bool isObstacle(const sf::Vector2i& position);
-	Item* getNearestItemInRange(const sf::Vector2f& position, unsigned int range);
+	Item* getItemInRect(const sf::FloatRect& rect);
 	void dropItem(Item* item, const sf::Vector2f& position);
 private:
 	sf::RenderWindow* _window;

@@ -43,16 +43,13 @@ void Region::manageDraw(sf::RenderWindow & window)
 }
 
 // Renvoit l'item le plus proche de la position dans une certaine portée et le supprime de la région, nullptr si il n'y en a pas
-Item* Region::getNearestItemInRange(sf::Vector2f position, unsigned int range) {
-	unsigned int minRange = range;
+Item* Region::getItemInRect(const sf::FloatRect& rect) {
 	DroppedItem* res = nullptr;
 
 	for (auto it = _items.begin(); it != _items.end(); ++it) {
-		unsigned int currentRange = Utils::distance((*it)->getPosition(), position);
-		if (currentRange <= minRange) {
-			minRange = currentRange;
+		sf::FloatRect test = (*it)->getGlobalBounds();
+		if ((*it)->getGlobalBounds().intersects(rect))
 			res = *it;
-		}
 	}
 	if (res == nullptr)
 		return nullptr;

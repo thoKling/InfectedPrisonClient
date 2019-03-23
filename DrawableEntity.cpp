@@ -18,8 +18,8 @@ DrawableEntity::~DrawableEntity()
 sf::Vector2f DrawableEntity::getPosition() const
 {
 	sf::Vector2f initPos = Transformable::getPosition();
-	initPos.x += _sprite.getTextureRect().width / 2 - getOrigin().x;
-	initPos.y += _sprite.getTextureRect().height / 2 - getOrigin().y;
+	initPos.x += _sprite.getGlobalBounds().width / 2 - getOrigin().x;
+	initPos.y += _sprite.getGlobalBounds().height / 2 - getOrigin().y;
 	return initPos;
 }
 
@@ -98,8 +98,8 @@ void DrawableEntity::orientate(const sf::Vector2f& position)
 sf::FloatRect DrawableEntity::getGlobalBounds()
 {
 	sf::FloatRect res = sf::FloatRect(
-		DrawableEntity::getPosition(),
-		sf::Vector2f(_sprite.getTextureRect().height, _sprite.getTextureRect().width));
+		Transformable::getPosition(),
+		sf::Vector2f(_sprite.getGlobalBounds().height, _sprite.getGlobalBounds().width));
 	return res;
 }
 
@@ -107,8 +107,8 @@ std::vector<sf::Vector2f> DrawableEntity::getCorners()
 {
 	std::vector<sf::Vector2f> res(4);
 	res[0] = sf::Vector2f(getPosition().x - getOrigin().x, getPosition().y - getOrigin().y);
-	res[1] = sf::Vector2f(res[0].x + _sprite.getTextureRect().width, res[0].y);
-	res[3] = sf::Vector2f(res[0].x, res[0].y + _sprite.getTextureRect().height);
+	res[1] = sf::Vector2f(res[0].x + _sprite.getGlobalBounds().width, res[0].y);
+	res[3] = sf::Vector2f(res[0].x, res[0].y + _sprite.getGlobalBounds().height);
 	res[2] = sf::Vector2f(res[1].x, res[3].y);
 	return res;
 }

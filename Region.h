@@ -11,7 +11,7 @@ public:
 
 	void manageDraw(sf::RenderWindow& window);
 
-	Item* getNearestItemInRange(sf::Vector2f position, unsigned int range);
+	Item* getItemInRect(const sf::FloatRect& rect);
 	void dropItem(Item* item, const sf::Vector2f& position);
 
 	///

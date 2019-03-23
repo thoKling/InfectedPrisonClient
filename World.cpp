@@ -127,9 +127,9 @@ bool World::isObstacle(const sf::Vector2i& position)
 	return _currentRegion->isObstacle(position);
 }
 
-Item * World::getNearestItemInRange(const sf::Vector2f& position, unsigned int range)
+Item * World::getItemInRect(const sf::FloatRect& rect)
 {
-	return _currentRegion->getNearestItemInRange(position, range);
+	return _currentRegion->getItemInRect(rect);
 }
 
 void World::dropItem(Item* item, const sf::Vector2f& position) {

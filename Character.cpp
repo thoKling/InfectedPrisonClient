@@ -211,7 +211,7 @@ void Character::reload()
 }
 
 void Character::pickItem() {
-	Item* item = World::getInstance()->getNearestItemInRange(getPosition(), 50);
+	Item* item = World::getInstance()->getItemInRect(getGlobalBounds());
 
 	if (item != nullptr) {
 		_inventory.AddItem(item);

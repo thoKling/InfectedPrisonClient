@@ -45,9 +45,10 @@ bool Weapon::isReloading() {
 }
 
 unsigned int Weapon::reload(unsigned int stack) {
-	_isReloading = true;
 	unsigned int res = std::min(_capacity - _ammo, (int)stack);
 	_ammo += res;
+	if(res != 0)
+		_isReloading = true;
 	return res;
 }
 
