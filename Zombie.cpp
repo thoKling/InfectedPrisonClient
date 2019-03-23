@@ -51,7 +51,22 @@ void Zombie::receiveHit(sf::Vector2f hitterPosition)
 		_beingHit = true;
 		sf::Vector2f newPos;
 		sf::Vector2f vecUnit = Utils::getVecUnit(hitterPosition, getPosition());
-		move(sf::Vector2f(vecUnit.x * 100, vecUnit.y * 100));
+		for (size_t i = 0; i < 20; i++)
+		{
+			move(vecUnit.x * 5, 0);
+			if (isInObstacle()) {
+				move(-vecUnit.x * 5, 0);
+				break;
+			}
+		}
+		for (size_t i = 0; i < 20; i++)
+		{
+			move(0, vecUnit.y * 5);
+			if (isInObstacle()) {
+				move(0, -vecUnit.y * 5);
+				break;
+			}
+		}
 		_lifes--;
 	}
 }
