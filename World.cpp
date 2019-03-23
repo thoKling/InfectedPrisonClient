@@ -136,6 +136,11 @@ void World::dropItem(Item* item, const sf::Vector2f& position) {
 	_currentRegion->dropItem(item, position);
 }
 
+std::vector<std::vector<int>> World::getTiles()
+{
+	return _currentRegion->getTiles();
+}
+
 void World::drawMinimap()
 {
 	// On dessine la miniMap

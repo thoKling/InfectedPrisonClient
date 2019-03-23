@@ -113,29 +113,13 @@ void Character::mv()
 
 	// Déplacement en x
 	this->move(x, 0);
-	// Gestion des collisions en x
-	std::vector<sf::Vector2f> corners = getCorners();
-	for (size_t i = 0; i < 4; i++)
-	{
-		if (World::getInstance()->isObstacle(MapUtils::transformInTilesPos(corners[i]))) {
-			std::cout << "Can't move in x" << std::endl;
-			this->move(-x, 0);
-			break;
-		}
-	}
+	if(isInObstacle())
+		this->move(-x, 0);
 
 	// Déplacement en y
 	this->move(0, y);
-	// Gestion des collisions en y
-	corners = getCorners();
-	for (size_t i = 0; i < 4; i++)
-	{
-		if (World::getInstance()->isObstacle(MapUtils::transformInTilesPos(corners[i]))) {
-			std::cout << "Can't move in y" << std::endl;
-			this->move(0, -y);
-			break;
-		}
-	}
+	if(isInObstacle())
+		this->move(0, -y);
 }
 
 void Character::receiveHit(const sf::Vector2f& hitterPosition)
@@ -145,7 +129,22 @@ void Character::receiveHit(const sf::Vector2f& hitterPosition)
 		_beingHit = true;
 		sf::Vector2f newPos;
 		sf::Vector2f vecUnit = Utils::getVecUnit(hitterPosition, getPosition());
-		move(sf::Vector2f(vecUnit.x * 100, vecUnit.y * 100));	
+		for (size_t i = 0; i < 20; i++)
+		{
+			move(vecUnit.x * 5, 0);
+			if (isInObstacle()) {
+				move(-vecUnit.x * 5, 0);
+				break;
+			}
+		}
+		for (size_t i = 0; i < 20; i++)
+		{
+			move(0, vecUnit.y * 5);
+			if (isInObstacle()) {
+				move(0, -vecUnit.y * 5);
+				break;
+			}
+		}
 		--_lives;
 		if (!_lives)
 			die();
@@ -161,7 +160,7 @@ void Character::update(const sf::Vector2f& mousePos)
 	light->_emissionSprite.setPosition(getPosition());
 
 	if (_beingHit) {
-		_sprite.setColor(sf::Color(_sprite.getColor().r, _sprite.getColor().g + 15, _sprite.getColor().b + 15));
+		_sprite.setColor(sf::Color(_sprite.getColor().r, _sprite.getColor().g + 5, _sprite.getColor().b + 5));
 		if (_sprite.getColor().g == 255)
 			_beingHit = false;
 	}

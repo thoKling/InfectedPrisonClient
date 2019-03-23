@@ -1,11 +1,14 @@
 #include "MapUtils.h"
+#include "World.h"
 
 #include <iostream>
 
-std::list<sf::Vector2i> MapUtils::getPath(const std::vector<std::vector<int>>& tiles, const sf::Vector2i& startCell, const sf::Vector2i& endCell)
+std::list<sf::Vector2i> MapUtils::getPath(const sf::Vector2i& startCell, const sf::Vector2i& endCell)
 {
 	// Initialisation
 	bool found = false;
+
+	const std::vector<std::vector<int>>& tiles = World::getInstance()->getTiles();
 
 	const unsigned int width = tiles[0].size();
 	const unsigned int height = tiles.size();

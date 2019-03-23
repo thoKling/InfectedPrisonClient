@@ -36,6 +36,9 @@ public:
 	bool isObstacle(const sf::Vector2i& position);
 	Item* getItemInRect(const sf::FloatRect& rect);
 	void dropItem(Item* item, const sf::Vector2f& position);
+
+	std::vector<std::vector<int>> getTiles();
+
 private:
 	sf::RenderWindow* _window;
 

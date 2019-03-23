@@ -25,6 +25,7 @@ bool Projectile::toDelete()
 void Projectile::update()
 {
 	move(_velocity*cos(getRotation()*toRadians), _velocity*sin(getRotation()*toRadians));
+	// Portée max tu projectile
 	_travelledDistance += _velocity;
 	if (_travelledDistance > 800)
 		_toDelete = true;
@@ -39,12 +40,6 @@ void Projectile::update()
 		}
 	}
 	// Collisions avec les murs
-	std::vector<sf::Vector2f> corners = getCorners();
-	for (size_t i = 0; i < 4; i++)
-	{
-		if (World::getInstance()->isObstacle(MapUtils::transformInTilesPos(corners[i]))) {
-			_toDelete = true;
-			break;
-		}
-	}
+	if (isInObstacle())
+		_toDelete = true;
 }

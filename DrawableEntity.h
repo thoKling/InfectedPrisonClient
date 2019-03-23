@@ -22,6 +22,8 @@ public:
 protected:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
+	bool isInObstacle();
+
 	sf::Sprite _sprite;
 };
 

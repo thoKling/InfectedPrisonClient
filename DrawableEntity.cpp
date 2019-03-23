@@ -1,6 +1,8 @@
 #include "DrawableEntity.h"
 
 #include <iostream>
+#include "World.h"
+#include "MapUtils.h"
 
 #include "Utils.h"
 
@@ -35,6 +37,19 @@ void DrawableEntity::draw(sf::RenderTarget& target, sf::RenderStates states) con
 
 	// on dessine le sprite
 	target.draw(_sprite, states);
+}
+
+bool DrawableEntity::isInObstacle()
+{
+	// Gestion des collisions
+	auto corners = getCorners();
+	for (size_t i = 0; i < 4; i++)
+	{
+		if (World::getInstance()->isObstacle(MapUtils::transformInTilesPos(corners[i]))) {
+			return true;
+		}
+	}
+	return false;
 }
 
 // Orientation de l'entité en direction de la position donnée
