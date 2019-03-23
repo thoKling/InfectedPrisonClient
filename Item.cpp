@@ -6,7 +6,6 @@ Item::Item()
 {
 }
 
-
 Item::~Item()
 {
 }
@@ -15,8 +14,9 @@ void Item::use(Character* charac)
 {
 }
 
-void Item::reload()
+unsigned int Item::reload(unsigned int stack)
 {
+	return 0;
 }
 
 void Item::update() {
@@ -33,7 +33,32 @@ unsigned int Item::getAmmo()
 	return 0;
 }
 
-std::string Item::getWeaponType()
+WeaponType Item::getWeaponType()
 {
-	return "NaW"; // Not a Weapon
+	return WeaponType::NaW; // Not a Weapon
+}
+
+WeaponType Item::getAmmoType()
+{
+	return WeaponType::NaW; // Not a Weapon
+}
+
+unsigned int Item::getStack()
+{
+	return _stack;
+}
+
+void Item::setStack(unsigned int stack)
+{
+	_stack = stack;
+}
+
+void Item::addStack(unsigned int stack)
+{
+	_stack += stack;
+}
+
+void Item::removeStack(unsigned int stack)
+{
+	_stack -= stack;
 }

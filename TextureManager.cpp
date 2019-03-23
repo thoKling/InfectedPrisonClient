@@ -5,7 +5,7 @@
 
 std::map<std::string, sf::Texture*> TextureManager::_textMap;
 
-sf::Texture* TextureManager::loadText(std::string path)
+sf::Texture* TextureManager::loadText(const std::string& path)
 {
 	// On recupere juste le nom de la texture
 	std::vector<std::string> splited = Utils::split(path, "/");

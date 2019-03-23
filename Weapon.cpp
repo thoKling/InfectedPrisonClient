@@ -11,7 +11,7 @@ Weapon::Weapon() :
 	_capacity(5), 
 	_fireRate(10), 
 	_reloadSpeed(2), 
-	_type("gun"), 
+	_type(WeaponType::Gun), 
 	_isReloading(false),
 	_tickSinceReloadingUpdate(0), 
 	_tickSinceFiringUpdate(0), 
@@ -44,8 +44,11 @@ bool Weapon::isReloading() {
 	return _isReloading;
 }
 
-void Weapon::reload() {
+unsigned int Weapon::reload(unsigned int stack) {
 	_isReloading = true;
+	unsigned int res = std::min(_capacity - _ammo, (int)stack);
+	_ammo += res;
+	return res;
 }
 
 void Weapon::update()
@@ -58,7 +61,6 @@ void Weapon::update()
 		_tickSinceReloadingUpdate++;
 		if (_tickSinceReloadingUpdate > 60 * _reloadSpeed) {
 			_isReloading = false;
-			_ammo = _capacity;
 			_tickSinceReloadingUpdate = 0;
 		}
 	}
@@ -80,6 +82,6 @@ unsigned int Weapon::getAmmo()
 	return _ammo;
 }
 
-std::string Weapon::getWeaponType() {
+WeaponType Weapon::getWeaponType() {
 	return _type;
 }

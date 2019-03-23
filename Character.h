@@ -1,6 +1,7 @@
 #pragma once
 #include "DrawableEntity.h"
 #include "LTBL2/lighting/LightPointEmission.h"
+#include "Inventory.h"
 
 class Item;
 
@@ -30,6 +31,7 @@ private:
 	unsigned int _lives = 3;
 	bool _alive = true;
 	void die();
+	void reload();
 
 	// Boolean indiquant si oui ou non le joueur est en train de frapper
 	bool _isPunching;
@@ -43,6 +45,7 @@ private:
 	std::shared_ptr<ltbl::LightPointEmission> light;
 	sf::Texture pointLightTexture;
 
+	Inventory _inventory;
 	Item* _currentItem;
 
 	/* Les "interrupteurs de déplacement".

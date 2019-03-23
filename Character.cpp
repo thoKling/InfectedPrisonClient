@@ -17,7 +17,7 @@ Character::Character() :
 	_punchingSpeed(0.5), 
 	_currentItem(nullptr)
 {
-	this->setOrigin(32.f, 32.f);
+	this->setOrigin(24.f, 24.f);
 
 	sf::Texture* pointLightTexture = TextureManager::loadText("LTBL2/resources/pointLightTexture.png");
 	light = std::make_shared<ltbl::LightPointEmission>();
@@ -75,8 +75,7 @@ void Character::handleInputs(const sf::Event& event)
 		_upIsHeld = false;
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
-		if(_currentItem)
-			_currentItem->reload();
+		reload();
 
 	if (event.type == sf::Event::KeyReleased)
 		switch (event.key.code) {
@@ -183,12 +182,14 @@ void Character::update(const sf::Vector2f& mousePos)
 		if (_currentItem->isReloading())
 			file = "Man Blue/manBlue_reload";
 		else
-			file = "Man Blue/manBlue_" + _currentItem->getWeaponType();
+			file = "Man Blue/manBlue_" + WeaponTypesStr[_currentItem->getWeaponType()];
 		HUD::setAmmo(_currentItem->getAmmo());
 	}
 	else if (_isPunching) {
 		file = "Man Blue/manBlue_punch";
 	}
+	else
+		HUD::setAmmo(0);
 
 	_sprite.setTexture(*TextureManager::loadText("Ressources/PNG/" + file + ".png"));
 
@@ -200,17 +201,29 @@ void Character::die()
 	_alive = false;
 }
 
+void Character::reload()
+{
+	if (_currentItem) {
+		WeaponType typeW = _currentItem->getWeaponType();
+		unsigned int usedAmmos = _currentItem->reload(_inventory.getAmmos(typeW));
+		_inventory.setAmmos(typeW, usedAmmos);
+	}
+}
+
 void Character::pickItem() {
 	Item* item = World::getInstance()->getNearestItemInRange(getPosition(), 50);
 
 	if (item != nullptr) {
-		_currentItem = item;
+		_inventory.AddItem(item);
+		if(item->getWeaponType() != WeaponType::NaW)
+			_currentItem = item;
 	}
 }
 
 void Character::dropItem() {
 	if (_currentItem) {
 		World::getInstance()->dropItem(_currentItem, getPosition());
+		_inventory.dropItem(_currentItem);
 		_currentItem = nullptr;
 	}
 }

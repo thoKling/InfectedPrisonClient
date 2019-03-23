@@ -24,7 +24,7 @@ private:
 	const float _fireRate;
 
 	// type de l'arme
-	std::string _type;
+	WeaponType _type;
 
 public:
 	Weapon();
@@ -32,9 +32,9 @@ public:
 
 	virtual void use(Character* charac);
 	virtual bool isReloading();
-	virtual void reload();
+	virtual unsigned int reload(unsigned int stack);
 	virtual void update();
 	virtual unsigned int getAmmo();
-	virtual std::string getWeaponType();
+	virtual WeaponType getWeaponType();
 };
 

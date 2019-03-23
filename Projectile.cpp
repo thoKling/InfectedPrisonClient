@@ -4,9 +4,9 @@
 #include "TextureManager.h"
 #include "ZombiesManager.h"
 
-Projectile::Projectile(const std::string& typeWeapon)
+Projectile::Projectile(const WeaponType& typeWeapon)
 {
-	_sprite.setTexture(*TextureManager::loadText("Ressources/projectile_" + typeWeapon + ".png"));
+	_sprite.setTexture(*TextureManager::loadText("Ressources/projectile_" + WeaponTypesStr[typeWeapon] + ".png"));
 
 	this->setOrigin(16.f, 16.f);
 }

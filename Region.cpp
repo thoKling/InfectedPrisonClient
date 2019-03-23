@@ -2,6 +2,7 @@
 
 #include "Weapon.h"
 #include "Utils.h"
+#include "Ammo.h"
 
 #include <iostream>
 
@@ -14,6 +15,12 @@ Region::Region(const std::vector<std::vector<int>>& tiles)
 	DroppedItem* temp = new DroppedItem(new Weapon());
 	temp->setPosition({ 50, 50 });
 	_items.emplace_back(temp);
+
+	Item* tempItem = new Ammo(WeaponType::Gun);
+	tempItem->setStack(18);
+	DroppedItem* temp2 = new DroppedItem(tempItem);
+	temp2->setPosition({100,100});
+	_items.emplace_back(temp2);
 }
 
 

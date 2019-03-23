@@ -94,6 +94,12 @@
     <ClCompile Include="HUD.cpp">
       <Filter>Sources\HUD</Filter>
     </ClCompile>
+    <ClCompile Include="Ammo.cpp">
+      <Filter>Sources\Models\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Inventory.cpp">
+      <Filter>Sources\MainPlayer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -186,6 +192,12 @@
     <ClInclude Include="HUD.h">
       <Filter>Sources\HUD</Filter>
     </ClInclude>
+    <ClInclude Include="Ammo.h">
+      <Filter>Sources\Models\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Inventory.h">
+      <Filter>Sources\MainPlayer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Sources">
@@ -220,6 +232,9 @@
     </Filter>
     <Filter Include="Sources\HUD">
       <UniqueIdentifier>{85cbe02c-977d-41a9-9b9f-54ab2b2db881}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\MainPlayer">
+      <UniqueIdentifier>{75c7e691-de02-42e1-9bdb-bf51c050da81}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

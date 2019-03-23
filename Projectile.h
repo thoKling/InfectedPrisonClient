@@ -1,10 +1,12 @@
 #pragma once
 #include "DrawableEntity.h"
 
+#include "Item.h"
+
 class Projectile : public DrawableEntity
 {
 public:
-	Projectile(const std::string& typeWeapon);
+	Projectile(const WeaponType& typeWeapon);
 	~Projectile();
 	
 	bool toDelete();
