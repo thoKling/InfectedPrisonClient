@@ -42,6 +42,6 @@ void Inventory::setAmmos(WeaponType weaponType, unsigned int amount)
 {
 	for (auto it = _items.begin(); it != _items.end(); ++it) {
 		if ((*it)->getAmmoType() == weaponType)
-			return (*it)->removeStack(amount);
+			return (*it)->setStack(amount);
 	}
 }

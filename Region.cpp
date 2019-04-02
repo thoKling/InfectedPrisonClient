@@ -47,9 +47,10 @@ Item* Region::getItemInRect(const sf::FloatRect& rect) {
 	DroppedItem* res = nullptr;
 
 	for (auto it = _items.begin(); it != _items.end(); ++it) {
-		sf::FloatRect test = (*it)->getGlobalBounds();
-		if ((*it)->getGlobalBounds().intersects(rect))
+		if ((*it)->getGlobalBounds().intersects(rect)) {
 			res = *it;
+			break;
+		}
 	}
 	if (res == nullptr)
 		return nullptr;

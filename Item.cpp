@@ -61,4 +61,6 @@ void Item::addStack(unsigned int stack)
 void Item::removeStack(unsigned int stack)
 {
 	_stack -= stack;
+	if (_stack < 0) 
+		stack = 0;
 }
