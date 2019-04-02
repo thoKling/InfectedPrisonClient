@@ -39,7 +39,12 @@ public:
 
 	std::vector<std::vector<int>> getTiles();
 
+	void gameOver();
+	bool getGameOver();
+
 private:
+	bool _gameOver = false;
+
 	sf::RenderWindow* _window;
 
 	///

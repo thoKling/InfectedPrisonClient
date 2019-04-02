@@ -4,6 +4,7 @@
 
 #include "World.h"
 #include "AudioManager.h"
+#include "TextureManager.h"
 
 #include "Utils.h"
 
@@ -71,6 +72,8 @@ Application::Application()
 		}
 	}
 	World::getInstance()->loadMap(_level, sf::Vector2i(0,0));
+	_gameOverSprite.setTexture(*TextureManager::loadText("Ressources/gameOver.png"));
+	_gameOverSprite.setScale(0.25, 0.25);
 }
 
 
@@ -114,7 +117,12 @@ void Application::draw()
 	// On nettoie la fenetre
 	_window.clear();
 
-	World::getInstance()->draw();
+	if (!World::getInstance()->getGameOver())
+		World::getInstance()->draw();
+	else {
+		_window.setView(_window.getDefaultView());
+		_window.draw(_gameOverSprite);
+	}
 
 	// On affiche les dessins
 	_window.display();
@@ -124,7 +132,7 @@ void Application::draw()
 // Ici on gère les entrées clavier du joueur
 void Application::handleInputs(sf::Event event)
 {
-	if (!_window.hasFocus()) {
+	if (!_window.hasFocus() || World::getInstance()->getGameOver()) {
 		return;
 	}
 
@@ -146,5 +154,6 @@ void Application::update()
 	// Conversion en coordonnées "monde"
 	sf::Vector2f mouseWorldPos = _window.mapPixelToCoords(mousePixelPos);
 
-	World::getInstance()->update(mouseWorldPos);
+	if(!World::getInstance()->getGameOver())
+		World::getInstance()->update(mouseWorldPos);
 }

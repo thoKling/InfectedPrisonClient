@@ -7,17 +7,18 @@
 #include "Character.h"
 #include "TextureManager.h"
 
-Weapon::Weapon() : 
-	_capacity(5), 
-	_fireRate(10), 
-	_reloadSpeed(2), 
-	_type(WeaponType::Gun), 
+Weapon::Weapon() :
+	_capacity(5),
+	_fireRate(10),
+	_reloadSpeed(2),
+	_type(WeaponType::Gun),
 	_isReloading(false),
-	_tickSinceReloadingUpdate(0), 
-	_tickSinceFiringUpdate(0), 
+	_tickSinceReloadingUpdate(0),
+	_tickSinceFiringUpdate(0),
 	_isFireable(true)
 {
-	_sprite.setTexture(*TextureManager::loadText("Ressources/theKey.png"));
+	_sprite.setTexture(*TextureManager::loadText("Ressources/gun.png"));
+	_sprite.setScale({0.083, 0.083});
 	_ammo = _capacity;
 }
 
