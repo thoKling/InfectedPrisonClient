@@ -25,8 +25,11 @@ void Inventory::dropItem(Item * item)
 void Inventory::removeStack(Item* item, unsigned int amount)
 {
 	auto it = std::find(_items.begin(), _items.end(), item);
-	if (it != _items.end())
+	if (it != _items.end()) {
 		(*it)->removeStack(amount);
+		if ((*it)->getStack() <= 0)
+			_items.remove(*it);
+	}
 }
 
 unsigned int Inventory::getAmmos(WeaponType weaponType)
@@ -41,7 +44,9 @@ unsigned int Inventory::getAmmos(WeaponType weaponType)
 void Inventory::setAmmos(WeaponType weaponType, unsigned int amount)
 {
 	for (auto it = _items.begin(); it != _items.end(); ++it) {
-		if ((*it)->getAmmoType() == weaponType)
-			return (*it)->setStack(amount);
+		if ((*it)->getAmmoType() == weaponType) {
+			removeStack(*it, amount);
+			break;
+		}
 	}
 }

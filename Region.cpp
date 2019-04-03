@@ -3,6 +3,7 @@
 #include "Weapon.h"
 #include "Utils.h"
 #include "Ammo.h"
+#include "ZombiesManager.h"
 
 #include <iostream>
 
@@ -13,14 +14,14 @@ Region::Region(const std::vector<std::vector<int>>& tiles)
 		throw std::string("Impossible de charger la map");
 	_tiles = tiles;
 	DroppedItem* temp = new DroppedItem(new Weapon());
-	temp->setPosition({ 50, 50 });
+	temp->setPosition({ 150, 150 });
 	_items.emplace_back(temp);
 
 	Item* tempItem = new Ammo(WeaponType::Gun);
 	tempItem->setStack(18);
 	DroppedItem* temp2 = new DroppedItem(tempItem);
-	temp2->setPosition({100,100});
-	_items.emplace_back(temp2);
+	temp2->setPosition({500,300});
+	//_items.emplace_back(temp2);
 }
 
 
@@ -40,6 +41,20 @@ void Region::manageDraw(sf::RenderWindow & window)
 	for (auto it = _items.begin(); it != _items.end(); ++it) {
 		window.draw(**it);
 	}
+}
+
+void Region::update()
+{
+	++_ticks;
+	if (_ticks % 600 == 0) {
+		Item* tempItem = new Ammo(WeaponType::Gun);
+		tempItem->setStack(4);
+		DroppedItem* temp2 = new DroppedItem(tempItem);
+		temp2->setPosition(sf::Vector2f( 500 + (int)(rand()% 50),300 + (int)(rand()%50) ));
+		_items.emplace_back(temp2);
+	}
+	if((_ticks + 30)%600 == 0)
+		ZombiesManager::createZombie(sf::Vector2f(800 + (int)(rand()%100), 500 + (int)(rand()%100)));
 }
 
 // Renvoit l'item le plus proche de la position dans une certaine portée et le supprime de la région, nullptr si il n'y en a pas

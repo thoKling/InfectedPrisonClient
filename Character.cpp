@@ -198,6 +198,7 @@ void Character::update(const sf::Vector2f& mousePos)
 void Character::die()
 {
 	_alive = false;
+	World::getInstance()->gameOver();
 }
 
 void Character::reload()

@@ -18,6 +18,8 @@ private:
 	void handleInputs(sf::Event);
 	void update();
 
+	sf::Sprite _gameOverSprite;
+
 	sf::RenderWindow _window;
 	sf::UdpSocket _socket;
 	sf::IpAddress _serverIP;

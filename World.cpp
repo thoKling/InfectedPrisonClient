@@ -62,12 +62,13 @@ void World::loadMap(const std::vector<std::vector<int>>& tiles, const sf::Vector
 
 void World::update(sf::Vector2f mousePos)
 {
-	ProjectilesManager::update();
-
 	// Mise à jour du comportement des personnages
 	CharactersManager::update(mousePos);
-	if(!Utils::debugMode)
+	if (!Utils::debugMode) {
 		ZombiesManager::update();
+		ProjectilesManager::update();
+		_currentRegion->update();
+	}
 
 	// On recupere la position du joueur, on cast en vector2i car les positions flotantes font des problemes dans les vues
 	sf::Vector2i playerPos = sf::Vector2i(CharactersManager::getCharacters()[0]->getPosition());
@@ -75,10 +76,6 @@ void World::update(sf::Vector2f mousePos)
 	// On centre les vues sur le joueur
 	_mainView.setCenter(CharactersManager::getCharacters()[0]->getPosition());//sf::Vector2f(playerPos));
 	_minimapView.setCenter(sf::Vector2f(playerPos));
-
-	// Idem avec les zombies
-	if (!Utils::debugMode)
-		ZombiesManager::update();
 
 	//si la fenetre n'a pas le focus on eteint la musique
 	if (_window->hasFocus() && !AudioManager::isMainThemePlayed()) {
@@ -139,6 +136,16 @@ void World::dropItem(Item* item, const sf::Vector2f& position) {
 std::vector<std::vector<int>> World::getTiles()
 {
 	return _currentRegion->getTiles();
+}
+
+void World::gameOver()
+{
+	_gameOver = true;
+}
+
+bool World::getGameOver()
+{
+	return _gameOver;
 }
 
 void World::drawMinimap()

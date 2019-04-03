@@ -10,6 +10,7 @@ public:
 	~Region();
 
 	void manageDraw(sf::RenderWindow& window);
+	void update();
 
 	Item* getItemInRect(const sf::FloatRect& rect);
 	void dropItem(Item* item, const sf::Vector2f& position);
@@ -22,9 +23,9 @@ public:
 	int getTileNumber(sf::Vector2i tilePos);
 
 private:
+	unsigned int _ticks = 0;
 	TileMap _map;
 
 	std::list<DroppedItem*> _items;
 	std::vector<std::vector<int>> _tiles;
 };
-

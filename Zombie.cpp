@@ -9,14 +9,13 @@
 #include "TextureManager.h"
 
 Zombie::Zombie() : 
-	_velocity(1), 
+	_velocity(2), 
 	_lastTileTarget(NULLPOS)
 {
 	_sprite.setTexture(*TextureManager::loadText("Ressources/PNG/zombie/zombie.png"));
 	_target = sf::Vector2f(200, 200);
 	setOrigin(24.f, 24.f);
 }
-
 
 Zombie::~Zombie()
 {
@@ -93,27 +92,17 @@ void Zombie::myMove() {
 
 	orientate(_target);
 	// On se déplace vers la destination
-	float depX = 0;
-	float depY = 0;
-	if (_target.x < getPosition().x)
-		depX = -_velocity;
-	else
-		depX = _velocity;
-
-	if (_target.y < getPosition().y)
-		depY = -_velocity;
-	else
-		depY = _velocity;
+	sf::Vector2f vecUnit = Utils::getVecUnit(getPosition(), _target);
 
 
-	this->move(depX, 0);
+	this->move(vecUnit.x * _velocity, 0);
 	if (isInObstacle()) {
-		this->move(-depX, 0);
+		this->move(-vecUnit.x * _velocity, 0);
 	}
 
-	this->move(0, depY);
+	this->move(0, vecUnit.y*_velocity);
 	if (isInObstacle()) {
-		this->move(0, -depY);
+		this->move(0, -vecUnit.y * _velocity);
 	}
 }
 
