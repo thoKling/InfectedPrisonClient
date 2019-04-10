@@ -1,6 +1,6 @@
 #include "Item.h"
 
-#include "Character.h"
+#include "Player.h"
 
 Item::Item()
 {
@@ -10,7 +10,7 @@ Item::~Item()
 {
 }
 
-void Item::use(Character* charac)
+void Item::use(Player* player)
 {
 }
 

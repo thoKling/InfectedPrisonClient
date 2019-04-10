@@ -7,12 +7,6 @@
     <ClCompile Include="main.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="Character.cpp">
-      <Filter>Sources\Models\Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="CharactersManager.cpp">
-      <Filter>Sources\Controllers\Entities</Filter>
-    </ClCompile>
     <ClCompile Include="LTBL2\quadtree\DynamicQuadtree.cpp">
       <Filter>Libs\LTBL2</Filter>
     </ClCompile>
@@ -62,10 +56,10 @@
       <Filter>Sources\Models\Entities</Filter>
     </ClCompile>
     <ClCompile Include="ProjectilesManager.cpp">
-      <Filter>Sources\Controllers\Entities</Filter>
+      <Filter>Sources\Controllers\Managers</Filter>
     </ClCompile>
     <ClCompile Include="ZombiesManager.cpp">
-      <Filter>Sources\Controllers\Entities</Filter>
+      <Filter>Sources\Controllers\Managers</Filter>
     </ClCompile>
     <ClCompile Include="TextureManager.cpp">
       <Filter>Sources\Core</Filter>
@@ -100,19 +94,25 @@
     <ClCompile Include="Inventory.cpp">
       <Filter>Sources\MainPlayer</Filter>
     </ClCompile>
+    <ClCompile Include="InventoryView.cpp">
+      <Filter>Sources\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerController.cpp">
+      <Filter>Sources\Controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Sources\Models\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayersManager.cpp">
+      <Filter>Sources\Controllers\Managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
       <Filter>Sources\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Character.h">
-      <Filter>Sources\Models\Entities</Filter>
-    </ClInclude>
     <ClInclude Include="AudioManager.h">
       <Filter>Sources\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="CharactersManager.h">
-      <Filter>Sources\Controllers\Entities</Filter>
     </ClInclude>
     <ClInclude Include="LTBL2\quadtree\DynamicQuadtree.h">
       <Filter>Libs\LTBL2</Filter>
@@ -163,10 +163,10 @@
       <Filter>Sources\Models\Entities</Filter>
     </ClInclude>
     <ClInclude Include="ProjectilesManager.h">
-      <Filter>Sources\Controllers\Entities</Filter>
+      <Filter>Sources\Controllers\Managers</Filter>
     </ClInclude>
     <ClInclude Include="ZombiesManager.h">
-      <Filter>Sources\Controllers\Entities</Filter>
+      <Filter>Sources\Controllers\Managers</Filter>
     </ClInclude>
     <ClInclude Include="TextureManager.h">
       <Filter>Sources\Core</Filter>
@@ -198,6 +198,18 @@
     <ClInclude Include="Inventory.h">
       <Filter>Sources\MainPlayer</Filter>
     </ClInclude>
+    <ClInclude Include="InventoryView.h">
+      <Filter>Sources\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerController.h">
+      <Filter>Sources\Controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Sources\Models\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayersManager.h">
+      <Filter>Sources\Controllers\Managers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Sources">
@@ -221,9 +233,6 @@
     <Filter Include="Sources\Controllers">
       <UniqueIdentifier>{dcb9068e-1997-4a31-b55a-e98ea1040da1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\Controllers\Entities">
-      <UniqueIdentifier>{d89bed07-2556-49f8-bac6-46dd6d23ed0c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Sources\Map">
       <UniqueIdentifier>{4af5a378-2ef5-4df9-bbf1-a2cf4852cf9c}</UniqueIdentifier>
     </Filter>
@@ -235,6 +244,9 @@
     </Filter>
     <Filter Include="Sources\MainPlayer">
       <UniqueIdentifier>{75c7e691-de02-42e1-9bdb-bf51c050da81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Controllers\Managers">
+      <UniqueIdentifier>{d89bed07-2556-49f8-bac6-46dd6d23ed0c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

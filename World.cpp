@@ -2,6 +2,9 @@
 
 #include "ProjectilesManager.h"
 #include "ZombiesManager.h"
+#include "PlayersManager.h"
+#include "PlayerController.h"
+#include "Player.h"
 #include "AudioManager.h"
 #include "Utils.h"
 #include "HUD.h"
@@ -33,7 +36,7 @@ World::World(sf::RenderWindow* window) :
 World::~World()
 {
 	ProjectilesManager::deleteAllProjectiles();
-	CharactersManager::destroyChars();
+	PlayersManager::destroyChars();
 	ZombiesManager::destroyZombies();
 }
 
@@ -46,7 +49,7 @@ void World::init(sf::RenderWindow* window)
 {
 	_instance = new World(window);
 	// Création du caractère
-	CharactersManager::createCharacter(sf::Vector2f(128, 200));
+	PlayersManager::createPlayer(sf::Vector2f(128, 200));
 	HUD::init(window);
 }
 
@@ -63,7 +66,7 @@ void World::loadMap(const std::vector<std::vector<int>>& tiles, const sf::Vector
 void World::update(sf::Vector2f mousePos)
 {
 	// Mise à jour du comportement des personnages
-	CharactersManager::update(mousePos);
+	PlayersManager::update(mousePos);
 	if (!Utils::debugMode) {
 		ZombiesManager::update();
 		ProjectilesManager::update();
@@ -71,10 +74,10 @@ void World::update(sf::Vector2f mousePos)
 	}
 
 	// On recupere la position du joueur, on cast en vector2i car les positions flotantes font des problemes dans les vues
-	sf::Vector2i playerPos = sf::Vector2i(CharactersManager::getCharacters()[0]->getPosition());
+	sf::Vector2i playerPos = sf::Vector2i(PlayersManager::getPlayers()[0]->getPlayer()->getPosition());
 
 	// On centre les vues sur le joueur
-	_mainView.setCenter(CharactersManager::getCharacters()[0]->getPosition());//sf::Vector2f(playerPos));
+	_mainView.setCenter(PlayersManager::getPlayers()[0]->getPlayer()->getPosition());//sf::Vector2f(playerPos));
 	_minimapView.setCenter(sf::Vector2f(playerPos));
 
 	//si la fenetre n'a pas le focus on eteint la musique
@@ -91,7 +94,7 @@ void World::draw()
 	// On fait les différents dessins en commencant par la map
 	_window->setView(_mainView);
 	_currentRegion->manageDraw(*_window);
-	CharactersManager::manageDraw(*_window);
+	PlayersManager::manageDraw(*_window);
 	ZombiesManager::manageDraw(*_window);
 	ProjectilesManager::manageDraw(*_window);
 
@@ -111,7 +114,7 @@ void World::draw()
 void World::handleInputs(const sf::Event& event)
 {
 	// Récupération des entrées clavier qui concernent les personnages
-	CharactersManager::handleInputs(event);
+	PlayersManager::handleInputs(event);
 }
 
 ltbl::LightSystem* World::getLightSys()
@@ -155,7 +158,7 @@ void World::drawMinimap()
 
 	// On fait les différents dessins en commencant par la map
 	_currentRegion->manageDraw(*_window);
-	CharactersManager::manageDraw(*_window);
+	PlayersManager::manageDraw(*_window);
 
 	//_window->draw(_lightSprite, _lightRenderStates);	// les ombres
 	_ls.render(_minimapView, _unshadowShader, _lightOverShapeShader); // les lumières
