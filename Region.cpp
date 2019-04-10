@@ -69,8 +69,8 @@ void Region::update()
 		tempKey2->setPosition(sf::Vector2f(150, 150));
 		_items.emplace_back(tempKey2);
 	}
-	if((_ticks + 30)%600 == 0)
-		ZombiesManager::createZombie(sf::Vector2f(800 + (int)(rand()%100), 500 + (int)(rand()%100)));
+	//if((_ticks + 30)%600 == 0)
+		//ZombiesManager::createZombie(sf::Vector2f(800 + (int)(rand()%100), 500 + (int)(rand()%100)));
 }
 
 // Renvoit l'item le plus proche de la position dans une certaine portée et le supprime de la région, nullptr si il n'y en a pas

@@ -21,7 +21,10 @@ public:
 	Player* getPlayer() const;
 
 	// Procédure qui dessine les personnages
-	void manageDraw(sf::RenderWindow& window);
+	void manageDrawCharacter(sf::RenderWindow& window);
+
+	// Procédure qui dessine les inventaires
+	void manageDrawInventory(sf::RenderWindow& window);
 
 private:
 

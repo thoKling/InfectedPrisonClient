@@ -23,7 +23,7 @@ sf::Packet& operator >>(sf::Packet& packet, std::vector<std::vector<int>>& myVec
 Application::Application()
 {
 	// on crée la fenêtre
-	_window.create(sf::VideoMode(WINDOWS_HEIGHT, WINDOWS_WIDTH), "Infected Prison");
+	_window.create(sf::VideoMode(WINDOWS_WIDTH, WINDOWS_HEIGHT), "Infected Prison");
 
 	World::init(&_window);
 

@@ -9,8 +9,8 @@ constexpr auto PI = 3.14159265;
 // Nombre de regions max
 #define REGION_NUMBER 400
 
-#define WINDOWS_HEIGHT 1024
-#define WINDOWS_WIDTH 512
+#define WINDOWS_HEIGHT 512
+#define WINDOWS_WIDTH 1024
 
 class Utils
 {

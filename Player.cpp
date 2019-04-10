@@ -101,6 +101,7 @@ void Player::update(const sf::Vector2f& mousePos)
 
 void Player::receiveHit(const sf::Vector2f& hitterPosition)
 {
+	_beingHit = true;
 	_sprite.setColor(sf::Color::Red);
 	sf::Vector2f newPos;
 	sf::Vector2f vecUnit = Utils::getVecUnit(hitterPosition, getPosition());

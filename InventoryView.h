@@ -12,7 +12,7 @@ public:
 	~InventoryView();
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-	void handleInputs(const sf::Event& event);
+	void update(Inventory* inventory);
 
 private:
 	Inventory* _inventory;

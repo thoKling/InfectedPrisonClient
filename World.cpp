@@ -94,7 +94,7 @@ void World::draw()
 	// On fait les différents dessins en commencant par la map
 	_window->setView(_mainView);
 	_currentRegion->manageDraw(*_window);
-	PlayersManager::manageDraw(*_window);
+	PlayersManager::manageDrawCharacters(*_window);
 	ZombiesManager::manageDraw(*_window);
 	ProjectilesManager::manageDraw(*_window);
 
@@ -108,6 +108,9 @@ void World::draw()
 
 	_window->setView(_window->getDefaultView());
 	HUD::manageDraw(_window);
+
+	PlayersManager::manageDrawInventories(*_window);
+
 	_window->setView(_mainView);
 }
 
@@ -158,7 +161,7 @@ void World::drawMinimap()
 
 	// On fait les différents dessins en commencant par la map
 	_currentRegion->manageDraw(*_window);
-	PlayersManager::manageDraw(*_window);
+	PlayersManager::manageDrawCharacters(*_window);
 
 	//_window->draw(_lightSprite, _lightRenderStates);	// les ombres
 	_ls.render(_minimapView, _unshadowShader, _lightOverShapeShader); // les lumières

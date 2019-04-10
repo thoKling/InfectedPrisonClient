@@ -37,7 +37,7 @@ void Zombie::update() {
 	if (Utils::distance(getPosition(), _target) > 80)
 		myMove();
 	else
-		PlayersManager::getPlayers().at(0)->receiveHit(getPosition());
+		PlayersManager::getPlayers()[0]->receiveHit(getPosition());
 }
 
 // Renvoit la position par rapport aux tiles 

@@ -17,7 +17,9 @@ public:
 	unsigned int getAmmos(WeaponType weaponType);
 	void setAmmos(WeaponType weaponType, unsigned int amount);
 
+	std::vector<Item*> getItems();
+
 private:
-	std::list<Item*> _items;
+	std::vector<Item*> _items;
 };
 

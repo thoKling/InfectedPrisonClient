@@ -93,11 +93,17 @@ void PlayerController::update(const sf::Vector2f& mousePos)
 	else
 		HUD::setAmmo(0);
 	HUD::setLives(_lives);
+
+	_inventoryView->update(&_inventory);
 }
 
-// on draw chaque personnage
-void PlayerController::manageDraw(sf::RenderWindow& window) {
+// on draw le personnage
+void PlayerController::manageDrawCharacter(sf::RenderWindow& window) {
 	window.draw(*_player);
+}
+
+// on draw l'inventaire
+void PlayerController::manageDrawInventory(sf::RenderWindow& window) {
 	if (_isInventoryOpen) {
 		window.draw(*_inventoryView);
 	}

@@ -16,7 +16,10 @@ public:
 	static std::map<unsigned int, PlayerController*> getPlayers();
 
 	// Procédure qui dessine les personnages
-	static void manageDraw(sf::RenderWindow& window);
+	static void manageDrawCharacters(sf::RenderWindow& window);
+
+	// Procédure qui dessine les inventaires
+	static void manageDrawInventories(sf::RenderWindow& window);
 
 	// Procédure qui traite les entrées clavier liées aux personnages
 	static void handleInputs(const sf::Event& event);

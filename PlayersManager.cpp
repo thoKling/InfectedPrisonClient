@@ -37,10 +37,18 @@ std::map<unsigned int, PlayerController*> PlayersManager::getPlayers()
 
 
 // on draw chaque personnage
-void PlayersManager::manageDraw(sf::RenderWindow& window) {
+void PlayersManager::manageDrawCharacters(sf::RenderWindow& window) {
 	for (auto it = _players.begin(); it != _players.end(); ++it)
 	{
-		it->second->manageDraw(window);
+		it->second->manageDrawCharacter(window);
+	}
+}
+
+// on draw chaque inventaire
+void PlayersManager::manageDrawInventories(sf::RenderWindow& window) {
+	for (auto it = _players.begin(); it != _players.end(); ++it)
+	{
+		it->second->manageDrawInventory(window);
 	}
 }
 
@@ -54,5 +62,8 @@ void PlayersManager::handleInputs(const sf::Event& event) {
 // Mise à jour du comportement des personnages
 void PlayersManager::update(const sf::Vector2f& mousePos)
 {
-	_players[0]->update(mousePos);
+	for (auto it = _players.begin(); it != _players.end(); ++it)
+	{
+		it->second->update(mousePos);
+	}
 }

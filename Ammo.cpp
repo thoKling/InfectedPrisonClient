@@ -5,7 +5,7 @@
 Ammo::Ammo(WeaponType ammoType)
 {
 	_ammoType = ammoType;
-	_sprite.setTexture(*TextureManager::loadText("Ressources/ammo.jpg"));
+	_sprite.setTexture(*TextureManager::loadText("Ressources/ammo.png"));
 	_sprite.setScale({0.125,0.25});
 }
 
