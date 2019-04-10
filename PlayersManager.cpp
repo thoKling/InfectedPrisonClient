@@ -22,8 +22,7 @@ void PlayersManager::destroyChars()
 
 // créer un nouveau personnage et renvoit l'id de ce dernier
 unsigned int PlayersManager::createPlayer(const sf::Vector2f& pos) {
-	Player* player = new Player();
-	_players[_nextId] = new PlayerController(player);
+	_players[_nextId] = new PlayerController();
 	_players[_nextId]->getPlayer()->setPosition(pos);
 	_nextId++;
 	return _nextId - 1;

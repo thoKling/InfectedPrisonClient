@@ -8,7 +8,7 @@ class Item;
 class Player : public DrawableEntity
 {
 public:
-	Player();
+	Player(Inventory* inventory);
 	~Player();
 
 	/* Procédure qui déplace le personnage */
@@ -19,6 +19,8 @@ public:
 	void update(const sf::Vector2f& mousePos);
 
 	// Getters and Setters
+	Inventory* getInventory() const;
+
 	//bool getDState() const;
 	void setDState(bool state);
 	//bool getQState() const;
@@ -30,10 +32,9 @@ public:
 	bool getHitState() const;
 	//void setUpState(bool state);
 
-	Item* getCurrentItem() const;
-	void setCurrentItem(Item* item);
-
 private:
+
+	Inventory* _inventory;
 
 	// La vitesse de déplacement du personnage
 	double _velocity = 5;
@@ -48,8 +49,6 @@ private:
 
 	std::shared_ptr<ltbl::LightPointEmission> light;
 	sf::Texture pointLightTexture;
-
-	Item* _currentItem;
 
 	bool _beingHit = false;
 

@@ -2,13 +2,12 @@
 
 #include "Inventory.h"
 
-class InventoryView;
 class Player;
 
 class PlayerController
 {
 public:
-	PlayerController(Player* player);
+	PlayerController();
 	~PlayerController();
 
 	/* Procédure qui récupère et traite les entrées clavier du joueur */
@@ -18,13 +17,14 @@ public:
 
 	void update(const sf::Vector2f& mousePos);
 
-	Player* getPlayer() const;
-
 	// Procédure qui dessine les personnages
 	void manageDrawCharacter(sf::RenderWindow& window);
 
 	// Procédure qui dessine les inventaires
 	void manageDrawInventory(sf::RenderWindow& window);
+
+	Player* getPlayer() const;
+	Inventory* getInventory() const;
 
 private:
 
@@ -33,8 +33,7 @@ private:
 
 	Player* _player;
 
-	Inventory _inventory;
-	InventoryView* _inventoryView;
+	Inventory* _inventory;
 	
 	unsigned int _lives = 3;
 	bool _alive = true;

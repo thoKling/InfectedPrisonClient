@@ -3,6 +3,7 @@
 #include <list>
 #include "Item.h"
 
+class InventoryView;
 
 class Inventory
 {
@@ -19,7 +20,16 @@ public:
 
 	std::vector<Item*> getItems();
 
+	Item* getCurrentItem() const;
+	void setCurrentItem(Item* item);
+
+	InventoryView* getInventoryView() const;
+
 private:
 	std::vector<Item*> _items;
+
+	InventoryView* _inventoryView;
+
+	Item* _currentItem;
 };
 

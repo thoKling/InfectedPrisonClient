@@ -1,4 +1,5 @@
 #include "InventoryView.h"
+#include "Inventory.h"
 #include "Utils.h"
 #include "TextureManager.h"
 
@@ -12,6 +13,7 @@ InventoryView::InventoryView(Inventory* inventory):
 
 InventoryView::~InventoryView()
 {
+	delete _inventory;
 }
 
 void InventoryView::draw(sf::RenderTarget& target, sf::RenderStates states) const
@@ -37,28 +39,38 @@ void InventoryView::draw(sf::RenderTarget& target, sf::RenderStates states) cons
 	base.setPosition(baseLeft, baseTop);
 	target.draw(base);
 
+	int nbCurrentItemFound = 0;
+
+	//Pour chaque case
 	for (int y = 0; y < baseHeight/64; y++) {
 		for (int x = 0; x < baseWidth/64; x++) {
+			//On dessine la case
 			sf::RectangleShape cell(sf::Vector2f(62, 62));
 			cell.setFillColor(sf::Color(50, 50, 50));
 			cell.setOutlineColor(sf::Color(166, 166, 166));
 			cell.setOutlineThickness(1);
 			cell.setPosition(baseLeft + x * 64, baseTop + y * 64);
 			target.draw(cell);
-			if (((baseWidth / 64)*y) + x < _inventory->getItems().size()) {
-				sf::Sprite sprite = _inventory->getItems()[((baseWidth / 64)*y) + x]->getSprite();
-				const sf::Vector2f initSpriteScale(sprite.getScale().x, sprite.getScale().y);
-				sprite.setScale(62.0 / sprite.getTexture()->getSize().x, 62.0 / sprite.getTexture()->getSize().y);
-				sprite.setPosition(baseLeft + x*64, baseTop + y*64);
-				target.draw(sprite);
-				sprite.setScale(initSpriteScale);
+			//Si il y a un item on le dessine
+			if (((baseWidth / 64)*y) + x + nbCurrentItemFound < _inventory->getItems().size()) {
+				Item* item = _inventory->getItems()[((baseWidth / 64)*y) + x + nbCurrentItemFound];
+				if (nbCurrentItemFound == 0 && item == _inventory->getCurrentItem()) {
+					nbCurrentItemFound = 1;
+					item = _inventory->getItems()[((baseWidth / 64)*y) + x + nbCurrentItemFound];
+				}
+				if (item != nullptr) {
+					sf::Sprite sprite = item->getSprite();
+					const sf::Vector2f initSpriteScale(sprite.getScale().x, sprite.getScale().y);
+					sprite.setScale(62.0 / sprite.getTexture()->getSize().x, 62.0 / sprite.getTexture()->getSize().y);
+					sprite.setPosition(baseLeft + x * 64, baseTop + y * 64);
+					target.draw(sprite);
+					sprite.setScale(initSpriteScale);
+				}
 			}
 		}
 	}
-	target.setView(temp);
-}
+	//affichage de l'objet courrant
 
-void InventoryView::update(Inventory* inventory)
-{
-	_inventory = inventory;
+
+	target.setView(temp);
 }

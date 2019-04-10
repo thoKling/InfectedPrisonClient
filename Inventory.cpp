@@ -1,14 +1,22 @@
 #include "Inventory.h"
+#include "InventoryView.h"
 
 
 
-Inventory::Inventory()
+Inventory::Inventory():
+	_inventoryView(new InventoryView(this)),
+	_currentItem(nullptr)
 {
 }
 
 
 Inventory::~Inventory()
 {
+	delete _currentItem;
+	for (auto it = _items.begin(); it != _items.end(); ++it) {
+		delete *it;
+	}
+	delete _inventoryView;
 }
 
 bool Inventory::AddItem(Item* item)
@@ -53,4 +61,18 @@ void Inventory::setAmmos(WeaponType weaponType, unsigned int amount)
 
 std::vector<Item*> Inventory::getItems() {
 	return _items;
+}
+
+Item* Inventory::getCurrentItem() const
+{
+	return _currentItem;
+}
+void Inventory::setCurrentItem(Item* item)
+{
+	_currentItem = item;
+}
+
+InventoryView* Inventory::getInventoryView() const
+{
+	return _inventoryView;
 }

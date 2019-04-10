@@ -1,21 +1,15 @@
 #include "Player.h"
 #include "Application.h"
 
-//#include "Utils.h"
-//#include "MapUtils.h"
 #include "World.h"
-//#include "AudioManager.h"
 #include "TextureManager.h"
 #include "LTBL2/lighting/LightSystem.h"
-//#include "Item.h"
-//#include "Inventory.h"
-//#include "InventoryView.h"
 
 #include <string>
 #include <iostream>
 
-Player::Player():
-	_currentItem(nullptr)
+Player::Player(Inventory* inventory) :
+	_inventory(inventory)
 {
 	this->setOrigin(24.f, 24.f);
 
@@ -35,7 +29,7 @@ Player::Player():
 
 Player::~Player()
 {
-	delete _currentItem;
+	delete _inventory;
 }
 
 
@@ -88,12 +82,12 @@ void Player::update(const sf::Vector2f& mousePos)
 	}
 
 	std::string file = "Man Blue/manBlue_stand";
-	if (_currentItem) {
-		_currentItem->update();
-		if (_currentItem->isReloading())
+	if (_inventory->getCurrentItem() != nullptr) {
+		_inventory->getCurrentItem()->update();
+		if (_inventory->getCurrentItem()->isReloading())
 			file = "Man Blue/manBlue_reload";
 		else
-			file = "Man Blue/manBlue_" + WeaponTypesStr[_currentItem->getWeaponType()];
+			file = "Man Blue/manBlue_" + WeaponTypesStr[_inventory->getCurrentItem()->getWeaponType()];
 	}
 
 	_sprite.setTexture(*TextureManager::loadText("Ressources/PNG/" + file + ".png"));
@@ -123,13 +117,9 @@ void Player::receiveHit(const sf::Vector2f& hitterPosition)
 	}
 }
 
-Item* Player::getCurrentItem() const
+Inventory* Player::getInventory() const
 {
-	return _currentItem;
-}
-void Player::setCurrentItem(Item* item)
-{
-	_currentItem = item;
+	return _inventory;
 }
 
 void Player::setDState(bool state)

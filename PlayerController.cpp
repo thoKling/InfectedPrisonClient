@@ -8,18 +8,19 @@
 
 
 
-PlayerController::PlayerController(Player* player):
-	_inventoryView(new InventoryView(&_inventory)),
-	_isInventoryOpen(false),
-	_player(player)
+PlayerController::PlayerController() :
+	_inventory(new Inventory()),
+	//_player(new Player(_inventory)),
+	_isInventoryOpen(false)
 {
+	_player = new Player(_inventory);
 }
 
 
 PlayerController::~PlayerController()
 {
-	delete _inventoryView;
 	delete _player;
+	delete _inventory;
 }
 
 /** Récupération et traitement des entrées clavier du joueur **/
@@ -50,8 +51,8 @@ void PlayerController::handleInputs(const sf::Event& event)
 
 	if (!_isInventoryOpen) {
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-			if (_player->getCurrentItem() != nullptr)
-				_player->getCurrentItem()->use(_player);
+			if (_inventory->getCurrentItem() != nullptr)
+				_inventory->getCurrentItem()->use(_player);
 
 		//if (!sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		//	_fire = false;
@@ -87,14 +88,13 @@ void PlayerController::handleInputs(const sf::Event& event)
 void PlayerController::update(const sf::Vector2f& mousePos)
 {
 	_player->update(mousePos);
-	if (_player->getCurrentItem() != nullptr) {
-		HUD::setAmmo(_player->getCurrentItem()->getAmmo());
+	if (_inventory->getCurrentItem() != nullptr) {
+		HUD::setAmmo(_inventory->getCurrentItem()->getAmmo());
 	}
 	else
 		HUD::setAmmo(0);
 	HUD::setLives(_lives);
 
-	_inventoryView->update(&_inventory);
 }
 
 // on draw le personnage
@@ -105,7 +105,7 @@ void PlayerController::manageDrawCharacter(sf::RenderWindow& window) {
 // on draw l'inventaire
 void PlayerController::manageDrawInventory(sf::RenderWindow& window) {
 	if (_isInventoryOpen) {
-		window.draw(*_inventoryView);
+		window.draw(*_inventory->getInventoryView());
 	}
 }
 
@@ -129,29 +129,33 @@ void PlayerController::pickItem() {
 	Item* item = World::getInstance()->getItemInRect(_player->getGlobalBounds());
 
 	if (item != nullptr) {
-		_inventory.AddItem(item);
+		_inventory->AddItem(item);
 		if (item->getWeaponType() != WeaponType::NaW)
-			_player->setCurrentItem(item);
+			_inventory->setCurrentItem(item);
 	}
 }
 
 void PlayerController::dropItem() {
-	if (_player->getCurrentItem() != nullptr) {
-		World::getInstance()->dropItem(_player->getCurrentItem(), _player->getPosition());
-		_inventory.dropItem(_player->getCurrentItem());
-		_player->setCurrentItem(nullptr);
+	if (_inventory->getCurrentItem() != nullptr) {
+		World::getInstance()->dropItem(_inventory->getCurrentItem(), _player->getPosition());
+		_inventory->dropItem(_inventory->getCurrentItem());
+		_inventory->setCurrentItem(nullptr);
 	}
 }
 
 void PlayerController::reload()
 {
-	if (_player->getCurrentItem() != nullptr) {
-		WeaponType typeW = _player->getCurrentItem()->getWeaponType();
-		unsigned int usedAmmos = _player->getCurrentItem()->reload(_inventory.getAmmos(typeW));
-		_inventory.setAmmos(typeW, usedAmmos);
+	if (_inventory->getCurrentItem() != nullptr) {
+		WeaponType typeW = _inventory->getCurrentItem()->getWeaponType();
+		unsigned int usedAmmos = _inventory->getCurrentItem()->reload(_inventory->getAmmos(typeW));
+		_inventory->setAmmos(typeW, usedAmmos);
 	}
 }
 
 Player* PlayerController::getPlayer() const {
 	return _player;
+}
+
+Inventory* PlayerController::getInventory() const {
+	return _inventory;
 }
