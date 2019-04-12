@@ -15,9 +15,14 @@ public:
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
+	void handleInputs(const sf::Event& event);
+
 private:
 	Inventory* _inventory;
 
 	std::list<Item*> _items;
+	//Dans chaque carré de 64/64 se trouve potentiellement un item
+	std::vector<std::vector<Item*>> _itemOnScreen;
+
 };
 

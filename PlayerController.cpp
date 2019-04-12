@@ -49,7 +49,11 @@ void PlayerController::handleInputs(const sf::Event& event)
 	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
 		_player->setUpState(false);
 
-	if (!_isInventoryOpen) {
+	if (_isInventoryOpen) {
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+			_inventory->getInventoryView()->handleInputs(event);
+	}
+	else {
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			if (_inventory->getCurrentItem() != nullptr)
 				_inventory->getCurrentItem()->use(_player);

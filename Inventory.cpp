@@ -5,7 +5,8 @@
 
 Inventory::Inventory():
 	_inventoryView(new InventoryView(this)),
-	_currentItem(nullptr)
+	_currentItem(nullptr),
+	_backpackSize(36)
 {
 }
 
@@ -21,8 +22,11 @@ Inventory::~Inventory()
 
 bool Inventory::AddItem(Item* item)
 {
-	_items.emplace_back(item);
-	return true;
+	if (_items.size() <= _backpackSize) {
+		_items.emplace_back(item);
+		return true;
+	}
+	return false;
 }
 
 void Inventory::dropItem(Item * item)

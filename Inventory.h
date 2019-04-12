@@ -26,6 +26,8 @@ public:
 	InventoryView* getInventoryView() const;
 
 private:
+	int _backpackSize;
+
 	std::vector<Item*> _items;
 
 	InventoryView* _inventoryView;
