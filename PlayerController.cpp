@@ -98,7 +98,7 @@ void PlayerController::update(const sf::Vector2f& mousePos)
 	else
 		HUD::setAmmo(0);
 	HUD::setLives(_lives);
-
+	_inventory->getInventoryView()->update();
 }
 
 // on draw le personnage
