@@ -21,7 +21,5 @@ private:
 	sf::Sprite _gameOverSprite;
 
 	sf::RenderWindow _window;
-	sf::UdpSocket _socket;
-	sf::IpAddress _serverIP;
 };
 

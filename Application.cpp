@@ -5,57 +5,24 @@
 #include "World.h"
 #include "AudioManager.h"
 #include "TextureManager.h"
+#include "SocketManager.h"
 
 #include "Utils.h"
-
-sf::Packet& operator >>(sf::Packet& packet, std::vector<std::vector<int>>& myVec)
-{
-	for (size_t i = 0; i < myVec.size(); i++)
-	{
-		for (size_t j = 0; j < myVec[0].size(); j++)
-		{
-			packet >> myVec[i][j];
-		}
-	}
-	return packet;
-}
 
 Application::Application()
 {
 	// on crée la fenêtre
 	_window.create(sf::VideoMode(1024, 512), "Infected Prison");
 
+	// Mettre à true si on veut utiliser le serveur
+	bool online = true;
 	World::init(&_window);
 
-	std::vector<std::vector<int>> _level;
-
-	// Mettre à true si on veut utiliser le serveur
-	bool online = false;
 	if (online) {
-		// on bind la socket
-		if (_socket.bind(10000) != sf::Socket::Done)
-		{
-			throw std::string("Impossible de lié la socket au port 9999");
-		}
-		sf::Packet packet;
-		packet << "Je suis la";
-		_socket.send(packet, "localhost", 9999);
-
-		unsigned short port;
-		sf::Packet packet2;
-		if (_socket.receive(packet2, _serverIP, port) != sf::Socket::Done)
-		{
-			throw std::string("Erreur lors de la récéption du paquet");
-		}
-		// on définit le niveau à l'aide de numéro de tuiles
-		_level.resize(8);
-		for (size_t i = 0; i < _level.size(); i++)
-		{
-			_level[i].resize(16);
-		}
-		packet2 >> _level;
+		SocketManager::init("localhost", 9999);
 	}
-	else {
+	else {	
+		std::vector<std::vector<int>> _level;
 		for (size_t i = 0; i < 16; i++)
 		{
 			std::vector<int> temp;
@@ -69,9 +36,9 @@ Application::Application()
 					temp.push_back(10);
 			}
 			_level.push_back(temp);
-		}
+		}	
+		World::getInstance()->loadMap(_level, sf::Vector2i(0,0));
 	}
-	World::getInstance()->loadMap(_level, sf::Vector2i(0,0));
 	_gameOverSprite.setTexture(*TextureManager::loadText("Ressources/gameOver.png"));
 	_gameOverSprite.setScale(0.25, 0.25);
 }

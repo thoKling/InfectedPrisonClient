@@ -100,6 +100,9 @@
     <ClCompile Include="Inventory.cpp">
       <Filter>Sources\MainPlayer</Filter>
     </ClCompile>
+    <ClCompile Include="SocketManager.cpp">
+      <Filter>Sources\Multiplayer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -198,6 +201,9 @@
     <ClInclude Include="Inventory.h">
       <Filter>Sources\MainPlayer</Filter>
     </ClInclude>
+    <ClInclude Include="SocketManager.h">
+      <Filter>Sources\Multiplayer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Sources">
@@ -235,6 +241,9 @@
     </Filter>
     <Filter Include="Sources\MainPlayer">
       <UniqueIdentifier>{75c7e691-de02-42e1-9bdb-bf51c050da81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Multiplayer">
+      <UniqueIdentifier>{5b670907-731d-4331-9b21-006aa64f8a5e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

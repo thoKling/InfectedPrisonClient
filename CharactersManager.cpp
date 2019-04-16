@@ -1,8 +1,7 @@
 #include "CharactersManager.h"
 
+#include "SocketManager.h"
 #include <iostream>
-
-#include "World.h"
 
 unsigned int CharactersManager::_nextId = 0;
 std::map<unsigned int, Character*> CharactersManager::_characters;
@@ -50,5 +49,13 @@ void CharactersManager::handleInputs(const sf::Event& event)
 // Mise à jour du comportement des personnages
 void CharactersManager::update(const sf::Vector2f& mousePos)
 {
-	_characters[0]->update(mousePos);
+	for (auto it = _characters.begin(); it != _characters.end(); ++it)
+	{
+		it->second->update(mousePos);
+	}
+	if (SocketManager::isOnline()) {
+		sf::Packet packet;
+		packet << SocketManager::PacketType::PlayerPos << _characters[0]->getPosition() << _characters[0]->getRotation();
+		SocketManager::send(packet);
+	}
 }
