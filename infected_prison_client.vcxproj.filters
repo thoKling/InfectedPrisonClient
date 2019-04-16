@@ -7,12 +7,6 @@
     <ClCompile Include="main.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="Character.cpp">
-      <Filter>Sources\Models\Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="CharactersManager.cpp">
-      <Filter>Sources\Controllers\Entities</Filter>
-    </ClCompile>
     <ClCompile Include="LTBL2\quadtree\DynamicQuadtree.cpp">
       <Filter>Libs\LTBL2</Filter>
     </ClCompile>
@@ -34,9 +28,6 @@
     <ClCompile Include="LTBL2\Math.cpp">
       <Filter>Libs\LTBL2</Filter>
     </ClCompile>
-    <ClCompile Include="Zombie.cpp">
-      <Filter>Sources\Models\Entities</Filter>
-    </ClCompile>
     <ClCompile Include="LTBL2\quadtree\Quadtree.cpp">
       <Filter>Libs\LTBL2</Filter>
     </ClCompile>
@@ -56,22 +47,7 @@
       <Filter>Sources\Core</Filter>
     </ClCompile>
     <ClCompile Include="Weapon.cpp">
-      <Filter>Sources\Models\Items</Filter>
-    </ClCompile>
-    <ClCompile Include="Projectile.cpp">
-      <Filter>Sources\Models\Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="ProjectilesManager.cpp">
-      <Filter>Sources\Controllers\Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="ZombiesManager.cpp">
-      <Filter>Sources\Controllers\Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="TextureManager.cpp">
-      <Filter>Sources\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="AudioManager.cpp">
-      <Filter>Sources\Core</Filter>
+      <Filter>Sources\Models\Entities\Items</Filter>
     </ClCompile>
     <ClCompile Include="Region.cpp">
       <Filter>Sources\Map</Filter>
@@ -80,25 +56,55 @@
       <Filter>Sources\Map</Filter>
     </ClCompile>
     <ClCompile Include="Item.cpp">
-      <Filter>Sources\Models\Items</Filter>
+      <Filter>Sources\Models\Entities\Items</Filter>
     </ClCompile>
     <ClCompile Include="Key.cpp">
-      <Filter>Sources\Models\Items</Filter>
-    </ClCompile>
-    <ClCompile Include="DrawableEntity.cpp">
-      <Filter>Sources\Models</Filter>
+      <Filter>Sources\Models\Entities\Items</Filter>
     </ClCompile>
     <ClCompile Include="DroppedItem.cpp">
-      <Filter>Sources\Models\Items</Filter>
+      <Filter>Sources\Models\Entities\Items</Filter>
     </ClCompile>
     <ClCompile Include="HUD.cpp">
-      <Filter>Sources\HUD</Filter>
+      <Filter>Sources\View\HUD</Filter>
     </ClCompile>
     <ClCompile Include="Ammo.cpp">
-      <Filter>Sources\Models\Items</Filter>
+      <Filter>Sources\Models\Entities\Items</Filter>
     </ClCompile>
     <ClCompile Include="Inventory.cpp">
-      <Filter>Sources\MainPlayer</Filter>
+      <Filter>Sources\Models\MainPlayer</Filter>
+    </ClCompile>
+    <ClCompile Include="InventoryView.cpp">
+      <Filter>Sources\View\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerController.cpp">
+      <Filter>Sources\Controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayersManager.cpp">
+      <Filter>Sources\Controllers\Managers\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectilesManager.cpp">
+      <Filter>Sources\Controllers\Managers\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="ZombiesManager.cpp">
+      <Filter>Sources\Controllers\Managers\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureManager.cpp">
+      <Filter>Sources\Controllers\Managers\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioManager.cpp">
+      <Filter>Sources\Controllers\Managers\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawableEntity.cpp">
+      <Filter>Sources\Models\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Sources\Models\Entities\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Sources\Models\Entities\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Zombie.cpp">
+      <Filter>Sources\Models\Entities\Entities</Filter>
     </ClCompile>
     <ClCompile Include="SocketManager.cpp">
       <Filter>Sources\Multiplayer</Filter>
@@ -107,15 +113,6 @@
   <ItemGroup>
     <ClInclude Include="Application.h">
       <Filter>Sources\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Character.h">
-      <Filter>Sources\Models\Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="AudioManager.h">
-      <Filter>Sources\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="CharactersManager.h">
-      <Filter>Sources\Controllers\Entities</Filter>
     </ClInclude>
     <ClInclude Include="LTBL2\quadtree\DynamicQuadtree.h">
       <Filter>Libs\LTBL2</Filter>
@@ -138,9 +135,6 @@
     <ClInclude Include="LTBL2\Math.h">
       <Filter>Libs\LTBL2</Filter>
     </ClInclude>
-    <ClInclude Include="Zombie.h">
-      <Filter>Sources\Models\Entities</Filter>
-    </ClInclude>
     <ClInclude Include="LTBL2\quadtree\StaticQuadtree.h">
       <Filter>Libs\LTBL2</Filter>
     </ClInclude>
@@ -160,19 +154,7 @@
       <Filter>Sources\Core</Filter>
     </ClInclude>
     <ClInclude Include="Weapon.h">
-      <Filter>Sources\Models\Items</Filter>
-    </ClInclude>
-    <ClInclude Include="Projectile.h">
-      <Filter>Sources\Models\Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="ProjectilesManager.h">
-      <Filter>Sources\Controllers\Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="ZombiesManager.h">
-      <Filter>Sources\Controllers\Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="TextureManager.h">
-      <Filter>Sources\Core</Filter>
+      <Filter>Sources\Models\Entities\Items</Filter>
     </ClInclude>
     <ClInclude Include="Region.h">
       <Filter>Sources\Map</Filter>
@@ -181,25 +163,55 @@
       <Filter>Sources\Map</Filter>
     </ClInclude>
     <ClInclude Include="Item.h">
-      <Filter>Sources\Models\Items</Filter>
+      <Filter>Sources\Models\Entities\Items</Filter>
     </ClInclude>
     <ClInclude Include="Key.h">
-      <Filter>Sources\Models\Items</Filter>
-    </ClInclude>
-    <ClInclude Include="DrawableEntity.h">
-      <Filter>Sources\Models</Filter>
+      <Filter>Sources\Models\Entities\Items</Filter>
     </ClInclude>
     <ClInclude Include="DroppedItem.h">
-      <Filter>Sources\Models\Items</Filter>
+      <Filter>Sources\Models\Entities\Items</Filter>
     </ClInclude>
     <ClInclude Include="HUD.h">
-      <Filter>Sources\HUD</Filter>
+      <Filter>Sources\View\HUD</Filter>
     </ClInclude>
     <ClInclude Include="Ammo.h">
-      <Filter>Sources\Models\Items</Filter>
+      <Filter>Sources\Models\Entities\Items</Filter>
     </ClInclude>
     <ClInclude Include="Inventory.h">
-      <Filter>Sources\MainPlayer</Filter>
+      <Filter>Sources\Models\MainPlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="InventoryView.h">
+      <Filter>Sources\View\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerController.h">
+      <Filter>Sources\Controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayersManager.h">
+      <Filter>Sources\Controllers\Managers\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectilesManager.h">
+      <Filter>Sources\Controllers\Managers\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="ZombiesManager.h">
+      <Filter>Sources\Controllers\Managers\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager.h">
+      <Filter>Sources\Controllers\Managers\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioManager.h">
+      <Filter>Sources\Controllers\Managers\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawableEntity.h">
+      <Filter>Sources\Models\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Sources\Models\Entities\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>Sources\Models\Entities\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Zombie.h">
+      <Filter>Sources\Models\Entities\Entities</Filter>
     </ClInclude>
     <ClInclude Include="SocketManager.h">
       <Filter>Sources\Multiplayer</Filter>
@@ -227,23 +239,35 @@
     <Filter Include="Sources\Controllers">
       <UniqueIdentifier>{dcb9068e-1997-4a31-b55a-e98ea1040da1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\Controllers\Entities">
-      <UniqueIdentifier>{d89bed07-2556-49f8-bac6-46dd6d23ed0c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Sources\Map">
       <UniqueIdentifier>{4af5a378-2ef5-4df9-bbf1-a2cf4852cf9c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\Models\Items">
-      <UniqueIdentifier>{45d37c4a-ce4e-4fd2-8adb-46b14582fd9d}</UniqueIdentifier>
+    <Filter Include="Sources\Controllers\Managers">
+      <UniqueIdentifier>{d89bed07-2556-49f8-bac6-46dd6d23ed0c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\HUD">
-      <UniqueIdentifier>{85cbe02c-977d-41a9-9b9f-54ab2b2db881}</UniqueIdentifier>
+    <Filter Include="Sources\Controllers\Managers\Entities">
+      <UniqueIdentifier>{50791ec2-9d19-4556-96dd-7f2f78f4c71b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\MainPlayer">
+    <Filter Include="Sources\Controllers\Managers\Core">
+      <UniqueIdentifier>{f89ec435-2e46-4eb9-91c0-9ef4127f5b75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Models\MainPlayer">
       <UniqueIdentifier>{75c7e691-de02-42e1-9bdb-bf51c050da81}</UniqueIdentifier>
     </Filter>
     <Filter Include="Sources\Multiplayer">
       <UniqueIdentifier>{5b670907-731d-4331-9b21-006aa64f8a5e}</UniqueIdentifier>
+	</Filter>
+    <Filter Include="Sources\Models\Entities\Items">
+      <UniqueIdentifier>{45d37c4a-ce4e-4fd2-8adb-46b14582fd9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Models\Entities\Entities">
+      <UniqueIdentifier>{d2acbde8-d93b-46c2-b1c1-c1b6f1539345}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\View">
+      <UniqueIdentifier>{7bfb3629-1708-4bb7-8291-293bfa2fa8bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\View\HUD">
+      <UniqueIdentifier>{85cbe02c-977d-41a9-9b9f-54ab2b2db881}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

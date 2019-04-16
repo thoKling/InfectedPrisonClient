@@ -4,7 +4,7 @@
 
 #include "ProjectilesManager.h"
 #include "AudioManager.h"
-#include "Character.h"
+#include "Player.h"
 #include "TextureManager.h"
 
 Weapon::Weapon() :
@@ -26,7 +26,7 @@ Weapon::~Weapon()
 {
 }
 
-void Weapon::use(Character* charac)
+void Weapon::use(Player* charac)
 {
 	if (_isFireable) {
 		if (_ammo > 0) {

@@ -1,6 +1,6 @@
 #include "Item.h"
 
-#include "Character.h"
+#include "Player.h"
 
 Item::Item()
 {
@@ -10,7 +10,7 @@ Item::~Item()
 {
 }
 
-void Item::use(Character* charac)
+void Item::use(Player* player)
 {
 }
 
@@ -61,4 +61,6 @@ void Item::addStack(unsigned int stack)
 void Item::removeStack(unsigned int stack)
 {
 	_stack -= stack;
+	if (_stack < 0) 
+		stack = 0;
 }

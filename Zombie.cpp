@@ -5,7 +5,9 @@
 #include "MapUtils.h"
 #include "World.h"
 #include "Utils.h"
-#include "CharactersManager.h"
+#include "PlayersManager.h"
+#include "PlayerController.h"
+#include "Player.h"
 #include "TextureManager.h"
 
 Zombie::Zombie() : 
@@ -23,7 +25,7 @@ Zombie::~Zombie()
 }
 
 void Zombie::update() {
-	_target = CharactersManager::getCharacters().at(0)->getPosition();
+	_target = PlayersManager::getPlayers().at(0)->getPlayer()->getPosition();
 
 	if (_beingHit) {
 		_sprite.setColor(sf::Color(_sprite.getColor().r, _sprite.getColor().g + 15, _sprite.getColor().b + 15));
@@ -35,7 +37,7 @@ void Zombie::update() {
 	if (Utils::distance(getPosition(), _target) > 80)
 		myMove();
 	else
-		CharactersManager::getCharacters().at(0)->receiveHit(getPosition());
+		PlayersManager::getPlayers()[0]->receiveHit(getPosition());
 }
 
 // Renvoit la position par rapport aux tiles 

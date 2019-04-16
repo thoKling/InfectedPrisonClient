@@ -12,10 +12,10 @@
 Application::Application()
 {
 	// on crée la fenêtre
-	_window.create(sf::VideoMode(1024, 512), "Infected Prison");
+	_window.create(sf::VideoMode(WINDOWS_WIDTH, WINDOWS_HEIGHT), "Infected Prison");
 
 	// Mettre à true si on veut utiliser le serveur
-	bool online = true;
+	bool online = false;
 	World::init(&_window);
 
 	if (online) {

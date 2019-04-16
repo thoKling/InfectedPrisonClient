@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "ProjectilesManager.h"
+#include "PlayersManager.h"
 
 bool SocketManager::_onlineMode = false;
 unsigned int SocketManager::_serverPort;
@@ -102,7 +103,7 @@ void SocketManager::handlePlayerConnection(sf::Packet packet)
 	std::string name;
 	packet >> name;
 	std::cout << name << " vient de se connecter !" << std::endl;
-	unsigned int id = CharactersManager::createCharacter({128,200});
+	unsigned int id = PlayersManager::createPlayer({128,200});
 	_playersConnected.push_back({id, name});
 }
 
@@ -121,8 +122,8 @@ void SocketManager::handlePlayerPos(sf::Packet packet)
 			id = player->localCharId;
 	}
 	if (id) {
-		CharactersManager::getCharacters()[id]->setPosition(pos);
-		CharactersManager::getCharacters()[id]->setRotation(rotation);
+		//PlayersManager::getPlayers()[id]->setPosition(pos);
+		//PlayersManager::getPlayers()[id]->setRotation(rotation);
 	}
 }
 

@@ -2,7 +2,8 @@
 
 #include "DrawableEntity.h"
 
-class Character;
+class PlayerController;
+class Player;
 
 enum WeaponType {
 	NaW, // Not a Weapon
@@ -16,7 +17,7 @@ class Item : public DrawableEntity
 public:
 	Item();
 	~Item();
-	virtual void use(Character* charac);
+	virtual void use(Player* player);
 	// Renvoit le nomdre d'ammo utilisée, recharge du nombre demandé
 	virtual unsigned int reload(unsigned int stack);
 	virtual void update();

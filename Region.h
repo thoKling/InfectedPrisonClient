@@ -29,4 +29,3 @@ private:
 	std::list<DroppedItem*> _items;
 	std::vector<std::vector<int>> _tiles;
 };
-

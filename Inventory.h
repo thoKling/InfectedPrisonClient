@@ -3,6 +3,8 @@
 #include <list>
 #include "Item.h"
 
+class InventoryView;
+
 class Inventory
 {
 public:
@@ -16,7 +18,20 @@ public:
 	unsigned int getAmmos(WeaponType weaponType);
 	void setAmmos(WeaponType weaponType, unsigned int amount);
 
+	std::vector<Item*> getItems();
+
+	Item* getCurrentItem() const;
+	void setCurrentItem(Item* item);
+
+	InventoryView* getInventoryView() const;
+
 private:
-	std::list<Item*> _items;
+	int _backpackSize;
+
+	std::vector<Item*> _items;
+
+	InventoryView* _inventoryView;
+
+	Item* _currentItem;
 };
 

@@ -30,7 +30,7 @@ public:
 	Weapon();
 	~Weapon();
 
-	virtual void use(Character* charac);
+	virtual void use(Player* charac);
 	virtual bool isReloading();
 	virtual unsigned int reload(unsigned int stack);
 	virtual void update();

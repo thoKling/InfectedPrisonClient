@@ -2,7 +2,6 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "CharactersManager.h"
 #include "Region.h"
 #include "Utils.h"
 

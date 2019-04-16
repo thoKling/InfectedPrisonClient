@@ -2,8 +2,6 @@
 
 #include <SFML/Network.hpp>
 
-#include "CharactersManager.h"
-
 class SocketManager
 {
 public:

@@ -1,25 +1,37 @@
 #include "Inventory.h"
+#include "InventoryView.h"
 
 
 
-Inventory::Inventory()
+Inventory::Inventory():
+	_inventoryView(new InventoryView(this)),
+	_currentItem(nullptr),
+	_backpackSize(36)
 {
 }
 
 
 Inventory::~Inventory()
 {
+	delete _currentItem;
+	for (auto it = _items.begin(); it != _items.end(); ++it) {
+		delete *it;
+	}
+	delete _inventoryView;
 }
 
 bool Inventory::AddItem(Item* item)
 {
-	_items.emplace_back(item);
-	return true;
+	if (_items.size() <= _backpackSize) {
+		_items.emplace_back(item);
+		return true;
+	}
+	return false;
 }
 
 void Inventory::dropItem(Item * item)
 {
-	_items.remove(item);
+	_items.erase(std::remove(_items.begin(), _items.end(), item), _items.end());
 }
 
 void Inventory::removeStack(Item* item, unsigned int amount)
@@ -28,7 +40,7 @@ void Inventory::removeStack(Item* item, unsigned int amount)
 	if (it != _items.end()) {
 		(*it)->removeStack(amount);
 		if ((*it)->getStack() <= 0)
-			_items.remove(*it);
+			_items.erase(std::remove(_items.begin(), _items.end(), *it), _items.end());
 	}
 }
 
@@ -49,4 +61,22 @@ void Inventory::setAmmos(WeaponType weaponType, unsigned int amount)
 			break;
 		}
 	}
+}
+
+std::vector<Item*> Inventory::getItems() {
+	return _items;
+}
+
+Item* Inventory::getCurrentItem() const
+{
+	return _currentItem;
+}
+void Inventory::setCurrentItem(Item* item)
+{
+	_currentItem = item;
+}
+
+InventoryView* Inventory::getInventoryView() const
+{
+	return _inventoryView;
 }
