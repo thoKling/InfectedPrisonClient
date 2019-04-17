@@ -17,11 +17,7 @@ World::World(sf::RenderWindow* window) :
 	// on créé les vues
 	_mainView = window->getDefaultView();
 	_mainView.zoom(1.5f);
-	//_window->setView(_mainView);
-	_minimapView = _mainView;
-	_minimapView.zoom(1.5);
-	// Dans un coin en haut à droite
-	_minimapView.setViewport(sf::FloatRect(0.75f, 0.f, 0.25f, 0.25f));
+	_window->setView(_mainView);
 
 	// Système de lumières
 	_penumbraTexture.loadFromFile("LTBL2/resources/penumbraTexture.png");
@@ -45,11 +41,11 @@ World* World::getInstance()
 	return _instance;
 }
 
-void World::init(sf::RenderWindow* window)
+void World::init(sf::RenderWindow* window, std::string name)
 {
 	_instance = new World(window);
 	// Création du caractère
-	PlayersManager::createPlayer(sf::Vector2f(128, 200));
+	PlayersManager::createClientPlayer(name, sf::Vector2f(128, 200));
 	HUD::init(window);
 }
 
@@ -65,20 +61,19 @@ void World::loadMap(const std::vector<std::vector<int>>& tiles, const sf::Vector
 
 void World::update(sf::Vector2f mousePos)
 {
+	// On recupere la position du joueur, on cast en vector2i car les positions flotantes font des problemes dans les vues
+	sf::Vector2i playerPos = sf::Vector2i(PlayersManager::getClientPlayer()->getPosition());
+
+	// On centre les vues sur le joueur
+	_mainView.setCenter(sf::Vector2f(playerPos));
 	// Mise à jour du comportement des personnages
 	PlayersManager::update(mousePos);
+
 	if (!Utils::debugMode) {
 		ZombiesManager::update();
 		ProjectilesManager::update();
 		_currentRegion->update();
 	}
-
-	// On recupere la position du joueur, on cast en vector2i car les positions flotantes font des problemes dans les vues
-	sf::Vector2i playerPos = sf::Vector2i(PlayersManager::getPlayers()[0]->getPlayer()->getPosition());
-
-	// On centre les vues sur le joueur
-	_mainView.setCenter(PlayersManager::getPlayers()[0]->getPlayer()->getPosition());//sf::Vector2f(playerPos));
-	_minimapView.setCenter(sf::Vector2f(playerPos));
 
 	//si la fenetre n'a pas le focus on eteint la musique
 	if (_window->hasFocus() && !AudioManager::isMainThemePlayed()) {
@@ -92,8 +87,8 @@ void World::update(sf::Vector2f mousePos)
 void World::draw()
 {
 	// On fait les différents dessins en commencant par la map
-	_window->setView(_mainView);
 	_currentRegion->manageDraw(*_window);
+	_window->setView(_mainView);
 	PlayersManager::manageDrawCharacters(*_window);
 	ZombiesManager::manageDraw(*_window);
 	ProjectilesManager::manageDraw(*_window);
@@ -109,7 +104,7 @@ void World::draw()
 	_window->setView(_window->getDefaultView());
 	HUD::manageDraw(_window);
 
-	PlayersManager::manageDrawInventories(*_window);
+	PlayersManager::getClientController().manageDrawInventory(*_window);
 
 	_window->setView(_mainView);
 }
@@ -117,7 +112,7 @@ void World::draw()
 void World::handleInputs(const sf::Event& event)
 {
 	// Récupération des entrées clavier qui concernent les personnages
-	PlayersManager::handleInputs(event);
+	PlayersManager::getClientController().handleInputs(event);
 }
 
 ltbl::LightSystem* World::getLightSys()
@@ -152,21 +147,4 @@ void World::gameOver()
 bool World::getGameOver()
 {
 	return _gameOver;
-}
-
-void World::drawMinimap()
-{
-	// On dessine la miniMap
-	_window->setView(_minimapView);
-
-	// On fait les différents dessins en commencant par la map
-	_currentRegion->manageDraw(*_window);
-	PlayersManager::manageDrawCharacters(*_window);
-
-	//_window->draw(_lightSprite, _lightRenderStates);	// les ombres
-	_ls.render(_minimapView, _unshadowShader, _lightOverShapeShader); // les lumières
-
-
-	// On remet la vue principale
-	_window->setView(_mainView);
 }

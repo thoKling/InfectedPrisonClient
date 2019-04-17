@@ -8,9 +8,9 @@
 #include <string>
 #include <iostream>
 
-Player::Player(Inventory* inventory) :
-	_inventory(inventory)
+Player::Player(std::string name) : _name(name)
 {
+	_showing = Showing::Stand;
 	this->setOrigin(24.f, 24.f);
 
 	sf::Texture* pointLightTexture = TextureManager::loadText("LTBL2/resources/pointLightTexture.png");
@@ -29,50 +29,12 @@ Player::Player(Inventory* inventory) :
 
 Player::~Player()
 {
-	delete _inventory;
 }
 
 
-/** Déplacements du personnage **/
-void Player::mv()
-{
-	double x = 0, y = 0;
 
-	if (_dIsHeld)
-		x += _velocity;
-
-	if (_qIsHeld)
-		x += -_velocity;
-
-	if (_sIsHeld)
-		y += _velocity;
-
-	if (_upIsHeld)
-		y += -_velocity;
-
-	if (x != 0 && y != 0) {
-		sf::Vector2f unitVec = Utils::getVecUnit(sf::Vector2f(0,0), sf::Vector2f(x, y));
-		x = _velocity * unitVec.x;
-		y = _velocity * unitVec.y;
-	}
-
-	// Déplacement en x
-	this->move(x, 0);
-	if(isInObstacle())
-		this->move(-x, 0);
-
-	// Déplacement en y
-	this->move(0, y);
-	if(isInObstacle())
-		this->move(0, -y);
-}
-
-void Player::update(const sf::Vector2f& mousePos)
+void Player::update()
 {	
-	orientate(sf::Vector2f(mousePos));
-
-	mv();
-
 	light->_emissionSprite.setPosition(getPosition());
 
 	if (_beingHit) {
@@ -82,19 +44,21 @@ void Player::update(const sf::Vector2f& mousePos)
 	}
 
 	std::string file = "Man Blue/manBlue_stand";
-	if (_inventory->getCurrentItem() != nullptr) {
-		_inventory->getCurrentItem()->update();
-		if (_inventory->getCurrentItem()->isReloading())
+	switch (_showing) {
+		case Showing::Reloading:
 			file = "Man Blue/manBlue_reload";
-		else
-			file = "Man Blue/manBlue_" + WeaponTypesStr[_inventory->getCurrentItem()->getWeaponType()];
+			break;
+		case Showing::Armed:
+			file = "Man Blue/manBlue_gun";
+			break;
 	}
-
 	_sprite.setTexture(*TextureManager::loadText("Ressources/PNG/" + file + ".png"));
 }
 
 void Player::receiveHit(const sf::Vector2f& hitterPosition)
 {
+	if (_beingHit)
+		return;
 	_beingHit = true;
 	_sprite.setColor(sf::Color::Red);
 	sf::Vector2f newPos;
@@ -115,32 +79,30 @@ void Player::receiveHit(const sf::Vector2f& hitterPosition)
 			break;
 		}
 	}
+	--_lives;
 }
 
-Inventory* Player::getInventory() const
+void Player::setShowing(Showing showing)
 {
-	return _inventory;
+	_showing = showing;
 }
 
-void Player::setDState(bool state)
+std::string Player::getName()
 {
-	_dIsHeld = state;
+	return _name;
 }
 
-void Player::setQState(bool state)
+unsigned int Player::getLives()
 {
-	_qIsHeld = state;
-}
-void Player::setSState(bool state)
-{
-	_sIsHeld = state;
-}
-void Player::setUpState(bool state)
-{
-	_upIsHeld = state;
+	return _lives;
 }
 
 bool Player::getHitState() const
 {
 	return _beingHit;
+}
+
+double Player::getVelocity()
+{
+	return _velocity;
 }

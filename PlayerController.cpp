@@ -5,15 +5,13 @@
 #include "World.h"
 #include "HUD.h"
 #include "Player.h"
-
+#include "SocketManager.h"
 
 
 PlayerController::PlayerController() :
 	_inventory(new Inventory()),
-	//_player(new Player(_inventory)),
 	_isInventoryOpen(false)
 {
-	_player = new Player(_inventory);
 }
 
 
@@ -28,26 +26,26 @@ void PlayerController::handleInputs(const sf::Event& event)
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::C)) {
 		_isInventoryOpen = true;
-		_player->setDState(false);
-		_player->setQState(false);
-		_player->setSState(false);
-		_player->setUpState(false);
+		_dIsHeld = false;
+		_qIsHeld = false;
+		_sIsHeld = false;
+		_upIsHeld = false;
 	}
 	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::C))
 		_isInventoryOpen = false;
 
 
 	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-		_player->setDState(false);
+		_dIsHeld = false;
 
 	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
-		_player->setQState(false);
+		_qIsHeld = false;
 
 	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-		_player->setSState(false);
+		_sIsHeld = false;
 
 	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
-		_player->setUpState(false);
+		_upIsHeld = false;
 
 	if (_isInventoryOpen) {
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
@@ -58,21 +56,17 @@ void PlayerController::handleInputs(const sf::Event& event)
 			if (_inventory->getCurrentItem() != nullptr)
 				_inventory->getCurrentItem()->use(_player);
 
-		//if (!sf::Mouse::isButtonPressed(sf::Mouse::Left))
-		//	_fire = false;
-
-
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-			_player->setDState(true);
+			_dIsHeld = true;
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
-			_player->setQState(true);
+			_qIsHeld = true;
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-			_player->setSState(true);
+			_sIsHeld = true;
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
-			_player->setUpState(true);
+			_upIsHeld = true;
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
 			reload();
@@ -88,17 +82,70 @@ void PlayerController::handleInputs(const sf::Event& event)
 			}
 	}
 }
+void PlayerController::movePlayer()
+{
+	double x = 0, y = 0;
+
+	if (_dIsHeld)
+		x += _player->getVelocity();
+
+	if (_qIsHeld)
+		x += -_player->getVelocity();
+
+	if (_sIsHeld)
+		y += _player->getVelocity();
+
+	if (_upIsHeld)
+		y += -_player->getVelocity();
+
+	// Surtout utile pour les diagonales
+	sf::Vector2f unitVec = Utils::getVecUnit(sf::Vector2f(0, 0), sf::Vector2f(x, y));
+	x *= std::abs(unitVec.x);
+	y *= std::abs(unitVec.y);
+
+	// Déplacement en x
+	_player->move(x, 0);
+	if (_player->isInObstacle())
+		_player->move(-x, 0);
+
+	// Déplacement en y
+	_player->move(0, y);
+	if (_player->isInObstacle())
+		_player->move(0, -y);
+}
 
 void PlayerController::update(const sf::Vector2f& mousePos)
 {
-	_player->update(mousePos);
+	_player->orientate(mousePos);
+	_player->update();
+
+	movePlayer();
+
+	if (SocketManager::isOnline()) {
+		sf::Packet packet;
+		packet << SocketManager::PacketType::PlayerPos << _player->getPosition() << _player->getRotation();
+		SocketManager::send(packet);
+	}
+
 	if (_inventory->getCurrentItem() != nullptr) {
+		_inventory->getCurrentItem()->update();
+		if (_inventory->getCurrentItem()->isReloading())
+			_player->setShowing(Player::Showing::Reloading);
+		else
+			_player->setShowing(Player::Showing::Armed);
 		HUD::setAmmo(_inventory->getCurrentItem()->getAmmo());
 	}
 	else
 		HUD::setAmmo(0);
-	HUD::setLives(_lives);
+	if (!_player->getLives())
+		die();
+	HUD::setLives(_player->getLives());
 	_inventory->getInventoryView()->update();
+}
+
+void PlayerController::attach(Player * player)
+{
+	_player = player;
 }
 
 // on draw le personnage
@@ -110,16 +157,6 @@ void PlayerController::manageDrawCharacter(sf::RenderWindow& window) {
 void PlayerController::manageDrawInventory(sf::RenderWindow& window) {
 	if (_isInventoryOpen) {
 		window.draw(*_inventory->getInventoryView());
-	}
-}
-
-void PlayerController::receiveHit(const sf::Vector2f& hitterPosition)
-{
-	if (!_player->getHitState() && _alive) {
-		_player->receiveHit(hitterPosition);
-		--_lives;
-		if (!_lives)
-			die();
 	}
 }
 

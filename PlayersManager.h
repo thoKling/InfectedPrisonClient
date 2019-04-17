@@ -3,35 +3,42 @@
 #include <SFML/Graphics.hpp>
 
 class PlayerController;
+class Player;
 
 class PlayersManager
 {
 public:
 	static void destroyChars();
 
+	// Méthode qui créer le personnage du client
+	static void createClientPlayer(std::string name, const sf::Vector2f& pos);
+
 	// Méthode qui permet de créer un nouveau personnage
-	static unsigned int createPlayer(const sf::Vector2f& pos);
+	static void createPlayer(std::string name, const sf::Vector2f& pos);
 
 	// Méthode qui renvoit la liste des personnages
-	static std::map<unsigned int, PlayerController*> getPlayers();
+	static std::map<std::string, Player*> getPlayers();
+
+	static Player* getPlayer(std::string name);
+
+	static Player* getClientPlayer();
+
+	static PlayerController& getClientController();
 
 	// Procédure qui dessine les personnages
 	static void manageDrawCharacters(sf::RenderWindow& window);
-
-	// Procédure qui dessine les inventaires
-	static void manageDrawInventories(sf::RenderWindow& window);
-
-	// Procédure qui traite les entrées clavier liées aux personnages
-	static void handleInputs(const sf::Event& event);
 
 	// Procédure qui met à jour le comportement des personnages
 	static void update(const sf::Vector2f& mousePos);
 
 private:
-	// Liste des personnages
-	static std::map<unsigned int, PlayerController*> _players;
+	// Controleur du client 
+	static PlayerController _clientPlayerController;
 
-	// identifiant suivant servant à la création d'un nouveau personnage
-	static unsigned int _nextId;
+	// Player du client 
+	static Player* _clientPlayer;
+
+	// Liste des personnages
+	static std::map<std::string, Player*> _playersConnected;
 };
 

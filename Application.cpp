@@ -16,10 +16,13 @@ Application::Application()
 
 	// Mettre à true si on veut utiliser le serveur
 	bool online = false;
-	World::init(&_window);
+
+	std::string playerName;
+	std::cin >> playerName;
+	World::init(&_window, playerName);
 
 	if (online) {
-		SocketManager::init("localhost", 9999);
+		SocketManager::init(playerName, "localhost", 9999);
 	}
 	else {	
 		std::vector<std::vector<int>> _level;

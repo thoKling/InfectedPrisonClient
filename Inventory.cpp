@@ -13,11 +13,12 @@ Inventory::Inventory():
 
 Inventory::~Inventory()
 {
+	/*
 	delete _currentItem;
 	for (auto it = _items.begin(); it != _items.end(); ++it) {
 		delete *it;
 	}
-	delete _inventoryView;
+	delete _inventoryView;*/
 }
 
 bool Inventory::AddItem(Item* item)

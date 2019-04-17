@@ -25,7 +25,7 @@ Zombie::~Zombie()
 }
 
 void Zombie::update() {
-	_target = PlayersManager::getPlayers().at(0)->getPlayer()->getPosition();
+	_target = PlayersManager::getClientPlayer()->getPosition();
 
 	if (_beingHit) {
 		_sprite.setColor(sf::Color(_sprite.getColor().r, _sprite.getColor().g + 15, _sprite.getColor().b + 15));
@@ -37,7 +37,7 @@ void Zombie::update() {
 	if (Utils::distance(getPosition(), _target) > 80)
 		myMove();
 	else
-		PlayersManager::getPlayers()[0]->receiveHit(getPosition());
+		PlayersManager::getClientPlayer()->receiveHit(getPosition());
 }
 
 // Renvoit la position par rapport aux tiles 

@@ -4,6 +4,7 @@
 
 #include "Region.h"
 #include "Utils.h"
+#include "PlayerController.h"
 
 class World
 {
@@ -12,7 +13,7 @@ class World
 ///
 public:
 	static World* getInstance();
-	static void init(sf::RenderWindow* window);
+	static void init(sf::RenderWindow* window, std::string name);
 private:
 	World(sf::RenderWindow* window);
 	~World();
@@ -50,8 +51,6 @@ private:
 	/// Les vues
 	///
 	sf::View _mainView; // Vue principale centrée sur le personnage 
-	sf::View _minimapView; // Vue de la minicarte centrée sur le personnage
-	void drawMinimap();
 
 	///
 	/// Les éléments du jeu

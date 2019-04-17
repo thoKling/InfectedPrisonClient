@@ -22,6 +22,8 @@ int Utils::getQuadrant(const sf::Vector2f & pos1, const sf::Vector2f & pos2)
 
 sf::Vector2f Utils::getVecUnit(const sf::Vector2f& startPos, const sf::Vector2f& endPos)
 {
+	if (startPos == endPos)
+		return { 0,0 };
 	sf::Vector2f res;
 	res.x = (endPos.x - startPos.x) / Utils::distance(startPos, endPos);
 	res.y = (endPos.y - startPos.y) / Utils::distance(startPos, endPos);

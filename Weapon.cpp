@@ -28,7 +28,7 @@ Weapon::~Weapon()
 
 void Weapon::use(Player* charac)
 {
-	if (_isFireable) {
+	if (_isFireable && !_isReloading) {
 		if (_ammo > 0) {
 			_isFireable = false;
 			ProjectilesManager::createProjectile(charac->getPosition(), charac->getRotation(), _type);

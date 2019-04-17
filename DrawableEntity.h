@@ -15,14 +15,14 @@ public:
 	/* Orientation de l'entite vers la position */
 	void orientate(const sf::Vector2f& position);
 
+	bool isInObstacle();
+
 	sf::FloatRect getGlobalBounds();
 
 	std::vector<sf::Vector2f> getCorners();
 
 protected:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-
-	bool isInObstacle();
 
 	sf::Sprite _sprite;
 };

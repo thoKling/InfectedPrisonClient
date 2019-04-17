@@ -13,9 +13,11 @@ public:
 	/* Procédure qui récupère et traite les entrées clavier du joueur */
 	void handleInputs(const sf::Event& event);
 
-	void receiveHit(const sf::Vector2f& hitterPosition);
+	void movePlayer();
 
 	void update(const sf::Vector2f& mousePos);
+
+	void attach(Player* player);
 
 	// Procédure qui dessine les personnages
 	void manageDrawCharacter(sf::RenderWindow& window);
@@ -27,15 +29,20 @@ public:
 	Inventory* getInventory() const;
 
 private:
-
+	/* Les "interrupteurs de déplacement".
+	True: les déplacements ont lieu,
+	False: il n'y a pas de déplacements */
+	bool _dIsHeld = false;
+	bool _qIsHeld = false;
+	bool _sIsHeld = false;
+	bool _upIsHeld = false;
 	// L'inventaire est il ouvert?
 	bool _isInventoryOpen;
 
 	Player* _player;
 
 	Inventory* _inventory;
-	
-	unsigned int _lives = 3;
+
 	bool _alive = true;
 	void die();
 	void reload();

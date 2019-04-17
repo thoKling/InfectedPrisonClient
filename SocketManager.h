@@ -11,16 +11,11 @@ public:
 		PlayerPos,
 		Projectile,
 	};
-	struct player {
-		unsigned int localCharId;
-		std::string name;
-	};
-	static void init(sf::IpAddress addr, unsigned int port);
+	static void init(std::string playerName, sf::IpAddress addr, unsigned int port);
 	static void send(sf::Packet packet);
 	static bool isOnline() { return _onlineMode; };
 
 private:
-	static std::vector<player> _playersConnected;
 	static void handlePackets();
 	static sf::Thread _packetsThread;
 
@@ -29,8 +24,6 @@ private:
 	static void handleProjectile(sf::Packet packet);
 
 	static std::string _name;
-	static unsigned int _playerConnected;
-	static unsigned int _playerId;
 	static bool _onlineMode;
 	static unsigned int _serverPort;
 	static sf::UdpSocket _socket;

@@ -4,15 +4,13 @@
 
 #include "ProjectilesManager.h"
 #include "PlayersManager.h"
+#include "Player.h"
 
 bool SocketManager::_onlineMode = false;
 unsigned int SocketManager::_serverPort;
-unsigned int SocketManager::_playerConnected = 0;
-unsigned int SocketManager::_playerId = 0;
 sf::UdpSocket SocketManager::_socket;
 sf::IpAddress SocketManager::_serverIP;
 sf::Thread SocketManager::_packetsThread(&handlePackets);
-std::vector<SocketManager::player> SocketManager::_playersConnected;
 std::string SocketManager::_name = "";
 
 sf::Packet& operator >>(sf::Packet& packet, std::vector<std::vector<int>>& myVec)
@@ -28,17 +26,17 @@ sf::Packet& operator >>(sf::Packet& packet, std::vector<std::vector<int>>& myVec
 }
 
 
-void SocketManager::init(sf::IpAddress addr, unsigned int port)
+void SocketManager::init(std::string playerName, sf::IpAddress addr, unsigned int port)
 {
 	_serverPort = port;
 	_serverIP = addr;
+	_name = playerName;
 	// on bind la socket
 	if (_socket.bind(sf::Socket::AnyPort) != sf::Socket::Done)
 	{
 		throw std::string("Impossible de lié la socket au port 10000");
 	}
 	sf::Packet packet;
-	std::cin >> _name;
 	packet << PacketType::Connection;
 	send(packet);
 	_onlineMode = true;
@@ -58,7 +56,7 @@ void SocketManager::init(sf::IpAddress addr, unsigned int port)
 	{
 		level[i].resize(32);
 	}
-	response >> _playerId >> _playerConnected >> level;
+	response >> level;
 	World::getInstance()->loadMap(level, sf::Vector2i(0, 0));
 	// exécute le thread
 	_packetsThread.launch();
@@ -103,8 +101,7 @@ void SocketManager::handlePlayerConnection(sf::Packet packet)
 	std::string name;
 	packet >> name;
 	std::cout << name << " vient de se connecter !" << std::endl;
-	unsigned int id = PlayersManager::createPlayer({128,200});
-	_playersConnected.push_back({id, name});
+	PlayersManager::createPlayer(name, {128,200});
 }
 
 void SocketManager::handlePlayerPos(sf::Packet packet)
@@ -115,16 +112,9 @@ void SocketManager::handlePlayerPos(sf::Packet packet)
 	packet >> pos;
 	float rotation;
 	packet >> rotation;
-	unsigned int id = 0;
-	for (auto player = _playersConnected.begin(); player != _playersConnected.end(); player++)
-	{
-		if (player->name == name)
-			id = player->localCharId;
-	}
-	if (id) {
-		//PlayersManager::getPlayers()[id]->setPosition(pos);
-		//PlayersManager::getPlayers()[id]->setRotation(rotation);
-	}
+
+	PlayersManager::getPlayer(name)->setPosition(pos);
+	PlayersManager::getPlayer(name)->setRotation(rotation);
 }
 
 void SocketManager::handleProjectile(sf::Packet packet)

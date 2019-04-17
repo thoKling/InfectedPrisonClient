@@ -7,62 +7,69 @@
 #include "World.h"
 #include "InventoryView.h"
 
-unsigned int PlayersManager::_nextId = 0;
-std::map<unsigned int, PlayerController*> PlayersManager::_players;
+std::map<std::string, Player*> PlayersManager::_playersConnected;
+Player* PlayersManager::_clientPlayer = nullptr;
+PlayerController PlayersManager::_clientPlayerController;
 
 // on désalloue la mémoire utilisée pour stocker les personnages
 void PlayersManager::destroyChars()
 {
-	for (auto it = _players.begin(); it != _players.end(); ++it)
+	for (auto it = _playersConnected.begin(); it != _playersConnected.end(); ++it)
 	{
 		delete it->second;
 	}
 }
 
+void PlayersManager::createClientPlayer(std::string name, const sf::Vector2f& pos)
+{
+	_clientPlayer = new Player(name);
+	_playersConnected[name] = _clientPlayer;
+	_playersConnected[name]->setPosition(pos);
+	_clientPlayerController.attach(_clientPlayer);
+}
+
 
 // créer un nouveau personnage et renvoit l'id de ce dernier
-unsigned int PlayersManager::createPlayer(const sf::Vector2f& pos) {
-	_players[_nextId] = new PlayerController();
-	_players[_nextId]->getPlayer()->setPosition(pos);
-	_nextId++;
-	return _nextId - 1;
+void PlayersManager::createPlayer(std::string name, const sf::Vector2f& pos) {
+	_playersConnected[name] = new Player(name);
+	_playersConnected[name]->setPosition(pos);
 }
 
 // renvoit la liste des personnages
-std::map<unsigned int, PlayerController*> PlayersManager::getPlayers()
+std::map<std::string, Player*> PlayersManager::getPlayers()
 {
-	return _players;
+	return _playersConnected;
 }
 
+Player * PlayersManager::getPlayer(std::string name)
+{
+	return _playersConnected[name];
+}
+
+Player * PlayersManager::getClientPlayer()
+{
+	return _clientPlayer;
+}
+
+PlayerController & PlayersManager::getClientController()
+{
+	return _clientPlayerController;
+}
 
 // on draw chaque personnage
 void PlayersManager::manageDrawCharacters(sf::RenderWindow& window) {
-	for (auto it = _players.begin(); it != _players.end(); ++it)
+	for (auto it = _playersConnected.begin(); it != _playersConnected.end(); ++it)
 	{
-		it->second->manageDrawCharacter(window);
-	}
-}
-
-// on draw chaque inventaire
-void PlayersManager::manageDrawInventories(sf::RenderWindow& window) {
-	for (auto it = _players.begin(); it != _players.end(); ++it)
-	{
-		it->second->manageDrawInventory(window);
-	}
-}
-
-void PlayersManager::handleInputs(const sf::Event& event) {
-	for (auto it = _players.begin(); it != _players.end(); ++it)
-	{
-		it->second->handleInputs(event);
+		window.draw(*it->second);
 	}
 }
 
 // Mise à jour du comportement des personnages
 void PlayersManager::update(const sf::Vector2f& mousePos)
 {
-	for (auto it = _players.begin(); it != _players.end(); ++it)
+	_clientPlayerController.update(mousePos);
+	for (auto it = _playersConnected.begin(); it != _playersConnected.end(); ++it)
 	{
-		it->second->update(mousePos);
+		it->second->update();
 	}
 }
