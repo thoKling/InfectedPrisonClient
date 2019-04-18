@@ -103,6 +103,9 @@ void SocketManager::handlePackets()
 		case PacketType::ZombieReceiveHit:
 			handleZombieReceiveHit(packet);
 			break;
+		case PacketType::PlayerReceiveHit:
+			handlePlayerReceiveHit(packet);
+			break;
 		default:
 			std::cout << "Unknown packetType from " << sender << std::endl;
 			break;
@@ -167,6 +170,14 @@ void SocketManager::handleZombieReceiveHit(sf::Packet packet)
 	unsigned int zombieId;
 	packet >> zombieId;
 	ZombiesManager::getZombies()[zombieId]->receiveHit(sf::Vector2f(0,0));
+}
+
+void SocketManager::handlePlayerReceiveHit(sf::Packet packet)
+{
+	std::string name;
+	sf::Vector2f hitterPos;
+	packet >> name >> hitterPos;
+	PlayersManager::getPlayer(name)->receiveHit(hitterPos);
 }
 
 sf::Packet & operator>>(sf::Packet & packet, SocketManager::PacketType & pt)

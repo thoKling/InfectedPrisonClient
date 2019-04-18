@@ -13,6 +13,7 @@ public:
 		CreateZombie,
 		ZombieState,
 		ZombieReceiveHit,
+		PlayerReceiveHit,
 	};
 	static void init(std::string playerName, sf::IpAddress addr, unsigned int port);
 	static void stop();
@@ -29,6 +30,7 @@ private:
 	static void handleZombieCreation(sf::Packet packet);
 	static void handleZombieState(sf::Packet packet);
 	static void handleZombieReceiveHit(sf::Packet packet);
+	static void handlePlayerReceiveHit(sf::Packet packet);
 
 	static std::string _name;
 	static bool _onlineMode;
