@@ -35,3 +35,8 @@ void HUD::setAmmo(unsigned int ammo)
 {
 	_ammo = ammo;
 }
+
+void HUD::setWave(unsigned int wave)
+{
+	_currentWave = wave;
+}

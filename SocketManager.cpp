@@ -6,6 +6,7 @@
 #include "PlayersManager.h"
 #include "ZombiesManager.h"
 #include "Player.h"
+#include "HUD.h"
 
 bool SocketManager::_onlineMode = false;
 unsigned int SocketManager::_serverPort;
@@ -106,6 +107,9 @@ void SocketManager::handlePackets()
 		case PacketType::PlayerReceiveHit:
 			handlePlayerReceiveHit(packet);
 			break;
+		case PacketType::NextWave:
+			handleNextWave(packet);
+			break;
 		default:
 			std::cout << "Unknown packetType from " << sender << std::endl;
 			break;
@@ -181,6 +185,13 @@ void SocketManager::handlePlayerReceiveHit(sf::Packet packet)
 	sf::Vector2f hitterPos;
 	packet >> name >> hitterPos;
 	PlayersManager::getPlayer(name)->receiveHit(hitterPos);
+}
+
+void SocketManager::handleNextWave(sf::Packet packet)
+{
+	int currentWave;
+	packet >> currentWave;
+	HUD::setWave(currentWave);
 }
 
 sf::Packet & operator>>(sf::Packet & packet, SocketManager::PacketType & pt)
