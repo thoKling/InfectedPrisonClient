@@ -3,8 +3,6 @@
 #include <SFML/Graphics.hpp>
 #include "Zombie.h"
 
-class World;
-
 class ZombiesManager
 {
 public:
@@ -13,6 +11,7 @@ public:
 	static void manageDraw(sf::RenderWindow& window);
 	static void update();
 	static void destroyZombies();
+	static void setState(unsigned int id, sf::Vector2f pos, float rotation);
 
 private:
 	static std::map<unsigned int, Zombie*> _zombies;

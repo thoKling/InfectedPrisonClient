@@ -9,6 +9,7 @@
 #include "PlayerController.h"
 #include "Player.h"
 #include "TextureManager.h"
+#include "SocketManager.h"
 
 Zombie::Zombie() : 
 	_velocity(2), 
@@ -32,40 +33,38 @@ void Zombie::update() {
 		if (_sprite.getColor().g == 255)
 			_beingHit = false;
 	}
-
-	// Si on est à distance on attaque
-	if (Utils::distance(getPosition(), _target) > 80)
-		myMove();
-	else
-		PlayersManager::getClientPlayer()->receiveHit(getPosition());
+	
+	if (!SocketManager::isOnline()) {
+		// Si on est à distance on attaque
+		if (Utils::distance(getPosition(), _target) > 80)
+			myMove();
+		else
+			PlayersManager::getClientPlayer()->receiveHit(getPosition());
+	}
 }
-
-// Renvoit la position par rapport aux tiles 
-sf::Vector2i Zombie::getPositionTiles() {
-	return MapUtils::transformInTilesPos(sf::Vector2f(getPosition().x+32, getPosition().y+32));
-}
-
 void Zombie::receiveHit(sf::Vector2f hitterPosition)
 {
 	if (!_beingHit) {
 		_sprite.setColor(sf::Color::Red);
 		_beingHit = true;
-		sf::Vector2f newPos;
-		sf::Vector2f vecUnit = Utils::getVecUnit(hitterPosition, getPosition());
-		for (size_t i = 0; i < 20; i++)
-		{
-			move(vecUnit.x * 5, 0);
-			if (isInObstacle()) {
-				move(-vecUnit.x * 5, 0);
-				break;
+		if (!SocketManager::isOnline()) {
+			sf::Vector2f newPos;
+			sf::Vector2f vecUnit = Utils::getVecUnit(hitterPosition, getPosition());
+			for (size_t i = 0; i < 20; i++)
+			{
+				move(vecUnit.x * 5, 0);
+				if (isInObstacle()) {
+					move(-vecUnit.x * 5, 0);
+					break;
+				}
 			}
-		}
-		for (size_t i = 0; i < 20; i++)
-		{
-			move(0, vecUnit.y * 5);
-			if (isInObstacle()) {
-				move(0, -vecUnit.y * 5);
-				break;
+			for (size_t i = 0; i < 20; i++)
+			{
+				move(0, vecUnit.y * 5);
+				if (isInObstacle()) {
+					move(0, -vecUnit.y * 5);
+					break;
+				}
 			}
 		}
 		_lifes--;
@@ -95,7 +94,6 @@ void Zombie::myMove() {
 	orientate(_target);
 	// On se déplace vers la destination
 	sf::Vector2f vecUnit = Utils::getVecUnit(getPosition(), _target);
-
 
 	this->move(vecUnit.x * _velocity, 0);
 	if (isInObstacle()) {

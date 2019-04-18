@@ -8,7 +8,6 @@ public:
 	~Zombie();
 
 	void update();
-	sf::Vector2i getPositionTiles();
 	void receiveHit(sf::Vector2f hitterPosition);
 	bool isDead();
 

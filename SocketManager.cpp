@@ -4,6 +4,7 @@
 
 #include "ProjectilesManager.h"
 #include "PlayersManager.h"
+#include "ZombiesManager.h"
 #include "Player.h"
 
 bool SocketManager::_onlineMode = false;
@@ -25,7 +26,6 @@ sf::Packet& operator >>(sf::Packet& packet, std::vector<std::vector<int>>& myVec
 	return packet;
 }
 
-
 void SocketManager::init(std::string playerName, sf::IpAddress addr, unsigned int port)
 {
 	_serverPort = port;
@@ -43,7 +43,6 @@ void SocketManager::init(std::string playerName, sf::IpAddress addr, unsigned in
 	///
 	/// Réponse du serveur avec les informations
 	///
-	std::vector<std::vector<int>> level;
 	unsigned short portS;
 	sf::Packet response;
 	if (_socket.receive(response, addr, portS) != sf::Socket::Done)
@@ -51,6 +50,7 @@ void SocketManager::init(std::string playerName, sf::IpAddress addr, unsigned in
 		throw std::string("Erreur lors de la récéption du paquet");
 	}
 	// on définit le niveau à l'aide de numéro de tuiles
+	std::vector<std::vector<int>> level;
 	level.resize(16);
 	for (size_t i = 0; i < level.size(); i++)
 	{
@@ -60,6 +60,11 @@ void SocketManager::init(std::string playerName, sf::IpAddress addr, unsigned in
 	World::getInstance()->loadMap(level, sf::Vector2i(0, 0));
 	// exécute le thread
 	_packetsThread.launch();
+}
+
+void SocketManager::stop()
+{
+	_packetsThread.terminate();
 }
 
 void SocketManager::send(sf::Packet packet)
@@ -88,6 +93,15 @@ void SocketManager::handlePackets()
 			break;
 		case PacketType::Projectile:
 			handleProjectile(packet);
+			break;
+		case PacketType::CreateZombie:
+			handleZombieCreation(packet);
+			break;
+		case PacketType::ZombieState:
+			handleZombieState(packet);
+			break;
+		case PacketType::ZombieReceiveHit:
+			handleZombieReceiveHit(packet);
 			break;
 		default:
 			std::cout << "Unknown packetType from " << sender << std::endl;
@@ -128,6 +142,31 @@ void SocketManager::handleProjectile(sf::Packet packet)
 	int weaponType;
 	packet >> weaponType;
 	ProjectilesManager::createProjectile(pos, rotation, WeaponType(weaponType), false);
+}
+
+void SocketManager::handleZombieCreation(sf::Packet packet)
+{
+	std::cout << "ZombieCreation" << std::endl;
+	sf::Vector2f pos;
+	packet >> pos;
+	std::cout << "position :" << pos.x << " " <<pos.y << std::endl;
+	ZombiesManager::createZombie(pos);
+}
+
+void SocketManager::handleZombieState(sf::Packet packet)
+{
+	unsigned int id;
+	sf::Vector2f pos;
+	float rotation;
+	packet >> id >> pos >> rotation;
+	ZombiesManager::setState(id, pos, rotation);
+}
+
+void SocketManager::handleZombieReceiveHit(sf::Packet packet)
+{
+	unsigned int zombieId;
+	packet >> zombieId;
+	ZombiesManager::getZombies()[zombieId]->receiveHit(sf::Vector2f(0,0));
 }
 
 sf::Packet & operator>>(sf::Packet & packet, SocketManager::PacketType & pt)

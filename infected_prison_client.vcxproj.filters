@@ -109,6 +109,7 @@
     <ClCompile Include="SocketManager.cpp">
       <Filter>Sources\Multiplayer</Filter>
     </ClCompile>
+    <ClCompile Include="GameState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -216,6 +217,7 @@
     <ClInclude Include="SocketManager.h">
       <Filter>Sources\Multiplayer</Filter>
     </ClInclude>
+    <ClInclude Include="GameState.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Sources">
@@ -256,7 +258,7 @@
     </Filter>
     <Filter Include="Sources\Multiplayer">
       <UniqueIdentifier>{5b670907-731d-4331-9b21-006aa64f8a5e}</UniqueIdentifier>
-	</Filter>
+    </Filter>
     <Filter Include="Sources\Models\Entities\Items">
       <UniqueIdentifier>{45d37c4a-ce4e-4fd2-8adb-46b14582fd9d}</UniqueIdentifier>
     </Filter>

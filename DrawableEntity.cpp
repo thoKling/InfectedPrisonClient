@@ -82,7 +82,6 @@ void DrawableEntity::orientate(const sf::Vector2f& position)
 			setRotation(0.f);
 			break;
 	}
-
 	// S'il s'agit d'un quadrant impair, on s'attend à avoir un angle par rapport à l'axe y
 	if (quadrant % 2 == 1)
 	{

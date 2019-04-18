@@ -15,7 +15,7 @@ Application::Application()
 	_window.create(sf::VideoMode(WINDOWS_WIDTH, WINDOWS_HEIGHT), "Infected Prison");
 
 	// Mettre à true si on veut utiliser le serveur
-	bool online = false;
+	bool online = true;
 
 	std::string playerName;
 	std::cin >> playerName;
@@ -66,8 +66,11 @@ void Application::start() {
 		sf::Event event;
 		while (_window.pollEvent(event))
 		{
-			if (event.type == sf::Event::Closed)
+			if (event.type == sf::Event::Closed) {
 				_window.close();
+				if (SocketManager::isOnline())
+					SocketManager::stop();
+			}
 			handleInputs(event);
 		}
 		// On update

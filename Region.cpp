@@ -5,6 +5,7 @@
 #include "Ammo.h"
 #include "Key.h"
 #include "ZombiesManager.h"
+#include "SocketManager.h"
 
 #include <iostream>
 
@@ -23,6 +24,10 @@ Region::Region(const std::vector<std::vector<int>>& tiles)
 	DroppedItem* temp2 = new DroppedItem(tempItem);
 	temp2->setPosition({500,300});
 	//_items.emplace_back(temp2);
+
+	// Création d'un zombie
+	if(!SocketManager::isOnline())
+		ZombiesManager::createZombie(sf::Vector2f(800, 500));
 }
 
 

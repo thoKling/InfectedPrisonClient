@@ -10,8 +10,12 @@ public:
 		Connection,
 		PlayerPos,
 		Projectile,
+		CreateZombie,
+		ZombieState,
+		ZombieReceiveHit,
 	};
 	static void init(std::string playerName, sf::IpAddress addr, unsigned int port);
+	static void stop();
 	static void send(sf::Packet packet);
 	static bool isOnline() { return _onlineMode; };
 
@@ -22,6 +26,9 @@ private:
 	static void handlePlayerConnection(sf::Packet packet);
 	static void handlePlayerPos(sf::Packet packet);
 	static void handleProjectile(sf::Packet packet);
+	static void handleZombieCreation(sf::Packet packet);
+	static void handleZombieState(sf::Packet packet);
+	static void handleZombieReceiveHit(sf::Packet packet);
 
 	static std::string _name;
 	static bool _onlineMode;

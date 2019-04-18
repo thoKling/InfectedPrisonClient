@@ -16,6 +16,14 @@ void ZombiesManager::destroyZombies()
 	}
 }
 
+void ZombiesManager::setState(unsigned int id, sf::Vector2f pos, float rotation)
+{
+	if (_zombies.find(id) != _zombies.end()) {
+		_zombies[id]->setPosition(pos);
+		_zombies[id]->setRotation(rotation);
+	}
+}
+
 // créé un nouveau zombie et renvoit l'id de ce dernier
 unsigned int ZombiesManager::createZombie(const sf::Vector2f& pos) {
 	_zombies[_nextId] = new Zombie();

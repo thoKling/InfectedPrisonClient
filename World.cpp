@@ -55,8 +55,6 @@ void World::loadMap(const std::vector<std::vector<int>>& tiles, const sf::Vector
 	//if (_regions.find(position) != _regions.end())
 		//_regions[sf::Vector2i(position)] = new Region(_ls, tiles);
 	_currentRegion = new Region(tiles);
-	// Création d'un zombie
-	ZombiesManager::createZombie(sf::Vector2f(800, 500));
 }
 
 void World::update(sf::Vector2f mousePos)
