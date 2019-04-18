@@ -56,26 +56,11 @@ void Region::update()
 		Item* tempItem = new Ammo(WeaponType::Gun);
 		tempItem->setStack(4);
 		DroppedItem* temp2 = new DroppedItem(tempItem);
-		
-		/*int tempX, tempY;
-		do {
-			tempX = rand() % (_tiles[0].size() * 64);
-			tempY = rand() % (_tiles.size() * 64);
-		} while (isObstacle(sf::Vector2i((int)tempX, (int)tempY)));
-
-		temp2->setPosition(sf::Vector2f((int)tempX, (int)tempY));*/
-
 		temp2->setPosition(sf::Vector2f( 500 + (int)(rand()% 50),300 + (int)(rand()%50) ));
 		_items.emplace_back(temp2);
-
-		Item* tempKey = new Key();
-		tempKey->setStack(1);
-		DroppedItem* tempKey2 = new DroppedItem(tempKey);
-		tempKey2->setPosition(sf::Vector2f(150, 150));
-		_items.emplace_back(tempKey2);
 	}
-	//if((_ticks + 30)%600 == 0)
-		//ZombiesManager::createZombie(sf::Vector2f(800 + (int)(rand()%100), 500 + (int)(rand()%100)));
+	if((_ticks + 30)%600 == 0 && !SocketManager::isOnline())
+		ZombiesManager::createZombie(sf::Vector2f(800 + (int)(rand()%100), 500 + (int)(rand()%100)));
 }
 
 // Renvoit l'item le plus proche de la position dans une certaine portée et le supprime de la région, nullptr si il n'y en a pas

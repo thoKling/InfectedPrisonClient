@@ -21,6 +21,7 @@ public:
 
 	// Getters and Setters
 	void setShowing(Showing showing);
+	Showing getShowing();
 	std::string getName();
 
 	unsigned int getLives();

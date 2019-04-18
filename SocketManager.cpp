@@ -129,7 +129,10 @@ void SocketManager::handlePlayerPos(sf::Packet packet)
 	packet >> pos;
 	float rotation;
 	packet >> rotation;
+	int showing;
+	packet >> showing;
 
+	PlayersManager::getPlayer(name)->setShowing(Player::Showing(showing));
 	PlayersManager::getPlayer(name)->setPosition(pos);
 	PlayersManager::getPlayer(name)->setRotation(rotation);
 }

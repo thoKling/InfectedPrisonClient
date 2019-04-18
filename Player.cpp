@@ -87,6 +87,11 @@ void Player::setShowing(Showing showing)
 	_showing = showing;
 }
 
+Player::Showing Player::getShowing()
+{
+	return _showing;
+}
+
 std::string Player::getName()
 {
 	return _name;

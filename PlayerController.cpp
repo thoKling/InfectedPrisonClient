@@ -123,7 +123,7 @@ void PlayerController::update(const sf::Vector2f& mousePos)
 
 	if (SocketManager::isOnline()) {
 		sf::Packet packet;
-		packet << SocketManager::PacketType::PlayerPos << _player->getPosition() << _player->getRotation();
+		packet << SocketManager::PacketType::PlayerPos << _player->getPosition() << _player->getRotation() << (int)_player->getShowing();
 		SocketManager::send(packet);
 	}
 
@@ -135,8 +135,10 @@ void PlayerController::update(const sf::Vector2f& mousePos)
 			_player->setShowing(Player::Showing::Armed);
 		HUD::setAmmo(_inventory->getCurrentItem()->getAmmo());
 	}
-	else
+	else {
 		HUD::setAmmo(0);
+		_player->setShowing(Player::Showing::Stand);
+	}
 	if (!_player->getLives())
 		die();
 	HUD::setLives(_player->getLives());
