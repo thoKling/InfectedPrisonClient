@@ -16,6 +16,6 @@ private:
 	static sf::Sprite _spriteAmmo;
 	static unsigned int _lives;
 	static unsigned int _ammo;
-	static unsigned int _currentWave = 0;
+	//static unsigned int _currentWave = 0;
 };
 

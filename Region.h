@@ -6,7 +6,7 @@
 class Region
 {
 public:
-	Region(const std::vector<std::vector<int>>& tiles);
+	Region(const std::string fileMap);
 	~Region();
 
 	void manageDraw(sf::RenderWindow& window);
@@ -24,8 +24,16 @@ public:
 
 private:
 	unsigned int _ticks = 0;
+	TileMap _mapBase;
 	TileMap _map;
 
 	std::list<DroppedItem*> _items;
+	std::vector<std::vector<int>> _tilesBase;
 	std::vector<std::vector<int>> _tiles;
+
+	const std::string _fileMap;
+
+	void saveMap();
+	void loadMap();
+	void loadMapBase();
 };
