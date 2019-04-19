@@ -67,3 +67,4 @@ void HUD::setWave(unsigned int wave)
 {
 	_currentWave = wave;
 }
+

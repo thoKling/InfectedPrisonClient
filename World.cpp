@@ -45,16 +45,13 @@ void World::init(sf::RenderWindow* window, std::string name)
 {
 	_instance = new World(window);
 	// Création du caractère
-	PlayersManager::createClientPlayer(name, sf::Vector2f(128, 200));
+	PlayersManager::createClientPlayer(name, sf::Vector2f(836, 810));
 	HUD::init(window);
 }
 
-void World::loadMap(const std::vector<std::vector<int>>& tiles, const sf::Vector2i& position)
+void World::loadMap(const sf::Vector2i& position)
 {
-	// Si on a pas déjà chargé cette région
-	//if (_regions.find(position) != _regions.end())
-		//_regions[sf::Vector2i(position)] = new Region(_ls, tiles);
-	_currentRegion = new Region(tiles);
+	_currentRegion = new Region("Chunks/map.txt");
 }
 
 void World::update(sf::Vector2f mousePos)

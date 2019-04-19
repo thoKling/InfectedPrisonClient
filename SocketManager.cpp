@@ -58,7 +58,7 @@ void SocketManager::init(std::string playerName, sf::IpAddress addr, unsigned in
 		level[i].resize(32);
 	}
 	response >> level;
-	World::getInstance()->loadMap(level, sf::Vector2i(0, 0));
+	World::getInstance()->loadMap(sf::Vector2i(0, 0));
 	// exécute le thread
 	_packetsThread.launch();
 }
@@ -191,7 +191,7 @@ void SocketManager::handleNextWave(sf::Packet packet)
 {
 	int currentWave;
 	packet >> currentWave;
-	HUD::setWave(currentWave);
+	//HUD::setWave(currentWave);
 }
 
 sf::Packet & operator>>(sf::Packet & packet, SocketManager::PacketType & pt)

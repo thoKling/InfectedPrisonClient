@@ -22,7 +22,7 @@ private:
 
 public:
 	// On charge une nouvelle map
-	void loadMap(const std::vector<std::vector<int>>& tiles, const sf::Vector2i& position);
+	void loadMap(const sf::Vector2i& position);
 
 	// Update les différentes entitées en jeux
 	void update(sf::Vector2f mousePos);

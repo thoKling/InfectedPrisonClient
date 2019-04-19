@@ -22,5 +22,6 @@ private:
 	static sf::Font _font;
 	static sf::Text _txtWave;
 	static sf::Text _txtZombiesLeft;
+	static unsigned int _currentWave;
 };
 

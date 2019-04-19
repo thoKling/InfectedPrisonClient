@@ -8,26 +8,34 @@
 #include "SocketManager.h"
 
 #include <iostream>
+#include <fstream>
 
-Region::Region(const std::vector<std::vector<int>>& tiles)
+Region::Region(const std::string fileMap):
+	_fileMap(fileMap)
 {
+	loadMap();
+
+	loadMapBase();
+
 	// on crée la tilemap avec le niveau précédemment défini
-	if (!_map.load("Ressources/Tilesheet/tileset.png", sf::Vector2u(64, 64), tiles, 32, 16))
+	if (!_mapBase.load("Ressources/Tilesheet/tileset.png", sf::Vector2u(64, 64), _tilesBase))
 		throw std::string("Impossible de charger la map");
-	_tiles = tiles;
+
+	// on crée la tilemap avec le niveau précédemment défini
+	if (!_map.load("Ressources/Tilesheet/tileset.png", sf::Vector2u(64, 64), _tiles))
+		throw std::string("Impossible de charger la map");
+
 	DroppedItem* temp = new DroppedItem(new Weapon());
-	temp->setPosition({ 150, 150 });
+	temp->setPosition({ 856, 870 });
 	_items.emplace_back(temp);
 
 	Item* tempItem = new Ammo(WeaponType::Gun);
 	tempItem->setStack(18);
-	DroppedItem* temp2 = new DroppedItem(tempItem);
-	temp2->setPosition({500,300});
 	//_items.emplace_back(temp2);
 
 	// Création d'un zombie
 	if(!SocketManager::isOnline())
-		ZombiesManager::createZombie(sf::Vector2f(800, 500));
+		ZombiesManager::createZombie(sf::Vector2f(1576, 810));
 }
 
 
@@ -42,6 +50,7 @@ Region::~Region()
 void Region::manageDraw(sf::RenderWindow & window)
 {
 	// On dessine la map
+	window.draw(_mapBase);
 	window.draw(_map);
 	// On dessine les items
 	for (auto it = _items.begin(); it != _items.end(); ++it) {
@@ -52,15 +61,113 @@ void Region::manageDraw(sf::RenderWindow & window)
 void Region::update()
 {
 	++_ticks;
+	//create ammo
 	if (_ticks % 600 == 0) {
 		Item* tempItem = new Ammo(WeaponType::Gun);
 		tempItem->setStack(4);
 		DroppedItem* temp2 = new DroppedItem(tempItem);
-		temp2->setPosition(sf::Vector2f( 500 + (int)(rand()% 50),300 + (int)(rand()%50) ));
+		int x;
+		int y;
+		int place = rand()%4;
+		std::cout << place << std::endl;
+		switch (place) {
+			case 0: 
+				x = 856;
+				y = 870;
+				break;
+			case 1: 
+				x = 1156;
+				y = 600;
+				break;
+			case 2: 
+				x = 1956;
+				y = 600;
+				break;
+			case 3: 
+				x = 856;
+				y = 870;
+				break;
+		}
+		temp2->setPosition(sf::Vector2f( x + rand()%30, y + rand()%30));
 		_items.emplace_back(temp2);
 	}
 	if((_ticks + 30)%600 == 0 && !SocketManager::isOnline())
-		ZombiesManager::createZombie(sf::Vector2f(800 + (int)(rand()%100), 500 + (int)(rand()%100)));
+		ZombiesManager::createZombie(sf::Vector2f(2560 + (int)(rand()%100), 1600 + (int)(rand()%100)));
+}
+
+void Region::saveMap() {
+	std::ofstream outfile;
+	outfile.open(_fileMap);
+
+	for (int i = 0; i < _tiles.size(); i++) {
+		for (int j = 0; j < _tiles[0].size(); j++) {
+			outfile << _tiles[i][j] << ",";
+		}
+		if(i!= _tiles.size())
+			outfile << "\n";
+	}
+}
+
+void Region::loadMap() {
+	std::ifstream infile;
+	infile.open(_fileMap);
+	if (!infile)
+	{
+		std::cout << "There was an error opening the file.\n";
+	}
+
+	char ch;
+	int currentNumber = 0;
+	std::vector<int> temp;
+
+	while (!infile.eof()) {
+		infile.get(ch);
+
+		if (ch == ',') {
+			temp.push_back(currentNumber);
+			currentNumber = 0;
+		}
+		else if (ch == '\n') {
+			_tiles.push_back(temp);
+			temp.clear();
+		}
+		else {
+			int ia = ch - '0';
+			currentNumber = currentNumber * 10 + ia;
+		}
+	}
+	_tiles.push_back(temp);
+}
+
+void Region::loadMapBase() {
+	std::ifstream infile;
+	infile.open("Chunks/base.txt");
+	if (!infile)
+	{
+		std::cout << "There was an error opening the file.\n";
+	}
+
+	char ch;
+	int currentNumber = 0;
+	std::vector<int> temp;
+
+	while (!infile.eof()) {
+		infile.get(ch);
+
+		if (ch == ',') {
+			temp.push_back(currentNumber);
+			currentNumber = 0;
+		}
+		else if (ch == '\n') {
+			_tilesBase.push_back(temp);
+			temp.clear();
+		}
+		else {
+			int ia = ch - '0';
+			currentNumber = currentNumber * 10 + ia;
+		}
+	}
+	_tilesBase.push_back(temp);
 }
 
 // Renvoit l'item le plus proche de la position dans une certaine portée et le supprime de la région, nullptr si il n'y en a pas
@@ -111,5 +218,5 @@ int Region::getTileNumber(sf::Vector2i tilePos)
 
 bool Region::isObstacle(sf::Vector2i tilePos)
 {
-	return getTileNumber(tilePos) == 41;
+	return !((getTileNumber(tilePos) == 10) || (getTileNumber(tilePos) == 319));
 }

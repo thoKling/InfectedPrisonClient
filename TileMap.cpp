@@ -3,12 +3,17 @@
 #include <iostream>
 
 #include "World.h"
+#include "Utils.h"
 
 TileMap::TileMap()
 {
 }
 
-bool TileMap::load(const std::string& tileset, sf::Vector2u tileSize, const std::vector<std::vector<int>>& tiles, unsigned int width, unsigned int height) {
+bool TileMap::load(const std::string& tileset, sf::Vector2u tileSize, const std::vector<std::vector<int>>& tiles) {
+
+	unsigned int width = tiles[0].size();
+	unsigned int height = tiles.size();
+
 	// on charge la texture du tileset
 	if (!_tileset.loadFromFile(tileset))
 		return false;
