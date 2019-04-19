@@ -109,7 +109,12 @@
     <ClCompile Include="SocketManager.cpp">
       <Filter>Sources\Multiplayer</Filter>
     </ClCompile>
-    <ClCompile Include="GameState.cpp" />
+    <ClCompile Include="GameState.cpp">
+      <Filter>Sources\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="mainGame.cpp">
+      <Filter>Sources\GameStates</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -217,7 +222,12 @@
     <ClInclude Include="SocketManager.h">
       <Filter>Sources\Multiplayer</Filter>
     </ClInclude>
-    <ClInclude Include="GameState.h" />
+    <ClInclude Include="GameState.h">
+      <Filter>Sources\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="mainGame.h">
+      <Filter>Sources\GameStates</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Sources">
@@ -270,6 +280,9 @@
     </Filter>
     <Filter Include="Sources\View\HUD">
       <UniqueIdentifier>{85cbe02c-977d-41a9-9b9f-54ab2b2db881}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\GameStates">
+      <UniqueIdentifier>{22eae110-36b2-45a8-8e43-2f3723678051}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

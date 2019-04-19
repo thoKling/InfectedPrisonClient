@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "World.h"
+#include "HUD.h"
 
 unsigned int ZombiesManager::_nextId = 0;
 std::map<unsigned int, Zombie*> ZombiesManager::_zombies;
@@ -59,4 +60,5 @@ void ZombiesManager::update() {
 	{
 		_zombies.erase(*it);
 	}
+	HUD::setZombiesLeft(_zombies.size());
 }

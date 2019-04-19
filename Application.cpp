@@ -15,7 +15,7 @@ Application::Application()
 	_window.create(sf::VideoMode(WINDOWS_WIDTH, WINDOWS_HEIGHT), "Infected Prison");
 
 	// Mettre à true si on veut utiliser le serveur
-	bool online = true;
+	bool online = false;
 
 	std::string playerName;
 	std::cin >> playerName;
