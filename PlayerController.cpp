@@ -22,8 +22,9 @@ PlayerController::~PlayerController()
 }
 
 /** Récupération et traitement des entrées clavier du joueur **/
-void PlayerController::handleInputs(const sf::Event& event)
+void PlayerController::handleInputs(const sf::Vector2f& mousePos, const sf::Event& event)
 {
+	_player->orientate(mousePos);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::C)) {
 		_isInventoryOpen = true;
 		_dIsHeld = false;
@@ -114,9 +115,8 @@ void PlayerController::movePlayer()
 		_player->move(0, -y);
 }
 
-void PlayerController::update(const sf::Vector2f& mousePos)
+void PlayerController::update()
 {
-	_player->orientate(mousePos);
 	_player->update();
 
 	movePlayer();

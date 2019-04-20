@@ -29,7 +29,7 @@ public:
 	static void manageDrawCharacters(sf::RenderWindow& window);
 
 	// Procédure qui met à jour le comportement des personnages
-	static void update(const sf::Vector2f& mousePos);
+	static void update();
 
 private:
 	// Controleur du client 

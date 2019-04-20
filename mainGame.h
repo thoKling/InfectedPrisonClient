@@ -6,11 +6,11 @@
 class mainGame : public GameState
 {
 public:
-	mainGame();
+	mainGame(bool online);
 	~mainGame();
-	virtual void update(sf::Vector2f mousePos);
-	virtual void handleInputs(sf::Event event);
-	virtual void manageDraw();
+	virtual void update();
+	virtual void handleInputs(const sf::Vector2f& mousePos, const sf::Event& event);
+	virtual void manageDraw(sf::RenderWindow& window);
 private:
 	sf::Sprite _gameOverSprite;
 };

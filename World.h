@@ -25,9 +25,9 @@ public:
 	void loadMap(const sf::Vector2i& position);
 
 	// Update les différentes entitées en jeux
-	void update(sf::Vector2f mousePos);
+	void update();
 	void draw();
-	void handleInputs(const sf::Event& event);
+	void handleInputs(const sf::Vector2f& mousePos, const sf::Event& event);
 
 	// Getters
 	ltbl::LightSystem* getLightSys();

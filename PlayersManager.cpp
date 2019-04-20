@@ -65,9 +65,9 @@ void PlayersManager::manageDrawCharacters(sf::RenderWindow& window) {
 }
 
 // Mise à jour du comportement des personnages
-void PlayersManager::update(const sf::Vector2f& mousePos)
+void PlayersManager::update()
 {
-	_clientPlayerController.update(mousePos);
+	_clientPlayerController.update();
 	for (auto it = _playersConnected.begin(); it != _playersConnected.end(); ++it)
 	{
 		it->second->update();

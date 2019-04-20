@@ -115,6 +115,9 @@
     <ClCompile Include="mainGame.cpp">
       <Filter>Sources\GameStates</Filter>
     </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>Sources\GameStates\Menu</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -228,6 +231,9 @@
     <ClInclude Include="mainGame.h">
       <Filter>Sources\GameStates</Filter>
     </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>Sources\GameStates\Menu</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Sources">
@@ -283,6 +289,9 @@
     </Filter>
     <Filter Include="Sources\GameStates">
       <UniqueIdentifier>{22eae110-36b2-45a8-8e43-2f3723678051}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\GameStates\Menu">
+      <UniqueIdentifier>{ced2fa27-bb68-4a59-8d40-970e5fe286db}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -6,36 +6,20 @@
 #include "TextureManager.h"
 #include "World.h"
 #include "SocketManager.h"
+#include "Application.h"
 
-mainGame::mainGame()
+mainGame::mainGame(bool online)
 {
-	// Mettre à true si on veut utiliser le serveur
-	bool online = false;
-
 	std::string playerName;
 	std::cin >> playerName;
-	//World::init(&_window, playerName);
+	World::init(&Application::getWindow(), playerName);
 
 	if (online) {
-		SocketManager::init(playerName, "localhost", 9999);
+		SocketManager::init(playerName, "169.254.102.218", 9999);
 	}
 	else {
-		std::vector<std::vector<int>> _level;
-		for (size_t i = 0; i < 16; i++)
-		{
-			std::vector<int> temp;
-			for (size_t j = 0; j < 32; j++)
-			{
-				if (j == 0 || j == 31 || i == 0 || i == 15)
-					temp.push_back(41);
-				else if (j == 5 && (i <= 5))
-					temp.push_back(41);
-				else
-					temp.push_back(10);
-			}
-			_level.push_back(temp);
-		}
-		World::getInstance()->loadMap(_level, sf::Vector2i(0, 0));
+
+		World::getInstance()->loadMap(sf::Vector2i(0, 0));
 	}
 	_gameOverSprite.setTexture(*TextureManager::loadText("Ressources/gameOver.png"));
 	_gameOverSprite.setScale(0.25, 0.25);
@@ -45,17 +29,17 @@ mainGame::~mainGame()
 {
 }
 
-void mainGame::update(sf::Vector2f mousePos)
+void mainGame::update()
 {
-	World::getInstance()->update(mousePos);
+	World::getInstance()->update();
 }
 
-void mainGame::handleInputs(sf::Event event)
+void mainGame::handleInputs(const sf::Vector2f& mousePos, const sf::Event& event)
 {
-	World::getInstance()->handleInputs(event);
+	World::getInstance()->handleInputs(mousePos, event);
 }
 
-void mainGame::manageDraw()
+void mainGame::manageDraw(sf::RenderWindow& window)
 {
 	World::getInstance()->draw();
 }
