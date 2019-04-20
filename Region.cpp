@@ -10,16 +10,21 @@
 #include <iostream>
 #include <fstream>
 
-Region::Region(const std::string fileMap):
-	_fileMap(fileMap)
+Region::Region(const std::string& fileMap):
+	_fileMap(&fileMap)
 {
 	loadMap();
+	init();
+}
 
+Region::Region(std::vector<std::vector<int>>& tiles):
+	_tiles(tiles)
+{
+	init();
+}
+
+void Region::init() {
 	loadMapBase();
-
-	// on crée la tilemap avec le niveau précédemment défini
-	if (!_mapBase.load("Ressources/Tilesheet/tileset.png", sf::Vector2u(64, 64), _tilesBase))
-		throw std::string("Impossible de charger la map");
 
 	// on crée la tilemap avec le niveau précédemment défini
 	if (!_map.load("Ressources/Tilesheet/tileset.png", sf::Vector2u(64, 64), _tiles))
@@ -34,7 +39,7 @@ Region::Region(const std::string fileMap):
 	//_items.emplace_back(temp2);
 
 	// Création d'un zombie
-	if(!SocketManager::isOnline())
+	if (!SocketManager::isOnline())
 		ZombiesManager::createZombie(sf::Vector2f(1576, 810));
 }
 
@@ -97,7 +102,7 @@ void Region::update()
 
 void Region::saveMap() {
 	std::ofstream outfile;
-	outfile.open(_fileMap);
+	outfile.open(*_fileMap);
 
 	for (int i = 0; i < _tiles.size(); i++) {
 		for (int j = 0; j < _tiles[0].size(); j++) {
@@ -110,7 +115,7 @@ void Region::saveMap() {
 
 void Region::loadMap() {
 	std::ifstream infile;
-	infile.open(_fileMap);
+	infile.open(*_fileMap);
 	if (!infile)
 	{
 		std::cout << "There was an error opening the file.\n";
@@ -168,6 +173,10 @@ void Region::loadMapBase() {
 		}
 	}
 	_tilesBase.push_back(temp);
+
+	// on crée la tilemap avec le niveau précédemment défini
+	if (!_mapBase.load("Ressources/Tilesheet/tileset.png", sf::Vector2u(64, 64), _tilesBase))
+		throw std::string("Impossible de charger la map");
 }
 
 // Renvoit l'item le plus proche de la position dans une certaine portée et le supprime de la région, nullptr si il n'y en a pas

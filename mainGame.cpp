@@ -35,7 +35,7 @@ mainGame::mainGame()
 			}
 			_level.push_back(temp);
 		}
-		World::getInstance()->loadMap(_level, sf::Vector2i(0, 0));
+		World::getInstance()->loadMap(sf::Vector2i(0, 0));
 	}
 	_gameOverSprite.setTexture(*TextureManager::loadText("Ressources/gameOver.png"));
 	_gameOverSprite.setScale(0.25, 0.25);

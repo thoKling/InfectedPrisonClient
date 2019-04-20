@@ -19,13 +19,23 @@ public:
 
 	void handleInputs(const sf::Event& event);
 
-	void update();
+	void update(const sf::Vector2f& mousePos);
 
 private:
 	Inventory* _inventory;
 
 	//Dans chaque carré de 64/64 se trouve potentiellement un item. Tableau selon [y,x]
 	std::vector<std::vector<Item*>> _itemOnScreen;
+
+	Item* _selectedItem;
+	sf::Vector2f _selectedItemLocation;
+
+	//fond flou
+	sf::RectangleShape _blur;
+	//cellule de l'inventaire
+	sf::RectangleShape _inventoryShape;
+
+	bool _isDragging;
 
 
 	// base de l'inventaire

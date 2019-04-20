@@ -11,6 +11,8 @@ sf::Texture* TextureManager::loadText(const std::string& path)
 	std::vector<std::string> splited = Utils::split(path, "/");
 	std::string textName = splited[splited.size()-1];
 
+	std::cout << textName << std::endl;
+
 	// On vérifie qu'on ne l'a pas déjà chargée
 	if (_textMap.find(textName) != _textMap.end()) {
 		//std::cout << "Déjà chargée" << std::endl;

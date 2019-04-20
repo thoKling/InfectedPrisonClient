@@ -48,8 +48,7 @@ void PlayerController::handleInputs(const sf::Event& event)
 		_upIsHeld = false;
 
 	if (_isInventoryOpen) {
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-			_inventory->getInventoryView()->handleInputs(event);
+		_inventory->getInventoryView()->handleInputs(event);
 	}
 	else {
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
@@ -142,7 +141,7 @@ void PlayerController::update(const sf::Vector2f& mousePos)
 	if (!_player->getLives())
 		die();
 	HUD::setLives(_player->getLives());
-	_inventory->getInventoryView()->update();
+	_inventory->getInventoryView()->update(mousePos);
 }
 
 void PlayerController::attach(Player * player)
