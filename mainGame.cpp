@@ -16,7 +16,6 @@ mainGame::mainGame(std::string playerName, bool online)
 		SocketManager::init(playerName, "localhost", 9999);
 	}
 	else {
-
 		World::getInstance()->loadMap(sf::Vector2i(0, 0));
 	}
 	_gameOverSprite.setTexture(*TextureManager::loadText("Ressources/gameOver.png"));

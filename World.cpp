@@ -54,6 +54,11 @@ void World::loadMap(const sf::Vector2i& position)
 	_currentRegion = new Region("Chunks/map.txt");
 }
 
+void World::loadMapFromServer(std::vector<std::vector<int>>& tiles, const sf::Vector2i& position)
+{
+	_currentRegion = new Region(tiles);
+}
+
 void World::update()
 {
 	// On recupere la position du joueur, on cast en vector2i car les positions flotantes font des problemes dans les vues

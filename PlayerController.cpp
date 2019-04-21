@@ -49,8 +49,7 @@ void PlayerController::handleInputs(const sf::Vector2f& mousePos, const sf::Even
 		_upIsHeld = false;
 
 	if (_isInventoryOpen) {
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-			_inventory->getInventoryView()->handleInputs(event);
+		_inventory->getInventoryView()->handleInputs(mousePos, event);
 	}
 	else {
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))

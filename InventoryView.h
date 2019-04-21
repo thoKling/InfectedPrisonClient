@@ -17,7 +17,7 @@ public:
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
-	void handleInputs(const sf::Event& event);
+	void handleInputs(const sf::Vector2f& mousePos, const sf::Event& event);
 
 	void update();
 
@@ -26,6 +26,16 @@ private:
 
 	//Dans chaque carré de 64/64 se trouve potentiellement un item. Tableau selon [y,x]
 	std::vector<std::vector<Item*>> _itemOnScreen;
+
+	Item* _selectedItem;
+	sf::Vector2f _selectedItemLocation;
+
+	//fond flou
+	sf::RectangleShape _blur;
+	//cellule de l'inventaire
+	sf::RectangleShape _inventoryShape;
+
+	bool _isDragging;
 
 
 	// base de l'inventaire

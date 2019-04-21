@@ -61,7 +61,7 @@ void SocketManager::init(std::string playerName, sf::IpAddress addr, unsigned in
 		level[i].resize(32);
 	}
 	response >> level;
-	World::getInstance()->loadMap(sf::Vector2i(0, 0));
+	World::getInstance()->loadMapFromServer(level, sf::Vector2i(0, 0));
 	// exécute le thread
 	_packetsThread.launch();
 }
