@@ -7,6 +7,9 @@
 #include "ZombiesManager.h"
 #include "Player.h"
 #include "HUD.h"
+#include "Item.h"
+#include "Weapon.h"
+#include "Ammo.h"
 
 bool SocketManager::_onlineMode = false;
 unsigned int SocketManager::_serverPort;
@@ -110,6 +113,9 @@ void SocketManager::handlePackets()
 		case PacketType::NextWave:
 			handleNextWave(packet);
 			break;
+		case PacketType::CreateItem:
+			handleCreateItem(packet);
+			break;
 		default:
 			std::cout << "Unknown packetType from " << sender << std::endl;
 			break;
@@ -156,10 +162,8 @@ void SocketManager::handleProjectile(sf::Packet packet)
 
 void SocketManager::handleZombieCreation(sf::Packet packet)
 {
-	std::cout << "ZombieCreation" << std::endl;
 	sf::Vector2f pos;
 	packet >> pos;
-	std::cout << "position :" << pos.x << " " <<pos.y << std::endl;
 	ZombiesManager::createZombie(pos);
 }
 
@@ -191,7 +195,32 @@ void SocketManager::handleNextWave(sf::Packet packet)
 {
 	int currentWave;
 	packet >> currentWave;
-	//HUD::setWave(currentWave);
+	HUD::setWave(currentWave);
+}
+
+void SocketManager::handleCreateItem(sf::Packet packet)
+{
+	std::cout << "Item Creation !" << std::endl;
+	sf::Vector2f position;
+	Item* item = nullptr;
+	packet >> &item >> position;
+	World::getInstance()->dropItem(item, position);
+}
+
+sf::Packet & operator>>(sf::Packet & packet, Item** item)
+{
+	std::string type;
+	unsigned int stack;
+	packet >> type >> stack;
+
+	if (type == "Weapon") {
+		*item = new Weapon();
+	}
+	else if (type == "Ammo") {
+		*item = new Ammo(WeaponType::Gun);
+	}
+	(*item)->setStack(stack);
+	return packet;
 }
 
 sf::Packet & operator>>(sf::Packet & packet, SocketManager::PacketType & pt)

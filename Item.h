@@ -33,6 +33,8 @@ public:
 	virtual WeaponType getWeaponType();
 	// Ammos
 	virtual WeaponType getAmmoType();
+	// Nécessaire pour la sérialization
+	virtual std::string getType() = 0;
 
 protected:
 	unsigned int _stack = 0;

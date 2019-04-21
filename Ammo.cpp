@@ -18,3 +18,8 @@ WeaponType Ammo::getAmmoType()
 {
 	return _ammoType;
 }
+
+std::string Ammo::getType()
+{
+	return "Ammo";
+}
