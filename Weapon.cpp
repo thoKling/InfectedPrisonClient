@@ -87,3 +87,8 @@ unsigned int Weapon::getAmmo()
 WeaponType Weapon::getWeaponType() {
 	return _type;
 }
+
+std::string Weapon::getType()
+{
+	return "Weapon";
+}

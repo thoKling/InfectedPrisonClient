@@ -11,3 +11,8 @@ Key::Key()
 Key::~Key()
 {
 }
+
+std::string Key::getType()
+{
+	return "Key";
+}

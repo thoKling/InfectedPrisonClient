@@ -8,6 +8,7 @@ public:
 	Ammo(WeaponType ammoType);
 	~Ammo();
 	virtual WeaponType getAmmoType();
+	virtual std::string getType();
 
 private:
 	WeaponType _ammoType;

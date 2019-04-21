@@ -15,7 +15,7 @@ mainGame::mainGame(bool online)
 	World::init(&Application::getWindow(), playerName);
 
 	if (online) {
-		SocketManager::init(playerName, "169.254.102.218", 9999);
+		SocketManager::init(playerName, "localhost", 9999);
 	}
 	else {
 

@@ -25,17 +25,14 @@ Region::Region(const std::string fileMap):
 	if (!_map.load("Ressources/Tilesheet/tileset.png", sf::Vector2u(64, 64), _tiles))
 		throw std::string("Impossible de charger la map");
 
-	DroppedItem* temp = new DroppedItem(new Weapon());
-	temp->setPosition({ 856, 870 });
-	_items.emplace_back(temp);
-
-	Item* tempItem = new Ammo(WeaponType::Gun);
-	tempItem->setStack(18);
-	//_items.emplace_back(temp2);
-
 	// Création d'un zombie
-	if(!SocketManager::isOnline())
+	if (!SocketManager::isOnline()) {
 		ZombiesManager::createZombie(sf::Vector2f(1576, 810));
+		DroppedItem* temp = new DroppedItem(new Weapon());
+		temp->setPosition({ 856, 870 });
+		_items.emplace_back(temp);
+
+	}
 }
 
 
@@ -60,6 +57,8 @@ void Region::manageDraw(sf::RenderWindow & window)
 
 void Region::update()
 {
+	if (SocketManager::isOnline())
+		return;
 	++_ticks;
 	//create ammo
 	if (_ticks % 600 == 0) {
@@ -91,7 +90,7 @@ void Region::update()
 		temp2->setPosition(sf::Vector2f( x + rand()%30, y + rand()%30));
 		_items.emplace_back(temp2);
 	}
-	if((_ticks + 30)%600 == 0 && !SocketManager::isOnline())
+	if((_ticks + 30)%600 == 0)
 		ZombiesManager::createZombie(sf::Vector2f(2560 + (int)(rand()%100), 1600 + (int)(rand()%100)));
 }
 

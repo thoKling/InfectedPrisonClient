@@ -36,5 +36,6 @@ public:
 	virtual void update();
 	virtual unsigned int getAmmo();
 	virtual WeaponType getWeaponType();
+	virtual std::string getType();
 };
 
