@@ -59,7 +59,7 @@ void World::loadMapFromServer(std::vector<std::vector<int>>& tiles, const sf::Ve
 	_currentRegion = new Region(tiles);
 }
 
-void World::update(sf::Vector2f mousePos)
+void World::update()
 {
 	// On recupere la position du joueur, on cast en vector2i car les positions flotantes font des problemes dans les vues
 	sf::Vector2i playerPos = sf::Vector2i(PlayersManager::getClientPlayer()->getPosition());
@@ -67,7 +67,7 @@ void World::update(sf::Vector2f mousePos)
 	// On centre les vues sur le joueur
 	_mainView.setCenter(sf::Vector2f(playerPos));
 	// Mise à jour du comportement des personnages
-	PlayersManager::update(mousePos);
+	PlayersManager::update();
 
 	if (!Utils::debugMode) {
 		ZombiesManager::update();
@@ -109,10 +109,10 @@ void World::draw()
 	_window->setView(_mainView);
 }
 
-void World::handleInputs(const sf::Event& event)
+void World::handleInputs(const sf::Vector2f& mousePos, const sf::Event& event)
 {
 	// Récupération des entrées clavier qui concernent les personnages
-	PlayersManager::getClientController().handleInputs(event);
+	PlayersManager::getClientController().handleInputs(mousePos, event);
 }
 
 ltbl::LightSystem* World::getLightSys()

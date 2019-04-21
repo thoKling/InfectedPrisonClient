@@ -1,8 +1,6 @@
 #pragma once
 
-#include <SFML/Window.hpp>
-
-class Application;
+#include <SFML/Graphics.hpp>
 
 ///
 /// GameState pattern : http://gamedev.dreamnoid.com/2009/01/06/game-state-pattern/
@@ -15,11 +13,7 @@ public:
 	~GameState();
 
 	virtual void update() = 0;
-	virtual void handleInputs(sf::Event event) = 0;
-	virtual void manageDraw() = 0;
-
-protected:
-
-	Application* GameMgr;
+	virtual void handleInputs(const sf::Vector2f& mousePos, const sf::Event& event) = 0;
+	virtual void manageDraw(sf::RenderWindow& window) = 0;
 };
 

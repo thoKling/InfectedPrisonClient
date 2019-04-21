@@ -22,8 +22,9 @@ PlayerController::~PlayerController()
 }
 
 /** Récupération et traitement des entrées clavier du joueur **/
-void PlayerController::handleInputs(const sf::Event& event)
+void PlayerController::handleInputs(const sf::Vector2f& mousePos, const sf::Event& event)
 {
+	_player->orientate(mousePos);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::C)) {
 		_isInventoryOpen = true;
 		_dIsHeld = false;
@@ -48,7 +49,7 @@ void PlayerController::handleInputs(const sf::Event& event)
 		_upIsHeld = false;
 
 	if (_isInventoryOpen) {
-		_inventory->getInventoryView()->handleInputs(event);
+		_inventory->getInventoryView()->handleInputs(mousePos, event);
 	}
 	else {
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
@@ -113,9 +114,8 @@ void PlayerController::movePlayer()
 		_player->move(0, -y);
 }
 
-void PlayerController::update(const sf::Vector2f& mousePos)
+void PlayerController::update()
 {
-	_player->orientate(mousePos);
 	_player->update();
 
 	movePlayer();
@@ -141,7 +141,7 @@ void PlayerController::update(const sf::Vector2f& mousePos)
 	if (!_player->getLives())
 		die();
 	HUD::setLives(_player->getLives());
-	_inventory->getInventoryView()->update(mousePos);
+	_inventory->getInventoryView()->update();
 }
 
 void PlayerController::attach(Player * player)

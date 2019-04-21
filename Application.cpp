@@ -7,31 +7,18 @@
 #include "TextureManager.h"
 #include "SocketManager.h"
 
+#include "Menu.h"
 #include "Utils.h"
+
+std::stack<GameState*> Application::_states;
+sf::RenderWindow Application::_window;
 
 Application::Application()
 {
 	// on crée la fenêtre
 	_window.create(sf::VideoMode(WINDOWS_WIDTH, WINDOWS_HEIGHT), "Infected Prison");
-
-	// Mettre à true si on veut utiliser le serveur
-	bool online = false;
-
-	std::string playerName;
-	std::cin >> playerName;
-	World::init(&_window, playerName);
-
-	if (online) {
-		SocketManager::init(playerName, "169.254.102.218", 9999);
-	}
-	else {	
-			
-		World::getInstance()->loadMap(sf::Vector2i(0,0));
-	}
-	_gameOverSprite.setTexture(*TextureManager::loadText("Ressources/gameOver.png"));
-	_gameOverSprite.setScale(0.25, 0.25);
+	setState(new Menu());
 }
-
 
 Application::~Application()
 {
@@ -76,13 +63,10 @@ void Application::draw()
 	// On nettoie la fenetre
 	_window.clear();
 
-	if (!World::getInstance()->getGameOver())
-		World::getInstance()->draw();
-	else {
-		_window.setView(_window.getDefaultView());
-		_window.draw(_gameOverSprite);
+	GameState* currentGameState = getCurrentState();
+	if (currentGameState != NULL) {
+		currentGameState->manageDraw(_window);
 	}
-
 	// On affiche les dessins
 	_window.display();
 }
@@ -91,7 +75,7 @@ void Application::draw()
 // Ici on gère les entrées clavier du joueur
 void Application::handleInputs(sf::Event event)
 {
-	if (!_window.hasFocus() || World::getInstance()->getGameOver()) {
+	if (!_window.hasFocus()) {
 		return;
 	}
 
@@ -101,18 +85,51 @@ void Application::handleInputs(sf::Event event)
 		Utils::debugMode = !Utils::debugMode;
 	}
 
-	World::getInstance()->handleInputs(event);
-}
-
-// On update chaque élément du jeux (1 fois par frame)
-void Application::update()
-{
 	// Récupération de la position de la souris par rapport à la fenêtre
 	sf::Vector2i mousePixelPos = sf::Mouse::getPosition(_window);
 
 	// Conversion en coordonnées "monde"
 	sf::Vector2f mouseWorldPos = _window.mapPixelToCoords(mousePixelPos);
 
-	if(!World::getInstance()->getGameOver())
-		World::getInstance()->update(mouseWorldPos);
+	GameState* currentGameState = getCurrentState();
+	if (currentGameState != NULL) {
+		currentGameState->handleInputs(mouseWorldPos, event);
+	}
+}
+
+// On update chaque élément du jeux (1 fois par frame)
+void Application::update()
+{
+	GameState* currentGameState = getCurrentState();
+	if (currentGameState != NULL) {
+		currentGameState->update();
+	}
+}
+
+void Application::pushState(GameState* state)
+{
+	// set current state
+	_states.push(state);
+}
+
+void Application::setState(GameState* state)
+{
+	// Delete the actual current state (if any)
+	popState();
+
+	// Add the new state
+	pushState(state);
+}
+
+void Application::popState()
+{
+	if (!_states.empty())
+	{
+		_states.pop();
+	}
+}
+
+sf::RenderWindow & Application::getWindow()
+{
+	return _window;
 }

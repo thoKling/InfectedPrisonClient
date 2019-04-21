@@ -17,9 +17,9 @@ public:
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
-	void handleInputs(const sf::Event& event);
+	void handleInputs(const sf::Vector2f& mousePos, const sf::Event& event);
 
-	void update(const sf::Vector2f& mousePos);
+	void update();
 
 private:
 	Inventory* _inventory;

@@ -3,24 +3,20 @@
 #include <SFML/Graphics.hpp>
 #include "Application.h"
 
-class Menu
+class Menu : public GameState
 {
 public:
 	Menu();
 	~Menu();
 
-	void start();
+	void update() {  };
+	void handleInputs(const sf::Vector2f& mousePos, const sf::Event& event);
+	void manageDraw(sf::RenderWindow& window);
 
 private:
-	void handleInputs(sf::Event);
-	void draw();
-
-	sf::RenderWindow _window;
-
 	sf::Font _font;
 	sf::Text _title;
 	sf::Text _btnSolo;
 	sf::Text _btnMulti;
 	sf::Text _btnSettings;
 };
-

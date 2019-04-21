@@ -16,9 +16,9 @@ InventoryView::InventoryView(Inventory* inventory):
 	//On défini le flou
 	_blur.setFillColor(sf::Color(0, 0, 0, 160));
 	//la texture de l'inventaire
-	sf::Texture* textureInventory = TextureManager::loadText("Ressources/PNG/Inventory.png");
-	_inventoryShape.setTexture(textureInventory);
-	_inventoryShape.setPosition(_baseTop, _baseLeft);
+	//sf::Texture* textureInventory = TextureManager::loadText("Ressources/PNG/Inventory.png");
+	//_inventoryShape.setTexture(textureInventory);
+	//_inventoryShape.setPosition(_baseTop, _baseLeft);
 
 	for (int i = 0; i < WINDOWS_HEIGHT/ TILESIZE; i++) {
 		std::vector<Item*> vect(WINDOWS_WIDTH / TILESIZE, nullptr);
@@ -96,7 +96,7 @@ void InventoryView::draw(sf::RenderTarget& target, sf::RenderStates states) cons
 	target.setView(temp);
 }
 
-void InventoryView::update(const sf::Vector2f& mousePos)
+void InventoryView::update()
 {
 	std::vector<Item*> emptyVect(WINDOWS_WIDTH / TILESIZE, nullptr);
 	_itemOnScreen.clear();
@@ -116,14 +116,9 @@ void InventoryView::update(const sf::Vector2f& mousePos)
 			addedItem++;
 		}
 	}
-
-	//mise à jour de la position du selected item
-	if (_selectedItem) {
-		_selectedItemLocation = mousePos;
-	}
 }
 
-void InventoryView::handleInputs(const sf::Event& event)
+void InventoryView::handleInputs(const sf::Vector2f& mousePos, const sf::Event& event)
 {
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 		if (!_isDragging) {
@@ -133,6 +128,7 @@ void InventoryView::handleInputs(const sf::Event& event)
 			_selectedItem = _itemOnScreen[(int)event.mouseButton.y / TILESIZE][(int)event.mouseButton.x / TILESIZE];
 			_isDragging = true;
 		}
+		_selectedItemLocation = mousePos;
 	}
 	if (!sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{

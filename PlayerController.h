@@ -11,11 +11,11 @@ public:
 	~PlayerController();
 
 	/* Procédure qui récupère et traite les entrées clavier du joueur */
-	void handleInputs(const sf::Event& event);
+	void handleInputs(const sf::Vector2f& mousePos, const sf::Event& event);
 
 	void movePlayer();
 
-	void update(const sf::Vector2f& mousePos);
+	void update();
 
 	void attach(Player* player);
 
