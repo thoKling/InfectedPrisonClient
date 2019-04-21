@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "Application.h"
+#include "TextBox.h"
 
 class Menu : public GameState
 {
@@ -19,4 +20,6 @@ private:
 	sf::Text _btnSolo;
 	sf::Text _btnMulti;
 	sf::Text _btnSettings;
+	TextBox _textBox;
+
 };

@@ -161,6 +161,7 @@
     <ClInclude Include="ProjectilesManager.h" />
     <ClInclude Include="Region.h" />
     <ClInclude Include="SocketManager.h" />
+    <ClInclude Include="TextBox.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="TileMap.h" />
     <ClInclude Include="Utils.h" />
@@ -202,6 +203,7 @@
     <ClCompile Include="ProjectilesManager.cpp" />
     <ClCompile Include="Region.cpp" />
     <ClCompile Include="SocketManager.cpp" />
+    <ClCompile Include="TextBox.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="TileMap.cpp" />
     <ClCompile Include="Utils.cpp" />

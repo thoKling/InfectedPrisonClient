@@ -6,7 +6,7 @@
 class mainGame : public GameState
 {
 public:
-	mainGame(bool online);
+	mainGame(std::string playerName, bool online);
 	~mainGame();
 	virtual void update();
 	virtual void handleInputs(const sf::Vector2f& mousePos, const sf::Event& event);

@@ -37,6 +37,10 @@ Menu::Menu()
 	_btnSettings.setCharacterSize(24);
 	_btnSettings.setOrigin(_btnSettings.getLocalBounds().left + _btnSettings.getLocalBounds().width / 2, 0);
 	_btnSettings.setPosition(window.getSize().x / 2, 350);
+
+	// Textbox
+	_textBox.setSize(200, 30);
+	_textBox.setPosition(window.getSize().x / 2 - (_textBox.getHitBox().width / 2), 75);
 }
 
 Menu::~Menu()
@@ -51,7 +55,7 @@ void Menu::handleInputs(const sf::Vector2f& mousePos, const sf::Event& event)
 		// Et si le bouton gauche est pressé
 		if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
 		{
-			Application::pushState(new mainGame(false));
+			Application::pushState(new mainGame(_textBox.getStr(), false));
 		}
 	}
 
@@ -61,7 +65,7 @@ void Menu::handleInputs(const sf::Vector2f& mousePos, const sf::Event& event)
 		// Et si le bouton gauche est pressé
 		if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
 		{
-			Application::pushState(new mainGame(true));
+			Application::pushState(new mainGame(_textBox.getStr(), true));
 		}
 	}
 
@@ -74,6 +78,14 @@ void Menu::handleInputs(const sf::Vector2f& mousePos, const sf::Event& event)
 			// ouverture des options
 		}
 	}
+
+	// TextBox
+	if (_textBox.getHitBox().contains(mousePos) 
+		&& event.type == sf::Event::MouseButtonPressed 
+		&& event.mouseButton.button == sf::Mouse::Left) {
+		_textBox.setFocus();
+	}
+	_textBox.handleInputs(event, mousePos);
 }
 
 
@@ -83,4 +95,5 @@ void Menu::manageDraw(sf::RenderWindow& window)
 	window.draw(_btnSolo);
 	window.draw(_btnMulti);
 	window.draw(_btnSettings);
+	window.draw(_textBox);
 }

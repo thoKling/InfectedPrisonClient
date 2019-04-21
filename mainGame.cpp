@@ -8,10 +8,8 @@
 #include "SocketManager.h"
 #include "Application.h"
 
-mainGame::mainGame(bool online)
+mainGame::mainGame(std::string playerName, bool online)
 {
-	std::string playerName;
-	std::cin >> playerName;
 	World::init(&Application::getWindow(), playerName);
 
 	if (online) {
