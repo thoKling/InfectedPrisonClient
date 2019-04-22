@@ -120,7 +120,7 @@ sf::FloatRect DrawableEntity::getGlobalBounds()
 std::vector<sf::Vector2f> DrawableEntity::getCorners()
 {
 	std::vector<sf::Vector2f> res(4);
-	res[0] = sf::Vector2f(getPosition().x - getOrigin().x, getPosition().y - getOrigin().y);
+	res[0] = sf::Transformable::getPosition();
 	res[1] = sf::Vector2f(res[0].x + _sprite.getGlobalBounds().width, res[0].y);
 	res[3] = sf::Vector2f(res[0].x, res[0].y + _sprite.getGlobalBounds().height);
 	res[2] = sf::Vector2f(res[1].x, res[3].y);

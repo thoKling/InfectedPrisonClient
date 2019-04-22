@@ -125,13 +125,23 @@ bool World::isObstacle(const sf::Vector2i& position)
 	return _currentRegion->isObstacle(position);
 }
 
-Item * World::getItemInRect(const sf::FloatRect& rect)
+DroppedItem* World::getItemInRect(const sf::FloatRect& rect)
 {
-	return _currentRegion->getItemInRect(rect);
+	return _currentRegion->getDroppedItemInRect(rect);
 }
 
 void World::dropItem(Item* item, const sf::Vector2f& position) {
 	_currentRegion->dropItem(item, position);
+}
+
+void World::deleteItem(Item * item, const sf::Vector2f& pos)
+{
+	_currentRegion->deleteItem(item, pos);
+}
+
+void World::addItem(Item * item, const sf::Vector2f & position)
+{
+	_currentRegion->addItem(item, position);
 }
 
 std::vector<std::vector<int>> World::getTiles()

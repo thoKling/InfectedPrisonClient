@@ -168,13 +168,20 @@ void PlayerController::die()
 }
 
 void PlayerController::pickItem() {
-	Item* item = World::getInstance()->getItemInRect(_player->getGlobalBounds());
+	DroppedItem* droppedItem = World::getInstance()->getItemInRect(_player->getGlobalBounds());
 
-	if (item != nullptr) {
+	if (droppedItem != nullptr) {
+		Item* item = droppedItem->getItem();
 		_inventory->AddItem(item);
 		if (item->getWeaponType() != WeaponType::NaW)
 			_inventory->setCurrentItem(item);
+		if (SocketManager::isOnline()) {
+			sf::Packet packet;
+			packet << SocketManager::PacketType::DeleteItem << *item << droppedItem->getCorners()[0];
+			SocketManager::send(packet);
+		}
 	}
+	delete(droppedItem);
 }
 
 void PlayerController::dropItem() {

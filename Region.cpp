@@ -36,7 +36,6 @@ void Region::init() {
 		DroppedItem* temp = new DroppedItem(new Weapon());
 		temp->setPosition({ 856, 870 });
 		_items.emplace_back(temp);
-
 	}
 }
 
@@ -179,25 +178,33 @@ void Region::loadMapBase() {
 }
 
 // Renvoit l'item le plus proche de la position dans une certaine portée et le supprime de la région, nullptr si il n'y en a pas
-Item* Region::getItemInRect(const sf::FloatRect& rect) {
+DroppedItem* Region::getDroppedItemInRect(const sf::FloatRect& rect) {
 	DroppedItem* res = nullptr;
-
 	for (auto it = _items.begin(); it != _items.end(); ++it) {
 		if ((*it)->getGlobalBounds().intersects(rect)) {
 			res = *it;
 			break;
 		}
 	}
-	if (res == nullptr)
-		return nullptr;
-
-	Item* itemRes = res->getItem();
 	_items.remove(res);
-	delete(res);
-	return itemRes;
+	return res;
 }
 
 void Region::dropItem(Item * item, const sf::Vector2f & position)
+{
+	if(!SocketManager::isOnline()) {
+		DroppedItem* temp = new DroppedItem(item);
+		temp->setPosition(position);
+		_items.emplace_back(temp);
+	}
+	else {
+		sf::Packet packet;
+		packet << SocketManager::PacketType::CreateItem << *item << position;
+		SocketManager::send(packet);
+	}
+}
+
+void Region::addItem(Item * item, const sf::Vector2f & position)
 {
 	DroppedItem* temp = new DroppedItem(item);
 	temp->setPosition(position);
@@ -222,6 +229,20 @@ int Region::getTileNumber(sf::Vector2i tilePos)
 		return -1;
 	}
 	return _tiles[tilePos.y][tilePos.x];
+}
+
+void Region::deleteItem(Item * item, const sf::Vector2f pos)
+{
+	auto toDelete = _items.begin();
+	for (auto it = _items.begin(); it != _items.end(); it++)
+	{
+		if ((*it)->getItem()->getType() == item->getType()
+			&& (*it)->getItem()->getStack() == item->getStack()
+			&& (*it)->getPosition() == pos) {
+			toDelete = it;
+		}
+	}
+	_items.erase(toDelete);
 }
 
 bool Region::isObstacle(sf::Vector2i tilePos)

@@ -13,8 +13,9 @@ public:
 	void manageDraw(sf::RenderWindow& window);
 	void update();
 
-	Item* getItemInRect(const sf::FloatRect& rect);
+	DroppedItem* getDroppedItemInRect(const sf::FloatRect& rect);
 	void dropItem(Item* item, const sf::Vector2f& position);
+	void addItem(Item* item, const sf::Vector2f& position);
 
 	///
 	/// Utils
@@ -22,6 +23,7 @@ public:
 	bool isObstacle(sf::Vector2i tilePos);
 	const std::vector<std::vector<int>>& getTiles() const;
 	int getTileNumber(sf::Vector2i tilePos);
+	void deleteItem(Item* item, const sf::Vector2f pos);
 
 private:
 

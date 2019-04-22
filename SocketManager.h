@@ -18,6 +18,7 @@ public:
 		PlayerReceiveHit,
 		NextWave,
 		CreateItem,
+		DeleteItem,
 	};
 	static void init(std::string playerName, sf::IpAddress addr, unsigned int port);
 	static void stop();
@@ -37,6 +38,7 @@ private:
 	static void handlePlayerReceiveHit(sf::Packet packet);
 	static void handleNextWave(sf::Packet packet);
 	static void handleCreateItem(sf::Packet packet);
+	static void handleDeleteItem(sf::Packet packet);
 
 	static std::string _name;
 	static bool _onlineMode;
@@ -54,6 +56,7 @@ inline sf::Packet& operator <<(sf::Packet& packet, const sf::Vector2<T>& vec)
 }
 
 sf::Packet& operator >>(sf::Packet& packet, Item** item);
+sf::Packet& operator <<(sf::Packet& packet, Item& item);
 
 sf::Packet& operator >>(sf::Packet& packet, SocketManager::PacketType& pt);
 sf::Packet& operator <<(sf::Packet& packet, const SocketManager::PacketType& pt);

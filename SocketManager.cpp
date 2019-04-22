@@ -116,6 +116,9 @@ void SocketManager::handlePackets()
 		case PacketType::CreateItem:
 			handleCreateItem(packet);
 			break;
+		case PacketType::DeleteItem:
+			handleDeleteItem(packet);
+			break;
 		default:
 			std::cout << "Unknown packetType from " << sender << std::endl;
 			break;
@@ -200,11 +203,19 @@ void SocketManager::handleNextWave(sf::Packet packet)
 
 void SocketManager::handleCreateItem(sf::Packet packet)
 {
-	std::cout << "Item Creation !" << std::endl;
 	sf::Vector2f position;
 	Item* item = nullptr;
 	packet >> &item >> position;
-	World::getInstance()->dropItem(item, position);
+	World::getInstance()->addItem(item, position);
+}
+
+void SocketManager::handleDeleteItem(sf::Packet packet)
+{
+	sf::Vector2f pos;
+	Item* item;
+	packet >> &item >> pos;
+	World::getInstance()->deleteItem(item, pos);
+	delete item;
 }
 
 sf::Packet & operator>>(sf::Packet & packet, Item** item)
@@ -220,6 +231,12 @@ sf::Packet & operator>>(sf::Packet & packet, Item** item)
 		*item = new Ammo(WeaponType::Gun);
 	}
 	(*item)->setStack(stack);
+	return packet;
+}
+
+sf::Packet & operator<<(sf::Packet & packet, Item& item)
+{
+	packet << item.getType() << item.getStack();
 	return packet;
 }
 
