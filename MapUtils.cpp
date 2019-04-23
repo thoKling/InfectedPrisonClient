@@ -113,7 +113,6 @@ std::list<sf::Vector2i> MapUtils::getPath(const sf::Vector2i& startCell, const s
 	return path;
 }
 
-
 // transforme une position relative à la fenetre en coordonnées de tiles
 sf::Vector2i MapUtils::transformInTilesPos(const sf::Vector2f& pos)
 {
