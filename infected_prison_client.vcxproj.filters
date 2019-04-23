@@ -121,6 +121,9 @@
     <ClCompile Include="TextBox.cpp">
       <Filter>Sources\GameStates\Menu</Filter>
     </ClCompile>
+    <ClCompile Include="endGame.cpp">
+      <Filter>Sources\GameStates</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -239,6 +242,9 @@
     </ClInclude>
     <ClInclude Include="TextBox.h">
       <Filter>Sources\GameStates\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="endGame.h">
+      <Filter>Sources\GameStates</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
