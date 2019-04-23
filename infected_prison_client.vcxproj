@@ -133,6 +133,7 @@
     <ClInclude Include="Ammo.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="AudioManager.h" />
+    <ClInclude Include="endGame.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="mainGame.h" />
     <ClInclude Include="Menu.h" />
@@ -174,6 +175,7 @@
     <ClCompile Include="Ammo.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="AudioManager.cpp" />
+    <ClCompile Include="endGame.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="mainGame.cpp" />
     <ClCompile Include="Menu.cpp" />
