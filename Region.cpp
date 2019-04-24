@@ -238,7 +238,7 @@ void Region::deleteItem(Item * item, const sf::Vector2f pos)
 	{
 		if ((*it)->getItem()->getType() == item->getType()
 			&& (*it)->getItem()->getStack() == item->getStack()
-			&& (*it)->getPosition() == pos) {
+			&& (*it)->getCorners()[0] == pos) {
 			toDelete = it;
 		}
 	}
