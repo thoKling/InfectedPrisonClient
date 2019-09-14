@@ -5,12 +5,11 @@
 class Ammo : public Item
 {
 public:
-	Ammo(WeaponType ammoType);
+	Ammo(ItemType ammo);
 	~Ammo();
-	virtual WeaponType getAmmoType();
-	virtual std::string getType();
-
+	virtual ItemType getAmmoType();
+	virtual ItemType getType();
 private:
-	WeaponType _ammoType;
+	ItemType _ammo;
 };
 

@@ -5,12 +5,12 @@
 class PlayerController;
 class Player;
 
-enum WeaponType {
-	NaW, // Not a Weapon
+enum ItemType {
+	undefined,
+	Key,
 	Gun,
+	Ammunition
 };
-
-const std::string WeaponTypesStr[] = { "NaW", "Gun" };
 
 class Item : public DrawableEntity
 {
@@ -30,11 +30,12 @@ public:
 	// Weapons
 	virtual bool isReloading();
 	virtual unsigned int getAmmo();
-	virtual WeaponType getWeaponType();
-	// Ammos
-	virtual WeaponType getAmmoType();
+	virtual ItemType getItemType();
+	virtual ItemType getAmmoType();
 	// Nécessaire pour la sérialization
-	virtual std::string getType() = 0;
+	virtual ItemType getType() = 0;
+
+	static std::map<ItemType, std::string> ItemTypesStr;
 
 protected:
 	unsigned int _stack = 0;

@@ -47,7 +47,7 @@ Menu::~Menu()
 {
 }
 
-void Menu::handleInputs(const sf::Vector2f& mousePos, const sf::Event& event)
+void Menu::handleInputs(const sf::Vector2i& mousePixelPos, const sf::Vector2f& mousePos, const sf::Event& event)
 {
 	// Si la souris est sur le bouton "solo"
 	if (_btnSolo.getGlobalBounds().contains(mousePos))

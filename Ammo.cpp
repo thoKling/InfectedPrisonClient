@@ -2,9 +2,9 @@
 
 #include "TextureManager.h"
 
-Ammo::Ammo(WeaponType ammoType)
+Ammo::Ammo(ItemType ammo) :
+	_ammo(ammo)
 {
-	_ammoType = ammoType;
 	_sprite.setTexture(*TextureManager::loadText("Ressources/ammo.png"));
 	_sprite.setScale({0.125,0.25});
 }
@@ -14,12 +14,12 @@ Ammo::~Ammo()
 {
 }
 
-WeaponType Ammo::getAmmoType()
+ItemType Ammo::getAmmoType()
 {
-	return _ammoType;
+	return getType();
 }
 
-std::string Ammo::getType()
+ItemType Ammo::getType()
 {
-	return "Ammo";
+	return _ammo;
 }

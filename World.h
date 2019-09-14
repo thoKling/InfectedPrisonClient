@@ -28,7 +28,7 @@ public:
 	// Update les différentes entitées en jeux
 	void update();
 	void draw();
-	void handleInputs(const sf::Vector2f& mousePos, const sf::Event& event);
+	void handleInputs(const sf::Vector2i& mousePixelPos, const sf::Vector2f& mousePos, const sf::Event& event);
 
 	// Getters
 	ltbl::LightSystem* getLightSys();
@@ -45,6 +45,8 @@ public:
 
 	void gameOver();
 	bool getGameOver();
+
+	Region* getCurrentRegion();
 
 private:
 	bool _gameOver = false;

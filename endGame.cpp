@@ -34,7 +34,7 @@ endGame::~endGame()
 {
 }
 
-void endGame::handleInputs(const sf::Vector2f& mousePos, const sf::Event& event)
+void endGame::handleInputs(const sf::Vector2i& mousePixelPos, const sf::Vector2f& mousePos, const sf::Event& event)
 {
 	// Si la souris est sur le bouton "solo"
 	if (_btnMenu.getGlobalBounds().contains(mousePos))

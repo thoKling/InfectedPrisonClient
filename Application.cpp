@@ -16,7 +16,7 @@ sf::RenderWindow Application::_window;
 Application::Application()
 {
 	// on crée la fenêtre
-	_window.create(sf::VideoMode(WINDOWS_WIDTH, WINDOWS_HEIGHT), "Infected Prison");
+	_window.create(sf::VideoMode(WINDOWS_WIDTH, WINDOWS_HEIGHT), "Infected Prison", sf::Style::Titlebar | sf::Style::Close);
 	setState(new Menu());
 }
 
@@ -25,9 +25,6 @@ Application::~Application()
 }
 
 void Application::start() {	
-	// on lance la musique principale du jeu
-	//AudioManager::playMainTheme();
-
 	// on fait tourner la boucle principale
 	sf::Clock clock;
 	sf::Time lag = sf::seconds(0.0f);
@@ -93,7 +90,7 @@ void Application::handleInputs(sf::Event event)
 
 	GameState* currentGameState = getCurrentState();
 	if (currentGameState != NULL) {
-		currentGameState->handleInputs(mouseWorldPos, event);
+		currentGameState->handleInputs(mousePixelPos, mouseWorldPos, event);
 	}
 }
 

@@ -7,9 +7,9 @@
 #include "SocketManager.h"
 #include "MapUtils.h"
 
-Projectile::Projectile(const WeaponType& typeWeapon)
+Projectile::Projectile(const ItemType& typeWeapon)
 {
-	_sprite.setTexture(*TextureManager::loadText("Ressources/projectile_" + WeaponTypesStr[typeWeapon] + ".png"));
+	_sprite.setTexture(*TextureManager::loadText("Ressources/projectile_" + Item::ItemTypesStr[typeWeapon] + ".png"));
 
 	this->setOrigin(16.f, 16.f);
 }

@@ -10,7 +10,7 @@ public:
 	endGame();
 	~endGame();
 	virtual void update() {  };
-	virtual void handleInputs(const sf::Vector2f& mousePos, const sf::Event& event);
+	virtual void handleInputs(const sf::Vector2i& mousePixelPos, const sf::Vector2f& mousePos, const sf::Event& event);
 	virtual void manageDraw(sf::RenderWindow& window);
 private:
 	sf::Sprite _gameOverSprite;

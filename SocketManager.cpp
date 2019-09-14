@@ -7,9 +7,9 @@
 #include "ZombiesManager.h"
 #include "Player.h"
 #include "HUD.h"
-#include "Item.h"
 #include "Weapon.h"
 #include "Ammo.h"
+#include "Item.h"
 
 bool SocketManager::_onlineMode = false;
 unsigned int SocketManager::_serverPort;
@@ -160,7 +160,7 @@ void SocketManager::handleProjectile(sf::Packet packet)
 	packet >> rotation;
 	int weaponType;
 	packet >> weaponType;
-	ProjectilesManager::createProjectile(pos, rotation, WeaponType(weaponType), false);
+	ProjectilesManager::createProjectile(pos, rotation, ItemType(weaponType), false);
 }
 
 void SocketManager::handleZombieCreation(sf::Packet packet)
@@ -228,7 +228,7 @@ sf::Packet & operator>>(sf::Packet & packet, Item** item)
 		*item = new Weapon();
 	}
 	else if (type == "Ammo") {
-		*item = new Ammo(WeaponType::Gun);
+		*item = new Ammo(ItemType::Gun);
 	}
 	(*item)->setStack(stack);
 	return packet;

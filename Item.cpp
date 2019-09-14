@@ -1,6 +1,10 @@
 #include "Item.h"
 
-#include "Player.h"
+class Player;
+
+std::map<ItemType, std::string> Item::ItemTypesStr = {
+   {ItemType::undefined,"undefined"},{ItemType::Key,"Key"},{ItemType::Gun,"Gun"},{ItemType::Ammunition,"Ammo"}
+};
 
 Item::Item()
 {
@@ -28,19 +32,19 @@ bool Item::isReloading()
 	return false;
 }
 
+ItemType Item::getItemType()
+{
+	return ItemType::undefined;
+}
+
+ItemType Item::getAmmoType()
+{
+	return ItemType::undefined;
+}
+
 unsigned int Item::getAmmo()
 {
 	return 0;
-}
-
-WeaponType Item::getWeaponType()
-{
-	return WeaponType::NaW; // Not a Weapon
-}
-
-WeaponType Item::getAmmoType()
-{
-	return WeaponType::NaW; // Not a Weapon
 }
 
 unsigned int Item::getStack()

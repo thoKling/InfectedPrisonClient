@@ -12,7 +12,7 @@ Key::~Key()
 {
 }
 
-std::string Key::getType()
+ItemType Key::getType()
 {
-	return "Key";
+	return ItemType::Key;
 }

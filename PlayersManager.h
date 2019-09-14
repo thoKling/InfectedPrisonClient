@@ -5,12 +5,13 @@
 class PlayerController;
 class Player;
 
+// Manage all the players
 class PlayersManager
 {
 public:
 	static void destroyChars();
 
-	// Méthode qui créer le personnage du client
+	// Méthode qui créer le personnage du client, createClientPlayer(name,pos)
 	static void createClientPlayer(std::string name, const sf::Vector2f& pos);
 
 	// Méthode qui permet de créer un nouveau personnage

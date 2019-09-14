@@ -7,6 +7,8 @@
 #include "Player.h"
 #include "SocketManager.h"
 
+#include <iostream>
+
 
 PlayerController::PlayerController() :
 	_inventory(new Inventory()),
@@ -22,7 +24,7 @@ PlayerController::~PlayerController()
 }
 
 /** Récupération et traitement des entrées clavier du joueur **/
-void PlayerController::handleInputs(const sf::Vector2f& mousePos, const sf::Event& event)
+void PlayerController::handleInputs(const sf::Vector2i& mousePixelPos, const sf::Vector2f& mousePos, const sf::Event& event)
 {
 	_player->orientate(mousePos);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::C)) {
@@ -49,7 +51,7 @@ void PlayerController::handleInputs(const sf::Vector2f& mousePos, const sf::Even
 		_upIsHeld = false;
 
 	if (_isInventoryOpen) {
-		_inventory->getInventoryView()->handleInputs(mousePos, event);
+		_inventory->getInventoryView()->handleInputs(mousePixelPos, mousePos);
 	}
 	else {
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
@@ -142,6 +144,9 @@ void PlayerController::update()
 		die();
 	HUD::setLives(_player->getLives());
 	_inventory->getInventoryView()->update();
+
+	manageDroppedItems();
+
 }
 
 void PlayerController::attach(Player * player)
@@ -172,9 +177,9 @@ void PlayerController::pickItem() {
 
 	if (droppedItem != nullptr) {
 		Item* item = droppedItem->getItem();
-		_inventory->AddItem(item);
-		if (item->getWeaponType() != WeaponType::NaW)
+		if (_inventory->getCurrentItem() == nullptr && item->getItemType() == ItemType::Gun)
 			_inventory->setCurrentItem(item);
+		_inventory->AddItem(item);
 		if (SocketManager::isOnline()) {
 			sf::Packet packet;
 			packet << SocketManager::PacketType::DeleteItem << *item << droppedItem->getCorners()[0];
@@ -192,10 +197,21 @@ void PlayerController::dropItem() {
 	}
 }
 
+void PlayerController::manageDroppedItems() {
+	std::vector<Item*> itemsDroppedFromInventory = _inventory->getDroppedItems();
+	
+	Region* region = World::getInstance()->getCurrentRegion();
+	for (auto &item : itemsDroppedFromInventory) // access by reference to avoid copying
+	{
+		region->dropItem(item, _player->getPosition());
+	}
+	_inventory->deleteDroppedItems();
+}
+
 void PlayerController::reload()
 {
 	if (_inventory->getCurrentItem() != nullptr) {
-		WeaponType typeW = _inventory->getCurrentItem()->getWeaponType();
+		ItemType typeW = _inventory->getCurrentItem()->getItemType();
 		unsigned int usedAmmos = _inventory->getCurrentItem()->reload(_inventory->getAmmos(typeW));
 		_inventory->setAmmos(typeW, usedAmmos);
 	}

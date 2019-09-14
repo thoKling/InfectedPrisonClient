@@ -11,7 +11,7 @@ public:
 	~PlayerController();
 
 	/* Procédure qui récupère et traite les entrées clavier du joueur */
-	void handleInputs(const sf::Vector2f& mousePos, const sf::Event& event);
+	void handleInputs(const sf::Vector2i& mousePixelPos, const sf::Vector2f& mousePos, const sf::Event& event);
 
 	void movePlayer();
 
@@ -49,5 +49,7 @@ private:
 
 	void pickItem();
 	void dropItem();
+
+	void manageDroppedItems();
 };
 

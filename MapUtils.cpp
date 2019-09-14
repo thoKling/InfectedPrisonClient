@@ -118,3 +118,4 @@ sf::Vector2i MapUtils::transformInTilesPos(const sf::Vector2f& pos)
 {
 	return sf::Vector2i((int)(pos.x) / TILESIZE, (int)(pos.y) / TILESIZE);
 }
+

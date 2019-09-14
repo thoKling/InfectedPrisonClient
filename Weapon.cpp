@@ -11,7 +11,7 @@ Weapon::Weapon() :
 	_capacity(5),
 	_fireRate(10),
 	_reloadSpeed(2),
-	_type(WeaponType::Gun),
+	_type(ItemType::Gun),
 	_isReloading(false),
 	_tickSinceReloadingUpdate(0),
 	_tickSinceFiringUpdate(0),
@@ -84,11 +84,11 @@ unsigned int Weapon::getAmmo()
 	return _ammo;
 }
 
-WeaponType Weapon::getWeaponType() {
-	return _type;
+ItemType Weapon::getItemType() {
+	return getType();
 }
 
-std::string Weapon::getType()
+ItemType Weapon::getType()
 {
-	return "Weapon";
+	return ItemType::Gun;
 }

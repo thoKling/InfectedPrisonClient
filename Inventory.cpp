@@ -1,6 +1,7 @@
 #include "Inventory.h"
 #include "InventoryView.h"
 
+#include <iostream>
 
 
 Inventory::Inventory():
@@ -25,6 +26,8 @@ bool Inventory::AddItem(Item* item)
 {
 	if (_items.size() <= _backpackSize) {
 		_items.emplace_back(item);
+		_inventoryView->addItem(item);
+		std::cout << "capacity: " << _backpackSize - _items.size() << std::endl;
 		return true;
 	}
 	return false;
@@ -40,12 +43,15 @@ void Inventory::removeStack(Item* item, unsigned int amount)
 	auto it = std::find(_items.begin(), _items.end(), item);
 	if (it != _items.end()) {
 		(*it)->removeStack(amount);
-		if ((*it)->getStack() <= 0)
+		if ((*it)->getStack() <= 0){
+			_inventoryView->removeItem(*it);
+			// note: the object my not be deleted because of vector::erase behaviour
 			_items.erase(std::remove(_items.begin(), _items.end(), *it), _items.end());
+		}
 	}
 }
 
-unsigned int Inventory::getAmmos(WeaponType weaponType)
+unsigned int Inventory::getAmmos(ItemType weaponType)
 {
 	for (auto it = _items.begin(); it != _items.end(); ++it) {
 		if ((*it)->getAmmoType() == weaponType)
@@ -54,7 +60,7 @@ unsigned int Inventory::getAmmos(WeaponType weaponType)
 	return 0;
 }
 
-void Inventory::setAmmos(WeaponType weaponType, unsigned int amount)
+void Inventory::setAmmos(ItemType weaponType, unsigned int amount)
 {
 	for (auto it = _items.begin(); it != _items.end(); ++it) {
 		if ((*it)->getAmmoType() == weaponType) {
@@ -66,6 +72,14 @@ void Inventory::setAmmos(WeaponType weaponType, unsigned int amount)
 
 std::vector<Item*> Inventory::getItems() {
 	return _items;
+}
+
+std::vector<Item*> Inventory::getDroppedItems() {
+	return _inventoryView->getDroppedItems();
+}
+
+void Inventory::deleteDroppedItems() {
+	_inventoryView->deleteDroppedItems();
 }
 
 Item* Inventory::getCurrentItem() const

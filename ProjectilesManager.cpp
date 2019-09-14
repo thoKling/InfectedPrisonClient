@@ -19,7 +19,7 @@ void ProjectilesManager::deleteAllProjectiles()
 
 
 // créer un nouveau projectile et renvoit l'id de ce dernier
-unsigned int ProjectilesManager::createProjectile(const sf::Vector2f& pos, float rotation, const WeaponType& weaponType, bool replicate) {
+unsigned int ProjectilesManager::createProjectile(const sf::Vector2f& pos, float rotation, const ItemType& weaponType, bool replicate) {
 	_projectiles[_nextId] = new Projectile(weaponType);
 	_projectiles[_nextId]->setPosition(pos);
 	_projectiles[_nextId]->setRotation(rotation); 

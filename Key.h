@@ -7,6 +7,6 @@ class Key : public Item
 public:
 	Key();
 	~Key();
-	virtual std::string getType();
+	virtual ItemType getType();
 };
 

@@ -6,7 +6,7 @@
 class Projectile : public DrawableEntity
 {
 public:
-	Projectile(const WeaponType& typeWeapon);
+	Projectile(const ItemType& typeWeapon);
 	~Projectile();
 	
 	bool toDelete();

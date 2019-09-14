@@ -15,14 +15,16 @@ public:
 	bool AddItem(Item* item);
 	void dropItem(Item* item);
 	void removeStack(Item* item, unsigned int amount);
-	unsigned int getAmmos(WeaponType weaponType);
-	void setAmmos(WeaponType weaponType, unsigned int amount);
+	unsigned int getAmmos(ItemType weaponType);
+	void setAmmos(ItemType weaponType, unsigned int amount);
 
 	std::vector<Item*> getItems();
+	std::vector<Item*> getDroppedItems();
+	void deleteDroppedItems();
 
 	Item* getCurrentItem() const;
 	void setCurrentItem(Item* item);
-
+	
 	InventoryView* getInventoryView() const;
 
 private:

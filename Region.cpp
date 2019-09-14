@@ -1,14 +1,17 @@
+#pragma once
+
 #include "Region.h"
 
-#include "Weapon.h"
 #include "Utils.h"
 #include "Ammo.h"
-#include "Key.h"
+#include "Weapon.h"
+#include "Item.h"
 #include "ZombiesManager.h"
 #include "SocketManager.h"
 
 #include <iostream>
 #include <fstream>
+
 
 Region::Region(const std::string& fileMap):
 	_fileMap(&fileMap)
@@ -66,7 +69,7 @@ void Region::update()
 	++_ticks;
 	//create ammo
 	if (_ticks % 600 == 0) {
-		Item* tempItem = new Ammo(WeaponType::Gun);
+		Item* tempItem = new Ammo(ItemType::Gun);
 		tempItem->setStack(4);
 		DroppedItem* temp2 = new DroppedItem(tempItem);
 		int x;

@@ -47,6 +47,7 @@ void World::init(sf::RenderWindow* window, std::string name)
 	// Création du caractère
 	PlayersManager::createClientPlayer(name, sf::Vector2f(836, 810));
 	HUD::init(window);
+
 }
 
 void World::loadMap(const sf::Vector2i& position)
@@ -109,10 +110,10 @@ void World::draw()
 	_window->setView(_mainView);
 }
 
-void World::handleInputs(const sf::Vector2f& mousePos, const sf::Event& event)
+void World::handleInputs(const sf::Vector2i& mousePixelPos, const sf::Vector2f& mousePos, const sf::Event& event)
 {
 	// Récupération des entrées clavier qui concernent les personnages
-	PlayersManager::getClientController().handleInputs(mousePos, event);
+	PlayersManager::getClientController().handleInputs(mousePixelPos, mousePos, event);
 }
 
 ltbl::LightSystem* World::getLightSys()
@@ -157,4 +158,8 @@ void World::gameOver()
 bool World::getGameOver()
 {
 	return _gameOver;
+}
+
+Region* World::getCurrentRegion() {
+	return _currentRegion;
 }

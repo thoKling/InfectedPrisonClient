@@ -32,9 +32,9 @@ void mainGame::update()
 		Application::setState(new endGame());
 }
 
-void mainGame::handleInputs(const sf::Vector2f& mousePos, const sf::Event& event)
+void mainGame::handleInputs(const sf::Vector2i& mousePixelPos, const sf::Vector2f& mousePos, const sf::Event& event)
 {
-	World::getInstance()->handleInputs(mousePos, event);
+	World::getInstance()->handleInputs(mousePixelPos, mousePos, event);
 }
 
 void mainGame::manageDraw(sf::RenderWindow& window)
